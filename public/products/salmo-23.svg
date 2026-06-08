@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d4d0c6"/>
+      <stop offset="1" stop-color="#b7b1a7"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f0ede4"/>
+      <stop offset=".5" stop-color="#dcd8cd"/>
+      <stop offset="1" stop-color="#c8c3b7"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="35" stdDeviation="25" flood-opacity=".25"/>
+    </filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <path d="M84 160h632M84 195h470M84 805h632" stroke="#8e8a82" stroke-width="1" opacity=".5"/>
+  <text x="84" y="136" fill="#55534e" font-family="Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="4">PSALM / TWENTY THREE</text>
+  <path d="M214 247 332 194c23 30 113 30 136 0l118 53 112 176-106 65-48-72 8 416H248l8-416-48 72-106-65z" fill="url(#shirt)" filter="url(#shadow)"/>
+  <path d="M332 194c10 58 126 58 136 0" fill="none" stroke="#c5c0b5" stroke-width="18"/>
+  <path d="M350 208c20 25 80 25 100 0" fill="none" stroke="#f5f3ec" stroke-width="3"/>
+  <text x="400" y="440" text-anchor="middle" fill="#21211f" font-family="Georgia, serif" font-size="16" letter-spacing="3">THE LORD IS</text>
+  <text x="400" y="490" text-anchor="middle" fill="#21211f" font-family="Georgia, serif" font-size="48" font-style="italic">my shepherd</text>
+  <text x="400" y="532" text-anchor="middle" fill="#706d65" font-family="Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="4">I SHALL NOT WANT</text>
+  <text x="44" y="940" fill="#262621" font-family="Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="3">ESSENTIALS — GM CLOTHING</text>
+</svg>

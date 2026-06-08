@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d7d2c8"/>
+      <stop offset="1" stop-color="#aaa69e"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#676963"/>
+      <stop offset=".55" stop-color="#4a4c47"/>
+      <stop offset="1" stop-color="#31332f"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="35" stdDeviation="25" flood-opacity=".25"/>
+    </filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)"/>
+  <path d="M0 790 800 210M0 905 800 325M170 1000 800 540" stroke="#eeebe4" stroke-width="2" opacity=".35"/>
+  <circle cx="650" cy="185" r="145" fill="none" stroke="#d7ff38" stroke-width="2" opacity=".6"/>
+  <path d="M214 247 332 194c23 30 113 30 136 0l118 53 112 176-106 65-48-72 8 416H248l8-416-48 72-106-65z" fill="url(#shirt)" filter="url(#shadow)"/>
+  <path d="M332 194c10 58 126 58 136 0" fill="none" stroke="#333530" stroke-width="18"/>
+  <path d="M350 208c20 25 80 25 100 0" fill="none" stroke="#858780" stroke-width="3"/>
+  <circle cx="400" cy="452" r="77" fill="none" stroke="#d7ff38" stroke-width="2"/>
+  <text x="400" y="470" text-anchor="middle" fill="#eae7df" font-family="Arial, sans-serif" font-size="66" font-weight="900" letter-spacing="-5">01</text>
+  <text x="400" y="550" text-anchor="middle" fill="#eae7df" font-family="Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="5">COURT CULTURE</text>
+  <text x="44" y="940" fill="#262621" font-family="Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="3">BUILT FOR THE STREETS</text>
+</svg>

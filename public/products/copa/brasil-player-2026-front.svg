@@ -1,0 +1,15 @@
+<svg width="1200" height="1500" viewBox="0 0 1200 1500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="1500" fill="#ECECE7"/>
+  <path d="M320 318L465 222H735L880 318L818 528L744 502V1138H456V502L382 528L320 318Z" fill="#F7D800"/>
+  <path d="M465 222H735L704 320L665 378H535L496 320L465 222Z" fill="#052B25"/>
+  <path d="M536 378H664L632 429H568L536 378Z" fill="#F7D800"/>
+  <path d="M456 502H744V1138H456V502Z" fill="#F7D800"/>
+  <path d="M456 502L496 320M744 502L704 320" stroke="#00A884" stroke-width="12"/>
+  <path d="M420 455C500 430 690 418 780 455" stroke="#F7E954" stroke-width="18" opacity=".4"/>
+  <path d="M470 620C545 575 666 575 735 620" stroke="#F7E954" stroke-width="16" opacity=".35"/>
+  <path d="M462 735C560 700 650 704 742 735" stroke="#F7E954" stroke-width="16" opacity=".32"/>
+  <rect x="525" y="520" width="150" height="166" rx="18" fill="#0B6E58"/>
+  <path d="M600 555L620 604H675L630 635L648 688L600 655L552 688L570 635L525 604H580L600 555Z" fill="#F7D800"/>
+  <text x="600" y="1225" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="8" fill="#050505">BRASIL VERSAO JOGADOR 2026/27</text>
+  <text x="600" y="1280" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="6" fill="#050505" opacity=".45">FOTO TEMPORARIA - SUBSTITUIR PELO PRODUTO REAL</text>
+</svg>

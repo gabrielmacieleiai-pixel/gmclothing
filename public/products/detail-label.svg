@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="cloth" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#d7d2c7"/>
+      <stop offset="1" stop-color="#aaa69d"/>
+    </linearGradient>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="24" stdDeviation="20" flood-opacity=".25"/>
+    </filter>
+  </defs>
+  <rect width="800" height="1000" fill="url(#cloth)"/>
+  <path d="M0 80 800 920M0 260 650 1000M160 0 800 690" stroke="#eeeae1" stroke-width="3" opacity=".23"/>
+  <g filter="url(#shadow)">
+    <rect x="155" y="280" width="490" height="430" rx="3" fill="#131411"/>
+    <rect x="180" y="305" width="440" height="380" fill="none" stroke="#393b36" stroke-width="2"/>
+    <text x="400" y="430" text-anchor="middle" fill="#f1efe9" font-family="Arial, sans-serif" font-size="44" font-weight="900" letter-spacing="-2">GM/CLOTHING</text>
+    <path d="M290 475h220" stroke="#d7ff38" stroke-width="4"/>
+    <text x="400" y="535" text-anchor="middle" fill="#9fa198" font-family="Arial, sans-serif" font-size="12" font-weight="700" letter-spacing="5">VISTA PROPÓSITO</text>
+    <text x="400" y="620" text-anchor="middle" fill="#f1efe9" font-family="Arial, sans-serif" font-size="10" letter-spacing="4">BALNEÁRIO CAMBORIÚ / SC</text>
+  </g>
+  <text x="55" y="930" fill="#292924" font-family="Arial, sans-serif" font-size="10" font-weight="700" letter-spacing="4">AUTHENTIC GM LABEL — 2026</text>
+</svg>

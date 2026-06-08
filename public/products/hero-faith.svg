@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1100">
+  <defs>
+    <linearGradient id="shirt" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#353631"/>
+      <stop offset=".55" stop-color="#171815"/>
+      <stop offset="1" stop-color="#070807"/>
+    </linearGradient>
+    <filter id="shadow" x="-50%" y="-30%" width="200%" height="200%">
+      <feDropShadow dx="-20" dy="45" stdDeviation="35" flood-color="#000" flood-opacity=".5"/>
+    </filter>
+  </defs>
+  <path d="M186 252 329 183c29 39 143 39 172 0l143 69 142 223-135 82-61-91 10 526H230l10-526-61 91-135-82z" fill="url(#shirt)" filter="url(#shadow)" transform="rotate(-7 415 590)"/>
+  <path d="M337 194c18 71 139 65 166-8" fill="none" stroke="#090a08" stroke-width="22" transform="rotate(-7 415 590)"/>
+  <path d="M360 207c24 31 94 28 120-5" fill="none" stroke="#494b45" stroke-width="3" transform="rotate(-7 415 590)"/>
+  <g transform="rotate(-7 415 590)">
+    <text x="415" y="505" text-anchor="middle" fill="#ebe8df" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="6">FAITH DIVISION</text>
+    <path d="M350 528h130" stroke="#d7ff38" stroke-width="4"/>
+    <text x="415" y="563" text-anchor="middle" fill="#8d8e87" font-family="Arial, sans-serif" font-size="11" letter-spacing="4">GM / BC / 2026</text>
+  </g>
+</svg>

@@ -1,0 +1,13 @@
+<svg width="1200" height="1500" viewBox="0 0 1200 1500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="1500" fill="#E7E7E0"/>
+  <path d="M335 315L470 220H730L865 315L805 515L738 492V1135H462V492L395 515L335 315Z" fill="#F5D900"/>
+  <path d="M470 220H730V360H470V220Z" fill="#0D8B55"/>
+  <path d="M395 515L335 315L470 220V360L462 492L395 515Z" fill="#F6D700"/>
+  <path d="M805 515L865 315L730 220V360L738 492L805 515Z" fill="#F6D700"/>
+  <path d="M462 492L738 492V1135H462V492Z" fill="#F7D700"/>
+  <path d="M462 492L470 360M738 492L730 360M396 515L462 492M804 515L738 492" stroke="#00865D" stroke-width="10"/>
+  <text x="600" y="360" text-anchor="middle" font-family="Arial, sans-serif" font-size="74" font-weight="800" letter-spacing="6" fill="#F7D700">RONALDINHO</text>
+  <text x="600" y="760" text-anchor="middle" font-family="Arial Black, Arial, sans-serif" font-size="310" font-weight="900" fill="#0D6B48">10</text>
+  <text x="600" y="1225" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="8" fill="#050505">COSTAS RETRO 2006</text>
+  <text x="600" y="1280" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="6" fill="#050505" opacity=".45">FOTO TEMPORARIA - SUBSTITUIR PELO PRODUTO REAL</text>
+</svg>
