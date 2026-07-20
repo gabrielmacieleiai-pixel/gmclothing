@@ -22,7 +22,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+vercel-*.log
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+.vercel
