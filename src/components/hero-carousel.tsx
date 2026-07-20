@@ -102,9 +102,8 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                     {slide.description}
                   </p>
                   <Link
-                    className="flex h-12 items-center justify-between gap-8 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505] transition-colors hover:bg-[#d4b06a]"
+                    className="flex h-12 items-center justify-between gap-8 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505] transition duration-200 hover:bg-[#d4b06a] active:scale-[0.98]"
                     href={slide.href}
-                    onClick={() => window.scrollTo(0, 0)}
                   >
                     {slide.cta} <ArrowUpRight />
                   </Link>
@@ -118,40 +117,62 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
               </div>
 
               <div className="relative min-h-[360px] overflow-hidden border border-white/10 bg-[#050505]/35 shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:min-h-[500px] lg:min-h-0">
-                {slide.mobileImage ? (
-                  <Image
-                    alt={slide.eyebrow}
-                    className={`lg:hidden ${
-                      slide.mobileImageFit === "contain"
-                        ? "object-contain p-4 sm:p-8"
-                        : "object-cover"
-                    }`}
-                    fill
-                    priority={index === 0}
-                    sizes="100vw"
-                    src={slide.mobileImage}
-                    style={{
-                      objectPosition:
-                        slide.mobileImagePosition ??
-                        slide.imagePosition ??
-                        "center",
-                    }}
-                  />
-                ) : null}
-                <Image
-                  alt={slide.eyebrow}
-                  className={`${slide.mobileImage ? "hidden lg:block" : ""} ${
-                    slide.imageFit === "contain"
-                      ? "object-contain p-4 sm:p-8"
-                      : "object-cover"
-                  }`}
-                  fill
-                  priority={index === 0}
-                  sizes="(max-width: 1024px) 100vw, 55vw"
-                  src={slide.image}
-                  style={{ objectPosition: slide.imagePosition ?? "center" }}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/55 via-transparent to-transparent" />
+                {slide.image ? (
+                  <>
+                    {slide.mobileImage ? (
+                      <Image
+                        alt={slide.eyebrow}
+                        className={`lg:hidden ${
+                          slide.mobileImageFit === "contain"
+                            ? "object-contain p-4 sm:p-8"
+                            : "object-cover"
+                        }`}
+                        fill
+                        priority={index === 0}
+                        sizes="100vw"
+                        src={slide.mobileImage}
+                        style={{
+                          objectPosition:
+                            slide.mobileImagePosition ??
+                            slide.imagePosition ??
+                            "center",
+                        }}
+                      />
+                    ) : null}
+                    <Image
+                      alt={slide.eyebrow}
+                      className={`${slide.mobileImage ? "hidden lg:block" : ""} ${
+                        slide.imageFit === "contain"
+                          ? "object-contain p-4 sm:p-8"
+                          : "object-cover"
+                      }`}
+                      fill
+                      priority={index === 0}
+                      sizes="(max-width: 1024px) 100vw, 55vw"
+                      src={slide.image}
+                      style={{ objectPosition: slide.imagePosition ?? "center" }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/55 via-transparent to-transparent" />
+                  </>
+                ) : (
+                  <div className="absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_72%_18%,rgba(200,169,106,0.22),transparent_28%),linear-gradient(135deg,#050505_0%,#102316_56%,#050505_100%)]">
+                    <div className="absolute -right-12 top-10 h-[120%] w-32 rotate-12 bg-[#f4d21e]/10 blur-sm" />
+                    <div className="absolute right-16 top-0 h-full w-px bg-[#f4d21e]/30" />
+                    <div className="absolute bottom-0 left-0 h-28 w-full bg-gradient-to-t from-[#050505] to-transparent" />
+                    <div className="relative z-10 flex h-full min-h-[360px] flex-col justify-end p-6 sm:min-h-[500px] sm:p-9 lg:p-12">
+                      <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#c8a96a]">
+                        Copa 2026 / Brasil
+                      </p>
+                      <p className="text-[20vw] font-black uppercase leading-[0.74] tracking-display text-white/95 sm:text-8xl lg:text-[9rem]">
+                        Brasil
+                      </p>
+                      <p className="mt-3 max-w-sm text-xs font-bold uppercase leading-5 tracking-[0.18em] text-white/58">
+                        Futebol, identidade e presença para viver a temporada
+                        dentro e fora de campo.
+                      </p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </article>

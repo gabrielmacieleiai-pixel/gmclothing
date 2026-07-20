@@ -78,8 +78,8 @@ const collectionVisuals: Record<string, CollectionVisual> = {
     title: "Brasil guia o drop.",
     description:
       "Futebol, Copa e streetwear com visual de campanha. Brasil no centro da narrativa.",
-    image: brandAssets.brands2.copaHeroDesktop,
-    mobileImage: brandAssets.brands2.copaBrasilMobile,
+    image: brandAssets.brands2.copaProductHero,
+    mobileImage: brandAssets.brands2.copaProductClean,
     accent: "text-[#72c7ef]",
   },
   brasil: {
@@ -87,8 +87,8 @@ const collectionVisuals: Record<string, CollectionVisual> = {
     title: "Seleção, rua e presença.",
     description:
       "Peças com energia de jogo e leitura urbana para viver a temporada fora de campo.",
-    image: brandAssets.brands2.copaBrasilDesktop,
-    mobileImage: brandAssets.brands2.copaBrasilMobile,
+    image: brandAssets.brands2.copaProductClean,
+    mobileImage: brandAssets.brands2.copaProductHero,
     accent: "text-[#72c7ef]",
   },
   jerseys: {
@@ -96,8 +96,8 @@ const collectionVisuals: Record<string, CollectionVisual> = {
     title: "Futebol com linguagem GM.",
     description:
       "Camisas de futebol dentro de uma vitrine limpa, esportiva e premium.",
-    image: brandAssets.brands2.copaHeroDesktop,
-    mobileImage: brandAssets.brands2.copaHeroMobile,
+    image: brandAssets.brands2.copaProductHero,
+    mobileImage: brandAssets.brands2.copaProductClean,
     accent: "text-[#72c7ef]",
   },
   oversized: {
@@ -205,11 +205,11 @@ export function CollectionBrowser({
                 {selectedVisual.description}
               </p>
             </div>
-            <div className="relative min-h-[360px] overflow-hidden border-t border-white/10 lg:border-l lg:border-t-0">
+            <div className="relative min-h-[360px] overflow-hidden border-t border-white/10 bg-[#050505] lg:border-l lg:border-t-0">
               {selectedVisual.mobileImage ? (
                 <Image
                   alt=""
-                  className="object-cover lg:hidden"
+                  className="object-contain p-3 lg:hidden"
                   fill
                   sizes="100vw"
                   src={selectedVisual.mobileImage}
@@ -217,7 +217,7 @@ export function CollectionBrowser({
               ) : null}
               <Image
                 alt=""
-                className={`${selectedVisual.mobileImage ? "hidden lg:block" : ""} object-cover`}
+                className={`${selectedVisual.mobileImage ? "hidden lg:block" : ""} object-contain p-4`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
                 src={selectedVisual.image}

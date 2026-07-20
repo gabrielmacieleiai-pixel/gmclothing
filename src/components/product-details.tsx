@@ -116,7 +116,7 @@ export function ProductDetails({
       : product.details;
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ behavior: "auto", left: 0, top: 0 });
   }, [initialSelectedColorId, product.slug]);
 
   function handleGalleryScroll() {
@@ -212,7 +212,7 @@ export function ProductDetails({
       return;
     }
 
-    if (!selectedVariant?.yampiCheckoutUrl) {
+    if (!cartItem.checkoutUrl) {
       setCheckoutMessage(
         "Essa combinação ainda não está disponível para checkout. Fale conosco pelo WhatsApp.",
       );
@@ -220,7 +220,7 @@ export function ProductDetails({
     }
 
     addItem(cartItem);
-    window.location.href = selectedVariant.yampiCheckoutUrl;
+    window.location.href = cartItem.checkoutUrl;
   }
 
   return (
@@ -496,7 +496,7 @@ export function ProductDetails({
         <section className="mx-auto grid max-w-[1440px] gap-4 px-4 pb-20 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
           <div className="relative min-h-[360px] overflow-hidden bg-[#050505] sm:min-h-[460px]">
             <Image
-              src="/products/brand-assets/tecido-premium-alta-gramatura.png"
+              src="/products/brand-assets/tecido-premium-alta-gramatura.webp"
               alt="Material de apoio mostrando tecido premium de alta gramatura"
               fill
               sizes="(max-width: 1024px) 100vw, 45vw"
@@ -585,7 +585,7 @@ function MediaFrame({
           alt={media.alt ?? "Vídeo do produto"}
           fill
           sizes={sizes}
-          className="object-cover"
+          className="object-contain"
         />
       ) : (
         <div className="flex size-full items-center justify-center bg-[#050505] text-[10px] font-bold uppercase tracking-[0.18em] text-white/45">
@@ -615,7 +615,7 @@ function MediaFrame({
       fill
       priority={priority}
       sizes={sizes}
-      className="object-cover"
+      className="object-contain"
     />
   );
 }

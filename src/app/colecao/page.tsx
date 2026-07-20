@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     title: "Coleção | GM Clothing",
     description:
       "Streetwear masculino premium com curadoria GM Clothing.",
-    images: ["/products/brand-assets/oversized-essential-preta-editorial.jpg"],
+    images: ["/products/brand-assets/oversized-essential-preta-editorial.webp"],
   },
 };
 
@@ -26,16 +26,16 @@ const collectionHighlights = [
   {
     label: "Copa do Mundo",
     href: "/copa-do-mundo",
-    image: brandAssets.brands2.copaBrasilDesktop,
+    image: brandAssets.brands2.copaProductHero,
   },
   {
     label: "Oversized",
-    href: "/colecao?categoria=oversized#catalogo",
+    href: "/colecao/oversized",
     image: brandAssets.brands2.oversizedHeroDesktop,
   },
   {
     label: "Coleção Frio",
-    href: "/colecao?categoria=frio#catalogo",
+    href: "/colecao/frio",
     image: brandAssets.brands2.frioHeroDesktop,
   },
 ];
@@ -78,7 +78,7 @@ export default async function CollectionPage({
             fill
             priority
             sizes="52vw"
-            className="object-cover opacity-62"
+            className="object-contain p-6 opacity-72"
             style={{ objectPosition: "center" }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/50 to-transparent" />
@@ -116,7 +116,7 @@ export default async function CollectionPage({
                 alt=""
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
-                className="object-cover opacity-80 transition duration-700 group-hover:scale-[1.035] group-hover:opacity-95"
+                className="object-contain p-3 opacity-90 transition duration-700 group-hover:scale-[1.015] group-hover:opacity-100"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
               <div className="absolute inset-x-0 bottom-0 flex items-center justify-between gap-4 p-5">

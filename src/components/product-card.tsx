@@ -45,10 +45,10 @@ export function ProductCard({
     <article className="group min-w-0">
       <Link
         href={getProductHref(product)}
-        className="block"
-        onClick={() => window.scrollTo(0, 0)}
+        className="block transition duration-200 active:scale-[0.985]"
+        scroll
       >
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#dedbd3]">
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#dedbd3] transition-shadow duration-300 group-hover:shadow-[0_18px_45px_rgba(5,5,5,0.14)]">
           <div className="absolute left-3 right-3 top-3 z-10 flex items-start justify-between gap-2">
             {product.badge ? (
               <span className="bg-ink px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white">
@@ -71,10 +71,10 @@ export function ProductCard({
             fill
             priority={priority}
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
-            className="object-cover transition duration-500 group-hover:scale-[1.025]"
+            className="object-contain p-2 transition duration-500 group-hover:scale-[1.035] sm:p-3"
           />
           <span className="absolute bottom-3 left-3 right-3 translate-y-0 bg-bone px-4 py-3 text-center text-[10px] font-bold uppercase tracking-[0.18em] transition duration-300 group-hover:bg-ink group-hover:text-white sm:translate-y-3 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
-            Ver peça
+            Entrar na peça
           </span>
         </div>
         <div className="min-w-0 pt-4">
@@ -116,13 +116,13 @@ export function ProductCard({
                   </span>
                 </div>
               ) : null}
-              <div className="flex items-center justify-end gap-2">
+              <div className="flex max-w-[8.75rem] flex-col items-end gap-1 sm:max-w-none">
                 <span className="font-bold">
                   Por {formatPrice(pricing.currentPrice)}
                 </span>
                 {pricing.discountPercentage ? (
                   <span
-                    className={`px-2 py-1 text-[8px] font-black uppercase tracking-[0.12em] ${
+                    className={`whitespace-nowrap px-2 py-1 text-[8px] font-black uppercase tracking-[0.12em] ${
                       inverse
                         ? "bg-white text-[#050505]"
                         : "bg-[#050505] text-white"

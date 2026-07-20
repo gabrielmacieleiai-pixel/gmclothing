@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     title: "Drop Copa 2026 | GM Clothing",
     description:
       "Vista o momento. Futebol streetwear para a temporada de Copa.",
-    images: [brandAssets.brands2.copaHeroDesktop],
+    images: [brandAssets.brands2.copaProductHero],
   },
 };
 
@@ -58,42 +58,42 @@ export default function CopaDoMundoPage() {
                 com Brasil como foco e apenas produtos coerentes com a Copa.
               </p>
               <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                <Link
-                  className="flex h-12 items-center justify-center gap-3 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505]"
-                  href="#produtos-copa"
-                >
-                  Ver coleção <ArrowUpRight />
-                </Link>
                 {mainProduct ? (
                   <Link
-                    className="flex h-12 items-center justify-center gap-3 border border-white/20 px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-white"
+                    className="flex h-12 items-center justify-center gap-3 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505] transition duration-200 hover:bg-[#d4b06a] active:scale-[0.98]"
                     href={getProductHref(mainProduct)}
                   >
-                    Comprar destaque
+                    Entrar no destaque <ArrowUpRight />
                   </Link>
                 ) : null}
+                <Link
+                  className="flex h-12 items-center justify-center gap-3 border border-white/20 px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-white transition duration-200 hover:border-white active:scale-[0.98]"
+                  href="/colecao"
+                >
+                  Ver outras coleções
+                </Link>
               </div>
             </div>
           </div>
 
-          <div className="relative min-h-[430px] overflow-hidden border border-white/10 bg-white/5 shadow-[0_24px_70px_rgba(0,0,0,0.35)] lg:min-h-[560px]">
+          <div className="relative min-h-[430px] overflow-hidden border border-white/10 bg-[#f5f1e8] shadow-[0_24px_70px_rgba(0,0,0,0.35)] lg:min-h-[560px]">
             <Image
               alt="Campanha Drop Copa 2026 com Brasil em destaque"
-              className="object-cover lg:hidden"
+              className="object-contain p-4 lg:hidden"
               fill
               priority
               sizes="100vw"
-              src={brandAssets.brands2.copaHeroMobile}
+              src={brandAssets.brands2.copaProductHero}
             />
             <Image
               alt="Campanha Drop Copa 2026 com Brasil em destaque"
-              className="hidden object-cover lg:block"
+              className="hidden object-contain p-6 lg:block"
               fill
               priority
               sizes="52vw"
-              src={brandAssets.brands2.copaHeroDesktop}
+              src={brandAssets.brands2.copaProductHero}
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/70 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/55 via-transparent to-transparent" />
             <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7">
               <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-[#72c7ef]">
                 Brasil em destaque
@@ -120,10 +120,10 @@ export default function CopaDoMundoPage() {
           <div className="relative min-h-[280px] overflow-hidden border border-white/10 bg-white/5">
             <Image
               alt="Banner Brasil em campo GM Clothing"
-              className="object-cover"
+              className="object-contain p-4"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              src={brandAssets.brands2.copaBrasilDesktop}
+              src={brandAssets.brands2.copaProductClean}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/65 via-transparent to-transparent" />
             <div className="absolute bottom-0 left-0 p-5">
@@ -135,7 +135,7 @@ export default function CopaDoMundoPage() {
           <div className="relative min-h-[280px] overflow-hidden border border-white/10 bg-white/5">
             <Image
               alt="Detalhes da camiseta Brasil Copa 2026"
-              className="object-cover"
+              className="object-contain p-4"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
               src={brandAssets.brands2.copaDetails}

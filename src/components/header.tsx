@@ -5,7 +5,7 @@ import { MenuIcon } from "@/components/icons";
 const links = [
   { href: "/copa-do-mundo", label: "Copa 2026" },
   { href: "/colecao", label: "Coleção" },
-  { href: "/#lancamentos", label: "Lançamentos" },
+  { href: "/colecao/frio", label: "Lançamentos" },
   { href: "/acessorios", label: "Acessórios" },
   { href: "/#manifesto", label: "Manifesto" },
 ];

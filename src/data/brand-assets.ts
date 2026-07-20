@@ -1,42 +1,48 @@
 export const brandAssets = {
   brands2: {
+    copaProductHero:
+      "/products/copa/camiseta-brasil-versao-jogador-frente-2.webp",
+    copaProductClean:
+      "/products/copa/camiseta-brasil-versao-jogador-frente.webp",
+    copaProductDetail:
+      "/products/copa/camiseta-brasil-versao-jogador-detalhe-gola.webp",
     copaHeroDesktop:
-      "/products/brands 2/b2f0d29e-81b2-415f-a9af-4df307c46853.png",
+      "/products/brands 2/b2f0d29e-81b2-415f-a9af-4df307c46853.webp",
     copaHeroMobile:
-      "/products/brands 2/fb2666ef-63fa-4165-a64b-852203927584.png",
+      "/products/brands 2/fb2666ef-63fa-4165-a64b-852203927584.webp",
     copaBrasilDesktop:
-      "/products/brands 2/ccb10249-5066-415d-8035-bd70e39d81e6.png",
+      "/products/brands 2/ccb10249-5066-415d-8035-bd70e39d81e6.webp",
     copaBrasilMobile:
-      "/products/brands 2/76b4fd20-dd4c-4a83-8e23-bc2fb9fb256d.png",
+      "/products/brands 2/76b4fd20-dd4c-4a83-8e23-bc2fb9fb256d.webp",
     copaDetails:
-      "/products/brands 2/5e587f12-8ea1-4b99-9bda-7e79a7eacced.png",
+      "/products/brands 2/5e587f12-8ea1-4b99-9bda-7e79a7eacced.webp",
     oversizedHeroDesktop:
-      "/products/brands 2/073d232e-4751-4e5c-a7d7-f720e6207981.png",
+      "/products/brands 2/073d232e-4751-4e5c-a7d7-f720e6207981.webp",
     oversizedHeroMobile:
-      "/products/brands 2/05b9416e-47f2-4a7f-bc53-c13df440765b.png",
+      "/products/brands 2/05b9416e-47f2-4a7f-bc53-c13df440765b.webp",
     oversizedBrasil:
-      "/products/brands 2/2970f3f4-f02f-4163-84a6-c1a2899d2c05.png",
+      "/products/brands 2/2970f3f4-f02f-4163-84a6-c1a2899d2c05.webp",
     oversizedLifestyle:
-      "/products/brands 2/8b13e30d-b72c-484a-a04a-920c197effe8.png",
+      "/products/brands 2/8b13e30d-b72c-484a-a04a-920c197effe8.webp",
     oversizedManifesto:
-      "/products/brands 2/f11b286f-3d08-4f0c-8f54-e20738b4f53f.png",
+      "/products/brands 2/f11b286f-3d08-4f0c-8f54-e20738b4f53f.webp",
     frioHeroDesktop:
-      "/products/brands 2/009034d8-164a-436c-af32-7b1db382fc87.png",
+      "/products/brands 2/009034d8-164a-436c-af32-7b1db382fc87.webp",
     frioHeroMobile:
-      "/products/brands 2/003338ba-4e50-41bd-b593-b0f799b35125.png",
+      "/products/brands 2/003338ba-4e50-41bd-b593-b0f799b35125.webp",
     frioEditorial:
-      "/products/brands 2/894c0615-dcfc-40ba-bf89-53987b73d6e0.png",
+      "/products/brands 2/894c0615-dcfc-40ba-bf89-53987b73d6e0.webp",
     frioLifestyle:
-      "/products/brands 2/7e67e14d-8cc5-446f-bec7-8131ff11871c.png",
+      "/products/brands 2/7e67e14d-8cc5-446f-bec7-8131ff11871c.webp",
     frioStatement:
-      "/products/brands 2/ea4f3bc1-fa6c-455e-8d7a-1e55de1ea52e.png",
+      "/products/brands 2/ea4f3bc1-fa6c-455e-8d7a-1e55de1ea52e.webp",
     premiumDetails:
-      "/products/brands 2/33af57de-b987-4702-bf4e-a720b1f4523a.png",
+      "/products/brands 2/33af57de-b987-4702-bf4e-a720b1f4523a.webp",
     productDetails:
-      "/products/brands 2/4b499ff7-9978-4bda-a1a7-dc0f2bdd146d.png",
+      "/products/brands 2/4b499ff7-9978-4bda-a1a7-dc0f2bdd146d.webp",
     brandAtmosphere:
-      "/products/brands 2/9c728058-99bd-4b2c-ba9f-5c7060f2f388.png",
+      "/products/brands 2/9c728058-99bd-4b2c-ba9f-5c7060f2f388.webp",
     collectionOverview:
-      "/products/brands 2/ed6a30a1-85b6-4e2b-97b7-6b5d414b2511.png",
+      "/products/brands 2/ed6a30a1-85b6-4e2b-97b7-6b5d414b2511.webp",
   },
 } as const;
