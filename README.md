@@ -10,7 +10,7 @@ Site de vendas da GM Clothing, com foco em streetwear masculino premium.
 - Tailwind CSS
 - TypeScript
 - Supabase futuramente
-- Checkout externo via Yampi
+- Checkout externo via Shopify ou Yampi
 
 ## Como rodar
 
@@ -19,8 +19,10 @@ npm install
 npm run dev
 ```
 
-Para ativar o checkout externo, configure `YAMPI_CHECKOUT_BASE_URL` usando uma
-URL real da Yampi. A URL pode conter `{sku}` para gerar um destino por variante.
+Para ativar checkout externo, configure os dados reais da plataforma escolhida.
+Yampi continua suportado por `YAMPI_CHECKOUT_BASE_URL` e pelo mapa em
+`src/lib/yampi.ts`. Shopify fica preparado por `SHOPIFY_STORE_DOMAIN` e por
+`shopifyVariantId` em cada variante de produto.
 
 Para direcionar o atendimento ao número da loja, configure `WHATSAPP_NUMBER`
 com DDI e DDD. Sem número, o botão abre o compartilhamento do WhatsApp.

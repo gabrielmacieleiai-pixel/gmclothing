@@ -52,7 +52,7 @@ function createVariants(
     color,
     size,
     stock,
-    // Preencher somente com o link real da variante no checkout da Yampi.
+    // Preencher somente com o link real da variante no checkout externo.
     yampiCheckoutUrl: null,
   }));
 }

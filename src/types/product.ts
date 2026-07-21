@@ -35,6 +35,8 @@ export type ProductVariant = {
   color: ProductColor;
   size: string;
   stock: number;
+  checkoutUrl?: string | null;
+  shopifyVariantId?: string | null;
   yampiCheckoutUrl: string | null;
 };
 
@@ -77,6 +79,8 @@ export type Product = {
   price: number;
   promotionalPrice?: number;
   colorPricing?: Record<string, ProductColorPricing>;
+  checkoutUrl?: string | null;
+  shopifyHandle?: string | null;
   yampiCheckoutUrl?: string | null;
   collection: string;
   category: string;
