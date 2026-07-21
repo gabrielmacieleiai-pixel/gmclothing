@@ -9,7 +9,6 @@ import {
   activeProducts,
   getRelatedProducts,
   getProductBySlug,
-  getProductHref,
   getProductRedirectBySlug,
   getProductRedirectHref,
 } from "@/data/products";
@@ -22,9 +21,7 @@ type ProductPageProps = {
 };
 
 export function generateStaticParams() {
-  return activeProducts
-    .filter((product) => product.campaign !== "copa-2026")
-    .map((product) => ({ slug: product.slug }));
+  return activeProducts.map((product) => ({ slug: product.slug }));
 }
 
 export async function generateMetadata({
@@ -72,10 +69,6 @@ export default async function ProductPage({
     }
 
     notFound();
-  }
-
-  if (product.campaign === "copa-2026") {
-    redirect(getProductHref(product));
   }
 
   const productForSale = withCheckoutUrls(product);

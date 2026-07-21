@@ -63,7 +63,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
       >
         {slides.map((slide, index) => (
           <article
-            className={`relative min-h-[calc(100svh-96px)] w-full shrink-0 snap-start overflow-hidden ${paletteClasses[slide.palette]}`}
+            className={`relative min-h-[calc(100svh-88px)] w-full shrink-0 snap-start overflow-hidden ${paletteClasses[slide.palette]}`}
             key={slide.id}
           >
             <div className="absolute inset-0 opacity-70">
@@ -71,9 +71,9 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
               <div className="absolute bottom-[-24%] left-[-30%] size-[75vw] rounded-full bg-[#c8a96a]/15 blur-[150px]" />
             </div>
 
-            <div className="relative mx-auto grid w-full max-w-[1440px] gap-6 px-4 pb-12 pt-10 sm:px-6 lg:min-h-[calc(100svh-96px)] lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch lg:px-10 lg:py-10">
-              <div className="relative z-10 flex min-w-0 flex-col justify-end border border-current/10 bg-black/10 px-5 py-8 backdrop-blur-sm sm:px-7 lg:px-10 lg:py-12">
-                <div className="mb-8 flex items-center justify-between gap-5">
+            <div className="relative mx-auto grid w-full max-w-[1440px] gap-4 px-4 pb-12 pt-6 sm:px-6 lg:min-h-[calc(100svh-88px)] lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch lg:px-10 lg:py-8">
+              <div className="relative z-10 flex min-w-0 flex-col justify-between border border-current/10 bg-black/10 px-5 py-7 backdrop-blur-sm sm:px-7 lg:px-10 lg:py-10">
+                <div className="flex items-center justify-between gap-5">
                   <div className="flex shrink-0 items-center gap-3">
                     <div className="grid size-14 place-items-center border border-current/15 bg-white/5">
                       <span className="font-serif text-3xl font-black leading-none tracking-[-0.12em]">
@@ -93,11 +93,18 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   </p>
                 </div>
 
-                <h1 className="max-w-3xl break-words text-[clamp(3.25rem,13vw,8rem)] font-black uppercase leading-[0.84] tracking-display">
-                  {slide.title}
-                </h1>
+                <div className="py-12 sm:py-16 lg:py-10">
+                  <p
+                    className={`mb-5 text-[10px] font-bold uppercase tracking-[0.28em] ${accentClasses[slide.palette]}`}
+                  >
+                    GM Clothing / For Men
+                  </p>
+                  <h1 className="max-w-[9ch] text-[clamp(3.4rem,8vw,6.8rem)] font-black uppercase leading-[0.9] tracking-display [text-wrap:balance]">
+                    {slide.title}
+                  </h1>
+                </div>
 
-                <div className="mt-8 grid gap-5 border-t border-current/15 pt-5 sm:grid-cols-[1fr_auto] sm:items-end">
+                <div className="grid gap-5 border-t border-current/15 pt-5 sm:grid-cols-[1fr_auto] sm:items-end">
                   <p className="max-w-md text-sm leading-6 opacity-65">
                     {slide.description}
                   </p>
@@ -116,7 +123,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                 </ul>
               </div>
 
-              <div className="relative min-h-[360px] overflow-hidden border border-white/10 bg-[#050505]/35 shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:min-h-[500px] lg:min-h-0">
+              <div className="relative min-h-[430px] overflow-hidden border border-white/10 bg-[#050505]/35 shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:min-h-[560px] lg:min-h-0">
                 {slide.image ? (
                   <>
                     {slide.mobileImage ? (
@@ -152,7 +159,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                       src={slide.image}
                       style={{ objectPosition: slide.imagePosition ?? "center" }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/55 via-transparent to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/20 via-transparent to-transparent" />
                   </>
                 ) : (
                   <div className="absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_72%_18%,rgba(200,169,106,0.22),transparent_28%),linear-gradient(135deg,#050505_0%,#102316_56%,#050505_100%)]">
@@ -161,14 +168,14 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                     <div className="absolute bottom-0 left-0 h-28 w-full bg-gradient-to-t from-[#050505] to-transparent" />
                     <div className="relative z-10 flex h-full min-h-[360px] flex-col justify-end p-6 sm:min-h-[500px] sm:p-9 lg:p-12">
                       <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#c8a96a]">
-                        Copa 2026 / Brasil
+                        GM Clothing
                       </p>
                       <p className="text-[20vw] font-black uppercase leading-[0.74] tracking-display text-white/95 sm:text-8xl lg:text-[9rem]">
-                        Brasil
+                        Premium
                       </p>
                       <p className="mt-3 max-w-sm text-xs font-bold uppercase leading-5 tracking-[0.18em] text-white/58">
-                        Futebol, identidade e presença para viver a temporada
-                        dentro e fora de campo.
+                        Streetwear masculino com fotos reais, curadoria limpa e
+                        compra direta.
                       </p>
                     </div>
                   </div>

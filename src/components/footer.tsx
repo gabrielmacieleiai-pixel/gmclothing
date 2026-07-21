@@ -29,7 +29,7 @@ export function Footer() {
               <Link href="/">Início</Link>
               <Link href="/colecao/frio">Inverno</Link>
               <Link href="/colecao">Coleção</Link>
-              <Link href="/copa-do-mundo">Últimas peças</Link>
+              <Link href="/colecao?categoria=ultimas-pecas">Últimas peças</Link>
               <Link href="/acessorios">Acessórios</Link>
               <Link href="/carrinho">Carrinho</Link>
             </div>

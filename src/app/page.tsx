@@ -6,7 +6,7 @@ import { ArrowUpRight } from "@/components/icons";
 import { ProductGrid } from "@/components/product-grid";
 import { SectionHeading } from "@/components/section-heading";
 import { brandAssets } from "@/data/brand-assets";
-import { catalogProducts, copaProducts, getProductHref } from "@/data/products";
+import { catalogProducts, getProductHref } from "@/data/products";
 import { heroSlides } from "@/data/hero-slides";
 
 export const metadata: Metadata = {
@@ -22,7 +22,7 @@ const quickCategories = [
   { label: "Inverno", href: "/colecao/frio" },
   { label: "Chenile Zara", href: "/produto/sueter-chenile-zara?cor=caramelo" },
   { label: "Oversized", href: "/colecao/oversized" },
-  { label: "Últimas peças", href: "/copa-do-mundo" },
+  { label: "Últimas peças", href: "/colecao?categoria=ultimas-pecas" },
 ];
 
 export default function Home() {
@@ -42,7 +42,9 @@ export default function Home() {
   const oversizedDropProducts = catalogProducts
     .filter((product) => product.category === "Oversized")
     .slice(0, 4);
-  const clearanceProducts = copaProducts.slice(0, 3);
+  const clearanceProducts = catalogProducts
+    .filter((product) => product.campaign === "copa-2026")
+    .slice(0, 3);
 
   return (
     <>
@@ -164,15 +166,15 @@ export default function Home() {
                 Últimas peças
               </p>
               <h2 className="text-5xl font-black uppercase leading-[0.86] tracking-display sm:text-7xl">
-                Copa em promoção.
+                Peças finais.
               </h2>
               <p className="mt-6 max-w-md text-sm leading-6 text-black/55">
-                Seleção de peças de futebol para girar estoque sem transformar
-                a Home em loja de jerseys.
+                Uma seleção curta para girar estoque com preço forte, sem tirar
+                o foco da nova coleção.
               </p>
               <Link
                 className="mt-8 flex h-12 w-fit items-center gap-3 bg-[#050505] px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-white"
-                href="/copa-do-mundo"
+                href="/colecao?categoria=ultimas-pecas"
               >
                 Ver últimas peças <ArrowUpRight />
               </Link>

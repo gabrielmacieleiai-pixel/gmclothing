@@ -1833,10 +1833,6 @@ export function getCopaProductBySlug(slug: string) {
 export function getProductHref(product: Product) {
   const slug = product.canonicalSlug ?? product.slug;
 
-  if (product.campaign === "copa-2026") {
-    return buildProductPath(slug, product.defaultColorId, true);
-  }
-
   return buildProductPath(slug, product.defaultColorId);
 }
 

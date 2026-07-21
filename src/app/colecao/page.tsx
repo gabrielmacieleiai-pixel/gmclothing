@@ -34,8 +34,8 @@ const collectionHighlights = [
   },
   {
     label: "Últimas peças",
-    href: "/copa-do-mundo",
-    image: brandAssets.brands2.copaProductHero,
+    href: "/colecao?categoria=ultimas-pecas",
+    image: brandAssets.brands2.oversizedBrasil,
   },
 ];
 

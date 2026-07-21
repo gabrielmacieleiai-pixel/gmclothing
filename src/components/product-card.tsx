@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { ArrowUpRight } from "@/components/icons";
 import {
   getProductColors,
   getProductHref,
@@ -45,10 +46,10 @@ export function ProductCard({
     <article className="group min-w-0">
       <Link
         href={getProductHref(product)}
-        className="block transition duration-200 active:scale-[0.985]"
-        scroll
+        className="block outline-none transition duration-200 focus-visible:ring-2 focus-visible:ring-[#c8a96a] active:scale-[0.985]"
+        prefetch
       >
-        <div className="relative aspect-[4/5] overflow-hidden bg-[#dedbd3] transition-shadow duration-300 group-hover:shadow-[0_18px_45px_rgba(5,5,5,0.14)]">
+        <div className="relative aspect-[4/5] overflow-hidden bg-[#dedbd3] transition duration-300 group-hover:shadow-[0_18px_45px_rgba(5,5,5,0.14)]">
           <div className="absolute left-3 right-3 top-3 z-10 flex items-start justify-between gap-2">
             {product.badge ? (
               <span className="bg-ink px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white">
@@ -73,12 +74,12 @@ export function ProductCard({
             sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 25vw"
             className="object-contain p-2 transition duration-500 group-hover:scale-[1.035] sm:p-3"
           />
-          <span className="absolute bottom-3 left-3 right-3 translate-y-0 bg-bone px-4 py-3 text-center text-[10px] font-bold uppercase tracking-[0.18em] transition duration-300 group-hover:bg-ink group-hover:text-white sm:translate-y-3 sm:opacity-0 sm:group-hover:translate-y-0 sm:group-hover:opacity-100">
-            Entrar na peça
+          <span className="absolute bottom-3 left-3 right-3 flex items-center justify-between bg-bone px-4 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-ink transition duration-300 group-hover:bg-ink group-hover:text-white">
+            Ver produto <ArrowUpRight />
           </span>
         </div>
         <div className="min-w-0 pt-4">
-          <div className="flex min-w-0 items-start justify-between gap-4">
+          <div className="flex min-w-0 flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
               <h3
                 className={`truncate text-sm font-bold uppercase tracking-tight ${
@@ -100,7 +101,7 @@ export function ProductCard({
               </p>
             </div>
             <div
-              className={`shrink-0 text-right text-xs sm:text-sm ${
+              className={`shrink-0 text-xs sm:text-right sm:text-sm ${
                 inverse ? "text-white" : "text-[#050505]"
               }`}
             >
@@ -116,7 +117,7 @@ export function ProductCard({
                   </span>
                 </div>
               ) : null}
-              <div className="flex max-w-[8.75rem] flex-col items-end gap-1 sm:max-w-none">
+              <div className="flex flex-wrap items-center gap-2 sm:justify-end">
                 <span className="font-bold">
                   Por {formatPrice(pricing.currentPrice)}
                 </span>

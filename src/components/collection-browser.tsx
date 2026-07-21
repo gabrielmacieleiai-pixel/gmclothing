@@ -33,16 +33,17 @@ const filters: CollectionFilter[] = [
     matches: () => true,
   },
   {
-    id: "copa-2026",
-    label: "Copa 2026",
+    id: "frio",
+    label: "Frio",
     matches: (product) =>
-      product.campaign === "copa-2026" ||
-      product.collection === "Copa do Mundo",
+      product.collection === "Coleção Frio" ||
+      product.category === "Suéter" ||
+      product.category === "Polo Tricot",
   },
   {
-    id: "brasil",
-    label: "Brasil",
-    matches: (product) => hasText(product, "brasil"),
+    id: "oversized",
+    label: "Oversized",
+    matches: (product) => product.category === "Oversized",
   },
   {
     id: "jerseys",
@@ -52,17 +53,11 @@ const filters: CollectionFilter[] = [
       hasAnyText(product, ["jersey", "camisa de futebol", "camiseta brasil"]),
   },
   {
-    id: "oversized",
-    label: "Oversized",
-    matches: (product) => product.category === "Oversized",
-  },
-  {
-    id: "frio",
-    label: "Frio",
+    id: "ultimas-pecas",
+    label: "Últimas peças",
     matches: (product) =>
-      product.collection === "Coleção Frio" ||
-      product.category === "Suéter" ||
-      product.category === "Polo Tricot",
+      product.campaign === "copa-2026" ||
+      hasAnyText(product, ["últimas peças", "promoção", "queima", "final"]),
   },
   {
     id: "lancamentos",
@@ -73,29 +68,11 @@ const filters: CollectionFilter[] = [
 ];
 
 const collectionVisuals: Record<string, CollectionVisual> = {
-  "copa-2026": {
-    eyebrow: "Campanha Copa",
-    title: "Brasil guia o drop.",
-    description:
-      "Futebol, Copa e streetwear com visual de campanha. Brasil no centro da narrativa.",
-    image: brandAssets.brands2.copaProductHero,
-    mobileImage: brandAssets.brands2.copaProductClean,
-    accent: "text-[#72c7ef]",
-  },
-  brasil: {
-    eyebrow: "Brasil em destaque",
-    title: "Seleção, rua e presença.",
-    description:
-      "Peças com energia de jogo e leitura urbana para viver a temporada fora de campo.",
-    image: brandAssets.brands2.copaProductClean,
-    mobileImage: brandAssets.brands2.copaProductHero,
-    accent: "text-[#72c7ef]",
-  },
   jerseys: {
     eyebrow: "Jerseys",
     title: "Futebol com linguagem GM.",
     description:
-      "Camisas de futebol dentro de uma vitrine limpa, esportiva e premium.",
+      "Camisas de futebol dentro de uma vitrine limpa, esportiva e premium, sem tirar o foco da coleção principal.",
     image: brandAssets.brands2.copaProductHero,
     mobileImage: brandAssets.brands2.copaProductClean,
     accent: "text-[#72c7ef]",
@@ -108,6 +85,15 @@ const collectionVisuals: Record<string, CollectionVisual> = {
     image: brandAssets.brands2.oversizedHeroDesktop,
     mobileImage: brandAssets.brands2.oversizedHeroMobile,
     accent: "text-[#9faa83]",
+  },
+  "ultimas-pecas": {
+    eyebrow: "Preço de giro",
+    title: "Peças finais selecionadas.",
+    description:
+      "Uma curadoria curta para vender estoque parado com leitura premium e compra rápida.",
+    image: brandAssets.brands2.oversizedBrasil,
+    mobileImage: brandAssets.brands2.oversizedBrasil,
+    accent: "text-[#c8a96a]",
   },
   frio: {
     eyebrow: "Coleção de frio",

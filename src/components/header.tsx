@@ -6,7 +6,7 @@ const links = [
   { href: "/colecao/frio", label: "Inverno" },
   { href: "/colecao", label: "Coleção" },
   { href: "/colecao/oversized", label: "Oversized" },
-  { href: "/copa-do-mundo", label: "Últimas peças" },
+  { href: "/colecao?categoria=ultimas-pecas", label: "Últimas peças" },
   { href: "/acessorios", label: "Acessórios" },
   { href: "/#manifesto", label: "Manifesto" },
 ];
