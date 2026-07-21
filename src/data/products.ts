@@ -10,6 +10,8 @@ const colors = {
   offWhite: { id: "off-white", name: "Off-white", hex: "#e8e4d9" },
   charcoal: { id: "chumbo", name: "Chumbo", hex: "#4f504c" },
   brown: { id: "marrom", name: "Marrom", hex: "#6b3f2a" },
+  caramel: { id: "caramelo", name: "Caramelo", hex: "#8a542f" },
+  mixedGray: { id: "cinza-mesclado", name: "Cinza mesclado", hex: "#5a5650" },
   green: { id: "verde", name: "Verde", hex: "#183d27" },
   brazilYellow: { id: "amarelo", name: "Amarelo", hex: "#ffd500" },
   argentinaBlue: { id: "branco-azul", name: "Branco e azul", hex: "#72c7ef" },
@@ -30,6 +32,11 @@ const oversizedPromoPricing = {
 const oversizedWhitePricing = {
   price: 149.9,
   promotionalPrice: 99.9,
+};
+
+const winterPromoPricing = {
+  price: 399.9,
+  promotionalPrice: 249.9,
 };
 
 type StockBySize = Record<string, number>;
@@ -963,6 +970,233 @@ export const products: Product[] = [
     ],
   },
   {
+    slug: "sueter-chenile-zara",
+    name: "Suéter Chenile Zara",
+    shortName: "Chenile Zara",
+    active: true,
+    description:
+      "Suéter chenile com textura premium, toque macio e presença limpa para a coleção de inverno da GM Clothing.",
+    salesNote:
+      "O produto principal da coleção de inverno. Textura que aparece na foto, caimento fácil de vestir e leitura premium no primeiro olhar.",
+    details: [
+      "Suéter masculino em chenile",
+      "Toque macio e textura aparente",
+      "Gola, punhos e barra canelados",
+      "Caimento regular",
+      "Produto da coleção frio GM Clothing",
+    ],
+    price: winterPromoPricing.price,
+    promotionalPrice: winterPromoPricing.promotionalPrice,
+    yampiCheckoutUrl: null,
+    collection: "Coleção Frio",
+    category: "Suéter",
+    type: "apparel",
+    styleTags: ["inverno", "street", "premium", "tricot"],
+    tags: [
+      "suéter masculino",
+      "suéter chenile",
+      "zara",
+      "coleção frio",
+      "inverno masculino",
+      "lançamento",
+      "moda masculina",
+      "streetwear premium",
+      "gm clothing",
+    ],
+    features: [
+      "Textura chenile",
+      "Toque macio",
+      "Gola canelada",
+      "Punhos e barra canelados",
+      "Caimento regular",
+    ],
+    badge: "Peças limitadas",
+    hideStockCount: true,
+    showSizeGuide: false,
+    catalogColorSlugs: [
+      {
+        slug: "sueter-chenile-zara-caramelo",
+        colorId: colors.caramel.id,
+        colorName: colors.caramel.name,
+      },
+      {
+        slug: "sueter-chenile-zara-preto",
+        colorId: colors.black.id,
+        colorName: colors.black.name,
+      },
+      {
+        slug: "sueter-chenile-zara-azul-marinho",
+        colorId: colors.navy.id,
+        colorName: colors.navy.name,
+      },
+      {
+        slug: "sueter-chenile-zara-cinza-mesclado",
+        colorId: colors.mixedGray.id,
+        colorName: colors.mixedGray.name,
+      },
+    ],
+    photos: [
+      ...createProductPhotos("sueter-chenile-zara-caramelo", [
+        {
+          id: "frente",
+          src: "/products/winter/sueter-chenile-zara/caramelo/01-frente.webp",
+          alt: "Suéter Chenile Zara caramelo frente",
+          colorId: colors.caramel.id,
+        },
+        {
+          id: "look",
+          src: "/products/winter/sueter-chenile-zara/caramelo/02-look.webp",
+          alt: "Suéter Chenile Zara caramelo em look masculino",
+          colorId: colors.caramel.id,
+        },
+        {
+          id: "costas",
+          src: "/products/winter/sueter-chenile-zara/caramelo/03-costas.webp",
+          alt: "Suéter Chenile Zara caramelo costas",
+          colorId: colors.caramel.id,
+        },
+        {
+          id: "editorial",
+          src: "/products/winter/sueter-chenile-zara/caramelo/04-frente-editorial.webp",
+          alt: "Suéter Chenile Zara caramelo em pose editorial",
+          colorId: colors.caramel.id,
+        },
+        {
+          id: "detalhe-superior",
+          src: "/products/winter/sueter-chenile-zara/caramelo/05-detalhe-superior.webp",
+          alt: "Detalhe superior do Suéter Chenile Zara caramelo",
+          colorId: colors.caramel.id,
+        },
+        {
+          id: "detalhe-manga",
+          src: "/products/winter/sueter-chenile-zara/caramelo/06-detalhe-manga.webp",
+          alt: "Detalhe de manga do Suéter Chenile Zara caramelo",
+          colorId: colors.caramel.id,
+        },
+        {
+          id: "detalhe-textura",
+          src: "/products/winter/sueter-chenile-zara/caramelo/07-detalhe-textura.webp",
+          alt: "Detalhe da textura chenile na cor caramelo",
+          colorId: colors.caramel.id,
+        },
+      ]),
+      ...createProductPhotos("sueter-chenile-zara-preto", [
+        {
+          id: "frente",
+          src: "/products/winter/sueter-chenile-zara/preto/01-frente.webp",
+          alt: "Suéter Chenile Zara preto frente",
+          colorId: colors.black.id,
+        },
+        {
+          id: "look",
+          src: "/products/winter/sueter-chenile-zara/preto/02-look.webp",
+          alt: "Suéter Chenile Zara preto em look masculino",
+          colorId: colors.black.id,
+        },
+        {
+          id: "editorial",
+          src: "/products/winter/sueter-chenile-zara/preto/03-frente-editorial.webp",
+          alt: "Suéter Chenile Zara preto em pose editorial",
+          colorId: colors.black.id,
+        },
+        {
+          id: "detalhe",
+          src: "/products/winter/sueter-chenile-zara/preto/04-detalhe.webp",
+          alt: "Detalhe do Suéter Chenile Zara preto",
+          colorId: colors.black.id,
+        },
+      ]),
+      ...createProductPhotos("sueter-chenile-zara-azul-marinho", [
+        {
+          id: "frente",
+          src: "/products/winter/sueter-chenile-zara/azul-marinho/01-frente.webp",
+          alt: "Suéter Chenile Zara azul marinho frente",
+          colorId: colors.navy.id,
+        },
+        {
+          id: "look",
+          src: "/products/winter/sueter-chenile-zara/azul-marinho/02-look.webp",
+          alt: "Suéter Chenile Zara azul marinho em look masculino",
+          colorId: colors.navy.id,
+        },
+        {
+          id: "costas",
+          src: "/products/winter/sueter-chenile-zara/azul-marinho/03-costas.webp",
+          alt: "Suéter Chenile Zara azul marinho costas",
+          colorId: colors.navy.id,
+        },
+        {
+          id: "editorial",
+          src: "/products/winter/sueter-chenile-zara/azul-marinho/04-frente-editorial.webp",
+          alt: "Suéter Chenile Zara azul marinho em pose editorial",
+          colorId: colors.navy.id,
+        },
+        {
+          id: "detalhe-punho",
+          src: "/products/winter/sueter-chenile-zara/azul-marinho/05-detalhe-punho.webp",
+          alt: "Detalhe de punho do Suéter Chenile Zara azul marinho",
+          colorId: colors.navy.id,
+        },
+        {
+          id: "look-sentado",
+          src: "/products/winter/sueter-chenile-zara/azul-marinho/06-look-sentado.webp",
+          alt: "Suéter Chenile Zara azul marinho em look sentado",
+          colorId: colors.navy.id,
+        },
+        {
+          id: "detalhe-manga",
+          src: "/products/winter/sueter-chenile-zara/azul-marinho/07-detalhe-manga.webp",
+          alt: "Detalhe de manga do Suéter Chenile Zara azul marinho",
+          colorId: colors.navy.id,
+        },
+      ]),
+      ...createProductPhotos("sueter-chenile-zara-cinza-mesclado", [
+        {
+          id: "look",
+          src: "/products/winter/sueter-chenile-zara/cinza-mesclado/01-look.webp",
+          alt: "Suéter Chenile Zara cinza mesclado em look masculino",
+          colorId: colors.mixedGray.id,
+        },
+        {
+          id: "frente",
+          src: "/products/winter/sueter-chenile-zara/cinza-mesclado/02-frente.webp",
+          alt: "Suéter Chenile Zara cinza mesclado frente",
+          colorId: colors.mixedGray.id,
+        },
+        {
+          id: "costas",
+          src: "/products/winter/sueter-chenile-zara/cinza-mesclado/03-costas.webp",
+          alt: "Suéter Chenile Zara cinza mesclado costas",
+          colorId: colors.mixedGray.id,
+        },
+        {
+          id: "editorial",
+          src: "/products/winter/sueter-chenile-zara/cinza-mesclado/04-frente-editorial.webp",
+          alt: "Suéter Chenile Zara cinza mesclado em pose editorial",
+          colorId: colors.mixedGray.id,
+        },
+        {
+          id: "detalhe-superior",
+          src: "/products/winter/sueter-chenile-zara/cinza-mesclado/05-detalhe-superior.webp",
+          alt: "Detalhe superior do Suéter Chenile Zara cinza mesclado",
+          colorId: colors.mixedGray.id,
+        },
+        {
+          id: "detalhe-textura",
+          src: "/products/winter/sueter-chenile-zara/cinza-mesclado/06-detalhe-textura.webp",
+          alt: "Detalhe da textura chenile na cor cinza mesclado",
+          colorId: colors.mixedGray.id,
+        },
+      ]),
+    ],
+    variants: [
+      ...createVariants("GMC-FRIO-CHCA", colors.caramel, standardSizeStock),
+      ...createVariants("GMC-FRIO-CHPR", colors.black, standardSizeStock),
+      ...createVariants("GMC-FRIO-CHAZ", colors.navy, standardSizeStock),
+      ...createVariants("GMC-FRIO-CHCM", colors.mixedGray, standardSizeStock),
+    ],
+  },
+  {
     slug: "sueter-tricot-minimal-preto",
     name: "Suéter Tricot Minimal Preto",
     shortName: "Tricot Minimal Preto",
@@ -1537,6 +1771,22 @@ const productSlugRedirects: Record<string, ProductSlugRedirect> = {
     slug: "polo-tricot",
     colorId: colors.black.id,
   },
+  "sueter-chenile-zara-caramelo": {
+    slug: "sueter-chenile-zara",
+    colorId: colors.caramel.id,
+  },
+  "sueter-chenile-zara-preto": {
+    slug: "sueter-chenile-zara",
+    colorId: colors.black.id,
+  },
+  "sueter-chenile-zara-azul-marinho": {
+    slug: "sueter-chenile-zara",
+    colorId: colors.navy.id,
+  },
+  "sueter-chenile-zara-cinza-mesclado": {
+    slug: "sueter-chenile-zara",
+    colorId: colors.mixedGray.id,
+  },
 };
 
 export const catalogProducts = getCatalogProducts(activeProducts);
@@ -1548,10 +1798,10 @@ export const copaProducts = activeProducts
   });
 
 const featuredProductSlugs = [
+  "sueter-chenile-zara",
   "camiseta-brasil-versao-jogador",
   "oversized-court-verde-militar",
   "oversized-essential-preta",
-  "sueter-tricot-geometrico-off-white",
 ];
 
 export const featuredProducts = featuredProductSlugs

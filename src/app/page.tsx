@@ -6,39 +6,43 @@ import { ArrowUpRight } from "@/components/icons";
 import { ProductGrid } from "@/components/product-grid";
 import { SectionHeading } from "@/components/section-heading";
 import { brandAssets } from "@/data/brand-assets";
-import { catalogProducts, copaProducts } from "@/data/products";
+import { catalogProducts, copaProducts, getProductHref } from "@/data/products";
 import { heroSlides } from "@/data/hero-slides";
 
 export const metadata: Metadata = {
-  title: "Drop Copa 2026 e streetwear masculino premium",
+  title: "Nova coleção inverno | GM Clothing",
   description:
-    "GM Clothing com Drop Copa 2026, oversized, coleção frio e streetwear masculino premium.",
+    "GM Clothing com suéteres chenile, tricô premium, oversized e últimas peças selecionadas.",
   alternates: {
     canonical: "/",
   },
 };
 
 const quickCategories = [
-  { label: "Copa 2026", href: "/copa-do-mundo" },
+  { label: "Inverno", href: "/colecao/frio" },
+  { label: "Chenile Zara", href: "/produto/sueter-chenile-zara?cor=caramelo" },
   { label: "Oversized", href: "/colecao/oversized" },
-  { label: "Futebol", href: "/copa-do-mundo" },
-  { label: "Coleção Frio", href: "/colecao/frio" },
+  { label: "Últimas peças", href: "/copa-do-mundo" },
 ];
 
 export default function Home() {
-  const oversizedDropProducts = catalogProducts
-    .filter((product) => product.category === "Oversized")
-    .slice(0, 3);
-  const copaHomeProducts = copaProducts.slice(0, 3);
+  const chenileProducts = catalogProducts
+    .filter((product) => product.canonicalSlug === "sueter-chenile-zara")
+    .slice(0, 4);
+  const highlightChenile = chenileProducts[0];
   const winterProducts = catalogProducts
     .filter(
       (product) =>
-        product.collection === "Coleção Frio" ||
-        product.category === "Suéter" ||
-        product.category === "Polo Tricot",
+        product.canonicalSlug !== "sueter-chenile-zara" &&
+        (product.collection === "Coleção Frio" ||
+          product.category === "Suéter" ||
+          product.category === "Polo Tricot"),
     )
-    .slice(0, 3);
-  const launchProducts = winterProducts;
+    .slice(0, 4);
+  const oversizedDropProducts = catalogProducts
+    .filter((product) => product.category === "Oversized")
+    .slice(0, 4);
+  const clearanceProducts = copaProducts.slice(0, 3);
 
   return (
     <>
@@ -62,24 +66,34 @@ export default function Home() {
         <div className="mx-auto max-w-[1440px]">
           <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
             <div>
-              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#72c7ef]">
-                Campanha principal
+              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-[#c8a96a]">
+                Produto principal
               </p>
               <h2 className="text-5xl font-black uppercase leading-[0.86] tracking-display sm:text-7xl">
-                Drop Copa 2026
+                Suéter Chenile Zara
               </h2>
-              <p className="mt-6 max-w-md text-sm leading-6 text-white/55">
-                Futebol, streetwear e identidade em uma linha feita para viver
-                o momento dentro e fora de campo.
+              <p className="mt-6 max-w-md text-sm leading-6 text-white/58">
+                Textura real, toque macio e cores fortes para abrir a coleção
+                de inverno com desejo e clareza de compra.
               </p>
-              <Link
-                className="mt-8 flex h-12 w-fit items-center gap-3 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505]"
-                href="/copa-do-mundo"
-              >
-                Ver Drop Copa <ArrowUpRight />
-              </Link>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                {highlightChenile ? (
+                  <Link
+                    className="flex h-12 items-center justify-center gap-3 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505]"
+                    href={getProductHref(highlightChenile)}
+                  >
+                    Comprar destaque <ArrowUpRight />
+                  </Link>
+                ) : null}
+                <Link
+                  className="flex h-12 items-center justify-center gap-3 border border-white/20 px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-white"
+                  href="/colecao/frio"
+                >
+                  Ver inverno
+                </Link>
+              </div>
             </div>
-            <ProductGrid products={copaHomeProducts} inverse />
+            <ProductGrid products={chenileProducts} inverse />
           </div>
         </div>
       </section>
@@ -87,8 +101,8 @@ export default function Home() {
       <section className="bg-white px-4 py-16 sm:px-6 lg:px-10 lg:py-24" id="lancamentos">
         <div className="mx-auto max-w-[1440px]">
           <SectionHeading
-            eyebrow="Lançamentos"
-            title="Frio e tricô"
+            eyebrow="Coleção de inverno"
+            title="Outros suéteres e tricôs"
             href="/colecao/frio"
             action="Ver coleção frio"
           />
@@ -98,33 +112,27 @@ export default function Home() {
               href="/colecao/frio"
             >
               <Image
-                alt="Campanha de lançamentos de frio GM Clothing"
-                className="object-contain p-3 opacity-90 transition duration-700 group-hover:scale-[1.015]"
+                alt="Detalhe de textura do Suéter Chenile Zara GM Clothing"
+                className="object-contain p-4 opacity-90 transition duration-700 group-hover:scale-[1.015]"
                 fill
                 sizes="(max-width: 1024px) 100vw, 38vw"
-                src={brandAssets.brands2.frioStatement}
+                src={brandAssets.brands2.chenileDetail}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/20 to-transparent" />
               <div className="absolute inset-x-0 bottom-0 p-6">
                 <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.24em] text-white/55">
-                  Coleção de inverno
+                  Textura premium
                 </p>
                 <h3 className="max-w-sm text-4xl font-black uppercase leading-[0.88] tracking-display">
-                  Novidades da estação.
+                  Frio com presença.
                 </h3>
                 <span className="mt-5 flex w-fit items-center gap-3 border-b border-white pb-2 text-[10px] font-bold uppercase tracking-[0.18em]">
                   Explorar frio <ArrowUpRight />
                 </span>
               </div>
             </Link>
-            <ProductGrid products={launchProducts} />
+            <ProductGrid products={winterProducts} />
           </div>
-          <Link
-            className="mt-10 flex h-12 items-center justify-center border border-ink text-[10px] font-bold uppercase tracking-[0.18em] sm:hidden"
-            href="/colecao/frio"
-          >
-            Ver lançamentos
-          </Link>
         </div>
       </section>
 
@@ -140,11 +148,49 @@ export default function Home() {
               </h2>
             </div>
             <p className="max-w-xl text-sm leading-6 text-black/55 lg:ml-auto">
-              Produtos da pasta oversized entram com fotos grandes, preço claro
-              e compra rápida. O foco é valor percebido antes do clique.
+              Modelagens amplas continuam como base streetwear da marca, com
+              fotos grandes, preço claro e navegação direta para o produto.
             </p>
           </div>
           <ProductGrid products={oversizedDropProducts} />
+        </div>
+      </section>
+
+      <section className="bg-white px-4 py-16 sm:px-6 lg:px-10 lg:py-24">
+        <div className="mx-auto max-w-[1440px]">
+          <div className="grid gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-end">
+            <div>
+              <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.28em] text-black/45">
+                Últimas peças
+              </p>
+              <h2 className="text-5xl font-black uppercase leading-[0.86] tracking-display sm:text-7xl">
+                Copa em promoção.
+              </h2>
+              <p className="mt-6 max-w-md text-sm leading-6 text-black/55">
+                Seleção de peças de futebol para girar estoque sem transformar
+                a Home em loja de jerseys.
+              </p>
+              <Link
+                className="mt-8 flex h-12 w-fit items-center gap-3 bg-[#050505] px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-white"
+                href="/copa-do-mundo"
+              >
+                Ver últimas peças <ArrowUpRight />
+              </Link>
+            </div>
+            <ProductGrid products={clearanceProducts} />
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="border-t border-black/10 bg-[#f5f1e8] px-4 py-14 sm:px-6 lg:px-10"
+        id="manifesto"
+      >
+        <div className="mx-auto max-w-[1440px]">
+          <p className="max-w-3xl text-3xl font-black uppercase leading-[0.92] tracking-display sm:text-5xl">
+            Streetwear masculino premium, fotos reais e peças selecionadas para
+            quem não veste qualquer coisa.
+          </p>
         </div>
       </section>
     </>

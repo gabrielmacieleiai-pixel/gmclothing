@@ -3,9 +3,10 @@ import { CartButton } from "@/components/cart-button";
 import { MenuIcon } from "@/components/icons";
 
 const links = [
-  { href: "/copa-do-mundo", label: "Copa 2026" },
+  { href: "/colecao/frio", label: "Inverno" },
   { href: "/colecao", label: "Coleção" },
-  { href: "/colecao/frio", label: "Lançamentos" },
+  { href: "/colecao/oversized", label: "Oversized" },
+  { href: "/copa-do-mundo", label: "Últimas peças" },
   { href: "/acessorios", label: "Acessórios" },
   { href: "/#manifesto", label: "Manifesto" },
 ];
@@ -38,7 +39,7 @@ export function Header() {
       <div className="bg-[#050505] px-3 py-2 text-center text-[10px] font-bold uppercase tracking-[0.12em] text-white/70 sm:px-4 sm:text-xs sm:tracking-[0.22em]">
         <span className="sm:hidden">GM Clothing / For men</span>
         <span className="hidden sm:inline">
-          Vista propósito / Streetwear masculino premium / Atendimento via WhatsApp
+          Nova coleção inverno / Suéteres premium / Atendimento via WhatsApp
         </span>
       </div>
       <header className="sticky top-0 z-50 border-b border-black/10 bg-[#f5f1e8]/92 backdrop-blur-xl">

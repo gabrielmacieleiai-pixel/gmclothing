@@ -28,4 +28,7 @@ vercel-*.log
 *.tsbuildinfo
 next-env.d.ts
 
+# raw product uploads; optimized storefront images live in named subfolders
+public/products/winter/*.png
+
 .vercel

@@ -41,7 +41,7 @@ const collectionPages = {
     title: "Frio sem cara de básico.",
     description:
       "Suéteres e polos de tricô em uma vitrine separada, limpa e pensada para valorizar textura, caimento e acabamento.",
-    image: brandAssets.brands2.frioHeroDesktop,
+    image: brandAssets.brands2.chenileHero,
     accent: "text-[#c8a96a]",
     filterProducts: (products) =>
       products.filter(

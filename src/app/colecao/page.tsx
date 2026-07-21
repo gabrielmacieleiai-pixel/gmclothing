@@ -8,25 +8,24 @@ import { brandAssets } from "@/data/brand-assets";
 import { catalogProducts } from "@/data/products";
 
 export const metadata: Metadata = {
-  title: "Coleção",
+  title: "Coleção | GM Clothing",
   description:
-    "Coleção de streetwear premium da GM Clothing com Copa, oversized e peças de frio.",
+    "Coleção de streetwear premium da GM Clothing com inverno, oversized e últimas peças selecionadas.",
   alternates: {
     canonical: "/colecao",
   },
   openGraph: {
     title: "Coleção | GM Clothing",
-    description:
-      "Streetwear masculino premium com curadoria GM Clothing.",
-    images: ["/products/brand-assets/oversized-essential-preta-editorial.webp"],
+    description: "Streetwear masculino premium com curadoria GM Clothing.",
+    images: [brandAssets.brands2.chenileHero],
   },
 };
 
 const collectionHighlights = [
   {
-    label: "Copa do Mundo",
-    href: "/copa-do-mundo",
-    image: brandAssets.brands2.copaProductHero,
+    label: "Inverno",
+    href: "/colecao/frio",
+    image: brandAssets.brands2.chenileHero,
   },
   {
     label: "Oversized",
@@ -34,9 +33,9 @@ const collectionHighlights = [
     image: brandAssets.brands2.oversizedHeroDesktop,
   },
   {
-    label: "Coleção Frio",
-    href: "/colecao/frio",
-    image: brandAssets.brands2.frioHeroDesktop,
+    label: "Últimas peças",
+    href: "/copa-do-mundo",
+    image: brandAssets.brands2.copaProductHero,
   },
 ];
 
@@ -61,9 +60,9 @@ export default async function CollectionPage({
       </div>
 
       <section className="relative overflow-hidden bg-ink px-4 py-14 text-bone sm:px-6 lg:px-10 lg:py-20">
-        <div className="absolute inset-0 opacity-20">
+        <div className="absolute inset-0 opacity-18">
           <Image
-            src={brandAssets.brands2.brandAtmosphere}
+            src={brandAssets.brands2.chenileDetail}
             alt=""
             fill
             priority
@@ -73,12 +72,12 @@ export default async function CollectionPage({
         </div>
         <div className="absolute inset-y-0 right-0 hidden w-[52%] lg:block">
           <Image
-            src={brandAssets.brands2.collectionOverview}
+            src={brandAssets.brands2.chenileHero}
             alt=""
             fill
             priority
             sizes="52vw"
-            className="object-contain p-6 opacity-72"
+            className="object-contain p-6 opacity-85"
             style={{ objectPosition: "center" }}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/50 to-transparent" />
@@ -87,14 +86,14 @@ export default async function CollectionPage({
 
         <div className="relative mx-auto max-w-[1440px]">
           <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.25em] text-acid">
-            GM Clothing / Drop atual
+            GM Clothing / Curadoria atual
           </p>
           <h1 className="max-w-4xl text-[3.4rem] font-black uppercase leading-[0.78] tracking-display sm:text-8xl lg:text-[9rem]">
             Coleção
           </h1>
-          <p className="mt-8 max-w-xl text-sm leading-6 text-white/55">
-            Copa, oversized e frio organizados para compra rápida no celular.
-            Fotos grandes, informação limpa e foco no produto.
+          <p className="mt-8 max-w-xl text-sm leading-6 text-white/58">
+            Inverno, oversized e últimas peças organizados para compra rápida
+            no celular. Fotos grandes, informação limpa e foco no produto.
           </p>
           <div className="mt-10 flex flex-col gap-4 border-t border-white/20 pt-5 text-xs text-white/50 sm:flex-row sm:items-center sm:justify-between">
             <p>{catalogProducts.length} peças selecionadas</p>

@@ -18,29 +18,29 @@ export type HeroSlide = {
 
 export const heroSlides: HeroSlide[] = [
   {
-    id: "drop-copa-brasil",
-    eyebrow: "Drop Copa 2026",
-    title: "Brasil em campo.",
-    description:
-      "Futebol, presença e leitura street em um drop limpo, rápido e focado em conversão.",
-    href: "/copa-do-mundo",
-    cta: "Ver coleção",
-    palette: "military",
-  },
-  {
     id: "colecao-frio",
-    eyebrow: "Lançamentos de frio",
-    title: "Tricô com presença.",
+    eyebrow: "Nova coleção inverno",
+    title: "Chenile com presença.",
     description:
-      "Suéteres e polos de tricô com textura real, caimento limpo e visual premium.",
+      "O suéter Chenile Zara guia a coleção: textura real, toque macio e visual premium para vender agora.",
     href: "/colecao/frio",
-    cta: "Ver lançamentos",
-    image: brandAssets.brands2.frioHeroDesktop,
-    mobileImage: brandAssets.brands2.frioHeroMobile,
-    palette: "black",
+    cta: "Ver inverno",
+    image: brandAssets.brands2.chenileHero,
+    mobileImage: brandAssets.brands2.chenileHeroAlt,
+    palette: "gold",
     imageFit: "contain",
     mobileImageFit: "contain",
     imagePosition: "center",
     mobileImagePosition: "center top",
+  },
+  {
+    id: "drop-copa-brasil",
+    eyebrow: "Últimas peças Copa",
+    title: "Futebol em promoção.",
+    description:
+      "Oversized Brasil, Cristiano Ronaldo e retrôs selecionadas para girar estoque sem roubar o foco da coleção principal.",
+    href: "/copa-do-mundo",
+    cta: "Ver peças",
+    palette: "military",
   },
 ];

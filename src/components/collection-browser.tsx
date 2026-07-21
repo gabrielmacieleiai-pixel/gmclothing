@@ -114,8 +114,8 @@ const collectionVisuals: Record<string, CollectionVisual> = {
     title: "Tricô, textura e presença.",
     description:
       "Suéteres e polos de tricô com acabamento limpo, leitura premium e sensação de lançamento.",
-    image: brandAssets.brands2.frioHeroDesktop,
-    mobileImage: brandAssets.brands2.frioHeroMobile,
+    image: brandAssets.brands2.chenileHero,
+    mobileImage: brandAssets.brands2.chenileHeroAlt,
     accent: "text-[#c8a96a]",
   },
   lancamentos: {
@@ -123,8 +123,8 @@ const collectionVisuals: Record<string, CollectionVisual> = {
     title: "Novidades da estação.",
     description:
       "Uma curadoria visual para destacar peças novas sem transformar a página em marketplace.",
-    image: brandAssets.brands2.frioEditorial,
-    mobileImage: brandAssets.brands2.frioLifestyle,
+    image: brandAssets.brands2.chenileDetail,
+    mobileImage: brandAssets.brands2.chenileHero,
     accent: "text-[#c8a96a]",
   },
 };

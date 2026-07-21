@@ -36,6 +36,12 @@ export const brandAssets = {
       "/products/brands 2/7e67e14d-8cc5-446f-bec7-8131ff11871c.webp",
     frioStatement:
       "/products/brands 2/ea4f3bc1-fa6c-455e-8d7a-1e55de1ea52e.webp",
+    chenileHero:
+      "/products/winter/sueter-chenile-zara/caramelo/02-look.webp",
+    chenileHeroAlt:
+      "/products/winter/sueter-chenile-zara/azul-marinho/01-frente.webp",
+    chenileDetail:
+      "/products/winter/sueter-chenile-zara/caramelo/07-detalhe-textura.webp",
     premiumDetails:
       "/products/brands 2/33af57de-b987-4702-bf4e-a720b1f4523a.webp",
     productDetails:
