@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useMemo, useState } from "react";
 import { ProductGrid } from "@/components/product-grid";
 import { brandAssets } from "@/data/brand-assets";
+import { getImageVariantSrc } from "@/lib/image-variants";
 import type { Product } from "@/types/product";
 
 type CollectionBrowserProps = {
@@ -198,7 +199,7 @@ export function CollectionBrowser({
                   className="object-contain p-3 lg:hidden"
                   fill
                   sizes="100vw"
-                  src={selectedVisual.mobileImage}
+                  src={getImageVariantSrc(selectedVisual.mobileImage, "hero")}
                 />
               ) : null}
               <Image
@@ -206,7 +207,7 @@ export function CollectionBrowser({
                 className={`${selectedVisual.mobileImage ? "hidden lg:block" : ""} object-contain p-4`}
                 fill
                 sizes="(max-width: 1024px) 100vw, 58vw"
-                src={selectedVisual.image}
+                src={getImageVariantSrc(selectedVisual.image, "hero")}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/40 via-transparent to-transparent" />
             </div>

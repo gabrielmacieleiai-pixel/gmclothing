@@ -1,5 +1,8 @@
 node_modules
 .next
+.next-stale-*
+*-.next
+cache-*-.next
 out
 build
 work

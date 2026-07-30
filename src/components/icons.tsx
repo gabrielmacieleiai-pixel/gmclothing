@@ -29,3 +29,36 @@ export function MenuIcon({ className = "size-5" }: IconProps) {
     </svg>
   );
 }
+
+export function ChevronLeft({ className = "size-4" }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="m14.5 5-7 7 7 7" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+export function ChevronRight({ className = "size-4" }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="m9.5 5 7 7-7 7" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+export function SearchIcon({ className = "size-4" }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <circle cx="10.8" cy="10.8" r="5.8" stroke="currentColor" strokeWidth="1.8" />
+      <path d="m15.2 15.2 4 4" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}
+
+export function XIcon({ className = "size-5" }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.8" />
+    </svg>
+  );
+}

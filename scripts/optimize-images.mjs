@@ -3,7 +3,15 @@ import path from "path";
 import sharp from "sharp";
 
 const publicDir = path.join(process.cwd(), "public");
-const allowed = new Set([".jpg", ".jpeg", ".png"]);
+const productsDir = path.join(publicDir, "products");
+const optimizedDir = path.join(productsDir, "_optimized");
+const allowed = new Set([".jpg", ".jpeg", ".png", ".webp"]);
+
+const variants = [
+  { name: "card", width: 760, quality: 76 },
+  { name: "detail", width: 1500, quality: 82 },
+  { name: "hero", width: 1800, quality: 80 },
+];
 
 async function walk(dir) {
   const entries = await fs.readdir(dir, { withFileTypes: true });
@@ -11,6 +19,10 @@ async function walk(dir) {
 
   for (const entry of entries) {
     const full = path.join(dir, entry.name);
+
+    if (full.startsWith(optimizedDir)) {
+      continue;
+    }
 
     if (entry.isDirectory()) {
       files.push(...(await walk(full)));
@@ -22,30 +34,49 @@ async function walk(dir) {
   return files;
 }
 
-const files = await walk(publicDir);
+function getOutputName(file) {
+  const relative = path.relative(productsDir, file);
+  const parsed = path.parse(relative);
+
+  return `${path.join(parsed.dir, parsed.name)
+    .replace(/[\\/]+/g, "__")
+    .replace(/[^a-zA-Z0-9._-]+/g, "-")}.webp`;
+}
+
+await fs.mkdir(optimizedDir, { recursive: true });
+
+const files = (await walk(productsDir)).filter((file) =>
+  allowed.has(path.extname(file).toLowerCase()),
+);
+
+for (const variant of variants) {
+  await fs.mkdir(path.join(optimizedDir, variant.name), { recursive: true });
+}
+
+let generated = 0;
 
 for (const file of files) {
-  const ext = path.extname(file).toLowerCase();
+  const outputName = getOutputName(file);
 
-  if (!allowed.has(ext)) continue;
+  for (const variant of variants) {
+    const output = path.join(optimizedDir, variant.name, outputName);
 
-  const output = file.replace(ext, ".webp");
+    await sharp(file)
+      .rotate()
+      .resize({
+        width: variant.width,
+        withoutEnlargement: true,
+      })
+      .webp({
+        quality: variant.quality,
+        smartSubsample: true,
+      })
+      .toFile(output);
 
-  await sharp(file)
-    .rotate()
-    .resize({
-      width: 1600,
-      withoutEnlargement: true
-    })
-    .webp({
-      quality: 78
-    })
-    .toFile(output);
-
-  const oldStat = await fs.stat(file);
-  const newStat = await fs.stat(output);
-
-  console.log(
-    `${path.relative(publicDir, file)} -> ${path.relative(publicDir, output)} | ${Math.round(oldStat.size / 1024)}KB -> ${Math.round(newStat.size / 1024)}KB`
-  );
+    generated += 1;
+  }
 }
+
+console.log(
+  `Generated ${generated} optimized images from ${files.length} source files.`,
+);

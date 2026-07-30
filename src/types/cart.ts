@@ -10,6 +10,7 @@ export type CartItem = {
   colorHex?: string;
   size?: string;
   sku: string;
+  shopifyVariantId?: string | null;
   quantity: number;
   availableStock?: number;
   checkoutUrl: string | null;

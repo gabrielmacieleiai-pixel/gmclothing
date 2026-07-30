@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
-  title: "Últimas peças | GM Clothing",
+  title: "Últimas peças",
   description:
     "Peças finais da GM Clothing organizadas dentro da coleção principal.",
   alternates: {

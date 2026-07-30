@@ -18,26 +18,27 @@ export function SectionHeading({
 }: SectionHeadingProps) {
   return (
     <div
-      className={`mb-8 flex items-end justify-between gap-6 border-b pb-5 ${
+      className={`mb-10 flex items-end justify-between gap-4 border-b pb-5 sm:mb-8 sm:gap-6 ${
         inverse ? "border-white/20" : "border-black/15"
       }`}
     >
       <div>
         <p
-          className={`mb-2 text-[10px] font-bold uppercase tracking-[0.24em] ${
+          className={`mb-3 text-[9px] font-bold uppercase tracking-[0.22em] sm:mb-2 sm:text-[10px] sm:tracking-[0.24em] ${
             inverse ? "text-white/45" : "text-black/45"
           }`}
         >
           {eyebrow}
         </p>
-        <h2 className="text-3xl font-black uppercase tracking-display sm:text-5xl">
+        <h2 className="max-w-[16ch] text-[2rem] font-black uppercase leading-[0.95] tracking-display sm:max-w-none sm:text-5xl">
           {title}
         </h2>
       </div>
       {href ? (
         <Link
-          className="hidden items-center gap-2 text-xs font-bold uppercase tracking-[0.16em] sm:flex"
+          className="flex shrink-0 items-center gap-2 text-[9px] font-bold uppercase tracking-[0.14em] sm:text-xs sm:tracking-[0.16em]"
           href={href}
+          prefetch={false}
         >
           {action} <ArrowUpRight />
         </Link>

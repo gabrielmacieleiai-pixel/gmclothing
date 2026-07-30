@@ -7,6 +7,7 @@ import { ArrowUpRight } from "@/components/icons";
 import { ProductGrid } from "@/components/product-grid";
 import { brandAssets } from "@/data/brand-assets";
 import { catalogProducts, getProductHref } from "@/data/products";
+import { getImageVariantSrc } from "@/lib/image-variants";
 import type { Product } from "@/types/product";
 
 type CollectionPageProps = {
@@ -70,7 +71,7 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${collection.label} | GM Clothing`,
+    title: collection.label,
     description: collection.description,
     alternates: {
       canonical: `/colecao/${slug}`,
@@ -110,8 +111,9 @@ export default async function CollectionLandingPage({
 
       <section className="relative overflow-hidden bg-[#050505] px-4 py-14 text-white sm:px-6 lg:px-10 lg:py-20">
         <div className="absolute inset-0 opacity-70">
-          <div className="absolute -right-32 top-[-12%] size-[28rem] rounded-full bg-white/10 blur-[120px]" />
-          <div className="absolute bottom-[-22%] left-[-24%] size-[32rem] rounded-full bg-[#c8a96a]/12 blur-[140px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_12%,rgba(255,255,255,0.10),transparent_32%),radial-gradient(circle_at_8%_88%,rgba(200,169,106,0.12),transparent_34%)] lg:hidden" />
+          <div className="absolute -right-32 top-[-12%] hidden size-[28rem] rounded-full bg-white/10 blur-[110px] lg:block" />
+          <div className="absolute bottom-[-22%] left-[-24%] hidden size-[32rem] rounded-full bg-[#c8a96a]/12 blur-[110px] lg:block" />
         </div>
 
         <div className="relative mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-stretch">
@@ -130,15 +132,17 @@ export default async function CollectionLandingPage({
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               {highlightProduct ? (
                 <Link
-                  className="flex h-12 items-center justify-center gap-3 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505] transition duration-200 hover:bg-[#d4b06a] active:scale-[0.98]"
+                  className="flex h-12 items-center justify-center gap-3 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505] lg:transition lg:duration-200 lg:hover:bg-[#d4b06a]"
                   href={getProductHref(highlightProduct)}
+                  prefetch={false}
                 >
                   Ver destaque <ArrowUpRight />
                 </Link>
               ) : null}
               <Link
-                className="flex h-12 items-center justify-center gap-3 border border-white/20 px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-white transition duration-200 hover:border-white active:scale-[0.98]"
+                className="flex h-12 items-center justify-center gap-3 border border-white/20 px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-white lg:transition lg:duration-200 lg:hover:border-white"
                 href="/colecao"
+                prefetch={false}
               >
                 Todas as coleções
               </Link>
@@ -152,7 +156,7 @@ export default async function CollectionLandingPage({
               fill
               priority
               sizes="(max-width: 1024px) 100vw, 55vw"
-              src={collection.image}
+              src={getImageVariantSrc(collection.image, "hero")}
             />
             <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/35 via-transparent to-transparent" />
           </div>

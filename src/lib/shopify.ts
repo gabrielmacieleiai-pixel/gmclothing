@@ -1,4 +1,15 @@
-const SHOPIFY_STORE_DOMAIN = process.env.SHOPIFY_STORE_DOMAIN?.trim() ?? "";
+const DEFAULT_SHOPIFY_STORE_DOMAIN = "wgykiy-hp.myshopify.com";
+
+const SHOPIFY_STORE_DOMAIN =
+  process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN?.trim() ??
+  process.env.SHOPIFY_STORE_DOMAIN?.trim() ??
+  DEFAULT_SHOPIFY_STORE_DOMAIN;
+
+type ShopifyCheckoutOptions = {
+  checkout?: {
+    zip?: string;
+  };
+};
 
 function normalizeShopifyDomain(domain: string) {
   return domain
@@ -29,6 +40,7 @@ export function getShopifyProductUrl(handle: string | null | undefined) {
 export function getShopifyCartUrl(
   variantId: string | null | undefined,
   quantity = 1,
+  options?: ShopifyCheckoutOptions,
 ) {
   const storeDomain = normalizeShopifyDomain(SHOPIFY_STORE_DOMAIN);
   const normalizedVariantId = variantId
@@ -40,8 +52,60 @@ export function getShopifyCartUrl(
     return null;
   }
 
-  return `https://${storeDomain}/cart/${encodeURIComponent(
+  return withCheckoutParams(`https://${storeDomain}/cart/${encodeURIComponent(
     normalizedVariantId,
-  )}:${safeQuantity}`;
+  )}:${safeQuantity}`, options);
 }
 
+export function getShopifyCartPermalink(
+  items: Array<{ variantId?: string | null; quantity?: number }>,
+  options?: ShopifyCheckoutOptions,
+) {
+  const storeDomain = normalizeShopifyDomain(SHOPIFY_STORE_DOMAIN);
+  const variants = new Map<string, number>();
+
+  for (const item of items) {
+    if (!item.variantId) {
+      continue;
+    }
+
+    const normalizedVariantId = normalizeShopifyVariantId(item.variantId);
+    const safeQuantity = Math.max(1, Math.floor(item.quantity ?? 1));
+
+    if (!normalizedVariantId) {
+      continue;
+    }
+
+    variants.set(
+      normalizedVariantId,
+      (variants.get(normalizedVariantId) ?? 0) + safeQuantity,
+    );
+  }
+
+  if (!storeDomain || variants.size === 0) {
+    return null;
+  }
+
+  const cartItems = Array.from(variants.entries())
+    .map(
+      ([variantId, quantity]) => `${encodeURIComponent(variantId)}:${quantity}`,
+    )
+    .join(",");
+
+  return withCheckoutParams(`https://${storeDomain}/cart/${cartItems}`, options);
+}
+
+function withCheckoutParams(url: string, options?: ShopifyCheckoutOptions) {
+  const zip = options?.checkout?.zip?.replace(/\D/g, "");
+
+  if (!zip || zip.length !== 8) {
+    return url;
+  }
+
+  const params = new URLSearchParams({
+    "checkout[shipping_address][zip]": zip,
+    "checkout[shipping_address][country]": "Brazil",
+  });
+
+  return `${url}?${params.toString()}`;
+}

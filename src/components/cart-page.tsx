@@ -6,7 +6,9 @@ import { useState } from "react";
 import { AccessoryCrossSell } from "@/components/accessory-cross-sell";
 import { useCart } from "@/components/cart-provider";
 import { ArrowUpRight } from "@/components/icons";
+import { getCheckoutPrefill } from "@/lib/checkout-prefill";
 import { formatPrice } from "@/lib/format";
+import { getShopifyCartPermalink } from "@/lib/shopify";
 import type { FormEvent } from "react";
 
 export function CartPage() {
@@ -25,8 +27,20 @@ export function CartPage() {
     updateQuantity,
   } = useCart();
   const [couponInput, setCouponInput] = useState(couponCode);
+  const [checkoutZip] = useState(() => getCheckoutPrefill().zip);
   const hasItems = items.length > 0;
-
+  const shopifyItems = items.map((item) => ({
+    quantity: item.quantity,
+    variantId: item.shopifyVariantId,
+  }));
+  const canUseShopifyCheckout =
+    hasItems && shopifyItems.every((item) => Boolean(item.variantId));
+  const shopifyCheckoutUrl = canUseShopifyCheckout
+    ? getShopifyCartPermalink(shopifyItems, {
+        checkout: { zip: checkoutZip },
+      })
+    : null;
+  const checkoutHref = shopifyCheckoutUrl ?? "/checkout";
   function handleCouponSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     applyCoupon(couponInput);
@@ -233,17 +247,18 @@ export function CartPage() {
           </div>
 
           <div className="mt-6 grid gap-2">
-            <Link
+            <a
               className={`flex h-14 items-center justify-center bg-[#050505] px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-white ${
                 hasItems ? "" : "pointer-events-none opacity-40"
               }`}
-              href="/checkout"
+              href={checkoutHref}
             >
-              Ir para checkout
-            </Link>
+              Finalizar compra
+            </a>
             <Link
               className="flex h-12 items-center justify-center border border-black/15 px-5 text-[10px] font-bold uppercase tracking-[0.18em]"
               href="/colecao"
+              prefetch={false}
             >
               Continuar comprando
             </Link>

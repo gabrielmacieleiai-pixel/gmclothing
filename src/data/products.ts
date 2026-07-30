@@ -4,6 +4,7 @@ import type {
   ProductPhoto,
   ProductVariant,
 } from "@/types/product";
+import { getShopifyVariantId } from "@/data/shopify-variant-ids";
 
 const colors = {
   black: { id: "preto", name: "Preto", hex: "#171715" },
@@ -45,6 +46,7 @@ function createVariants(
   productCode: string,
   color: ProductColor,
   stockBySize: StockBySize,
+  productSlug?: string,
 ): ProductVariant[] {
   return Object.entries(stockBySize).map(([size, stock]) => ({
     id: `${productCode}-${color.id}-${size.toLowerCase()}`,
@@ -52,7 +54,27 @@ function createVariants(
     color,
     size,
     stock,
+    shopifyVariantId: productSlug
+      ? getShopifyVariantId(productSlug, color.id, size)
+      : null,
     // Preencher somente com o link real da variante no checkout externo.
+    yampiCheckoutUrl: null,
+  }));
+}
+
+function createShopifyReadyVariants(
+  productSlug: string,
+  skuBase: string,
+  color: ProductColor,
+  stockBySize: StockBySize,
+): ProductVariant[] {
+  return Object.entries(stockBySize).map(([size, stock]) => ({
+    id: `${skuBase}-${color.id}-${size.toLowerCase()}`.toLowerCase(),
+    sku: `${skuBase}-${size}`.toUpperCase(),
+    color,
+    size,
+    stock,
+    shopifyVariantId: getShopifyVariantId(productSlug, color.id, size),
     yampiCheckoutUrl: null,
   }));
 }
@@ -116,11 +138,93 @@ type OversizedProductInput = {
   skuCode: string;
   name: string;
   shortName: string;
+  active?: boolean;
   color: ProductColor;
   description: string;
   salesNote: string;
   badge?: string;
+  stockBySize?: StockBySize;
   tags?: string[];
+};
+
+const oversizedCatalogPhotoSources: Record<string, string[]> = {
+  "oversized-box-preta": [
+    "/products/Oversized/a5916e0c-712d-4785-8868-69b4fa193145.webp",
+    "/products/Oversized/d3da7709-c81e-4a0f-9e3a-a042d0e10f95.webp",
+    "/products/Oversized/5c095ef5-2dc1-4db6-8b36-0976cdc6ecdd.webp",
+    "/products/Oversized/478f0b24-16d7-42d5-9ea0-771cf7444dd9.webp",
+    "/products/Oversized/56101010-0f61-4613-8ff0-75683d4f2d76.webp",
+  ],
+  "oversized-box-off-white": [
+    "/products/Oversized/f6ad0234-e5e8-48d5-b935-1f79dfe31ff6.webp",
+    "/products/Oversized/39692017-22f5-4bbe-82bf-d6f083187c02.webp",
+    "/products/Oversized/5a8eef4c-69b9-4467-a217-8b63e0652da0.webp",
+    "/products/Oversized/f8665d17-00f6-4599-8975-0cbbe0dcf8ca.webp",
+    "/products/Oversized/7de91b42-46ca-483a-adaa-074a04c0ed02.webp",
+  ],
+  "oversized-box-azul-marinho": [
+    "/products/Oversized/07be526e-9d41-4166-a759-e7ca38424678.webp",
+    "/products/Oversized/1a9df566-6fea-4ed4-86b4-0bd3eb1e57bd.webp",
+    "/products/Oversized/69125d74-8298-4178-a689-7dab3c7fa174.webp",
+    "/products/Oversized/cc15f350-279f-466c-9797-ea10d83f910c.webp",
+    "/products/Oversized/28aa9013-9a6d-4764-9177-aaf317934cd2.webp",
+  ],
+  "oversized-pre-treino-preta": [
+    "/products/Oversized/220e13eb-7093-4a5d-bab7-0b4ddd0f083a.webp",
+    "/products/Oversized/c8b958e2-30f7-46cf-908e-b2a13358febf.webp",
+    "/products/Oversized/6cefacd8-7970-4eed-afef-337561150c31.webp",
+    "/products/Oversized/8292a2e4-11c9-40b3-bb94-a969d1b4965f.webp",
+    "/products/Oversized/b4b24265-e78f-4f21-9224-13c6e1992fb9.webp",
+  ],
+  "oversized-graphic-marrom": [
+    "/products/Oversized/77e279a5-451d-4c26-b3e2-6207e0b70ea3.webp",
+    "/products/Oversized/a7df4077-860e-4fb5-ae55-baa04438ddf0.webp",
+    "/products/Oversized/946cbfdc-2e70-4a90-84d1-e2321be0e3d8.webp",
+    "/products/Oversized/7dedb7b8-a896-40ab-b3e7-19819c73988b.webp",
+    "/products/Oversized/d23564ad-8380-427c-be10-9898efcaf484.webp",
+  ],
+  "oversized-essential-preta": [
+    "/products/Oversized/1c8a6912-8647-4a41-bd85-03b3228b0680.webp",
+    "/products/Oversized/edaeffb7-da2b-4a12-9ccf-b090c6907dfe.webp",
+    "/products/Oversized/baffa66d-46eb-4999-a4f2-dadeed1c8f13.webp",
+    "/products/Oversized/3a7ce6ef-41f5-4746-a864-65cdc384bb5d.webp",
+    "/products/Oversized/e1071e70-822e-4685-9c11-c8f0cc67c576.webp",
+  ],
+  "oversized-essential-off-white": [
+    "/products/Oversized/9ede750c-7805-46e6-808f-1e16967104e3.webp",
+    "/products/Oversized/31a7562d-04cf-49f6-a77a-3a6719d9c597.webp",
+    "/products/Oversized/4858bcfb-5c03-4ee7-ae94-2b11ac1a8a7e.webp",
+    "/products/Oversized/f6443761-e027-4a16-b3b9-90cd5f4cb7f7.webp",
+    "/products/Oversized/e844ccf5-594c-435a-aa40-83714d330f6e.webp",
+  ],
+  "oversized-court-verde-militar": [
+    "/products/Oversized/19a7faee-7612-4671-9aff-dc9120e2f25f.webp",
+    "/products/Oversized/12390414-6594-48a0-90b1-6cf384aec7e8.webp",
+    "/products/Oversized/60f149bc-e09d-4b59-9739-464cbd60e461.webp",
+    "/products/Oversized/c56b24c0-29ef-451a-b6ef-bb2ad5d3d35d.webp",
+    "/products/Oversized/f0c45bc4-cf56-49dd-8447-5165f8702165.webp",
+  ],
+  "oversized-court-marrom": [
+    "/products/Oversized/6383e7ff-1f34-4ecf-a215-9d5959bfab5c.webp",
+    "/products/Oversized/e4d5f4b1-8d54-4579-a7be-dd3de4791aef.webp",
+    "/products/Oversized/e377cd97-ce26-49ff-9552-f83b3cd64026.webp",
+    "/products/Oversized/ea61f66f-3ea5-4479-a177-f7fb42137b4d.webp",
+    "/products/Oversized/a04d29cf-f7d6-49bf-be6a-a9251063c206.webp",
+  ],
+  "oversized-graphic-azul-preta": [
+    "/products/Oversized/5e0ff254-1750-40f0-946e-708a3308e9e6.webp",
+    "/products/Oversized/1230a2c7-8d31-4b34-b86e-a9873e590748.webp",
+    "/products/Oversized/82181edb-1c82-4d4d-9640-8c747950d2e1.webp",
+    "/products/Oversized/77601549-84d6-4b48-814d-2bbec48e8e19.webp",
+    "/products/Oversized/9f746fdf-f96b-4cc6-8526-71e3985130e8.webp",
+  ],
+  "oversized-graphic-azul-off-white": [
+    "/products/Oversized/bcfdbecf-4bb1-4120-a9b4-3c705b0eac8c.webp",
+    "/products/Oversized/6b02eadc-1ac4-4cdb-870c-f5840e9bb225.webp",
+    "/products/Oversized/88ee6e28-ed7d-45bb-a004-0f6112966094.webp",
+    "/products/Oversized/99493324-0630-41e2-b1d8-2d726c2df61b.webp",
+    "/products/Oversized/481aff48-1002-4802-9bd1-48b5cd71b17f.webp",
+  ],
 };
 
 function createSequentialProductPhotos(
@@ -128,12 +232,16 @@ function createSequentialProductPhotos(
   productName: string,
   colorId?: string,
 ): ProductPhoto[] {
-  return Array.from({ length: 5 }, (_, index) => {
+  const mappedSources = oversizedCatalogPhotoSources[productCode];
+
+  return Array.from({ length: mappedSources?.length ?? 5 }, (_, index) => {
     const photoNumber = String(index + 1).padStart(2, "0");
 
     return {
       id: `${productCode}-foto-${photoNumber}`,
-      src: `/products/oversized-catalog/${productCode}-${photoNumber}.webp`,
+      src:
+        mappedSources?.[index] ??
+        `/products/oversized-catalog/${productCode}-${photoNumber}.webp`,
       alt: `${productName} foto ${index + 1}`,
       colorId,
     };
@@ -145,7 +253,7 @@ function createOversizedProduct(input: OversizedProductInput): Product {
     slug: input.slug,
     name: input.name,
     shortName: input.shortName,
-    active: true,
+    active: input.active ?? true,
     description: input.description,
     salesNote: input.salesNote,
     details: [...oversizedDetails],
@@ -166,7 +274,12 @@ function createOversizedProduct(input: OversizedProductInput): Product {
     showSizeGuide: false,
     photos: createSequentialProductPhotos(input.slug, input.name),
     variants: [
-      ...createVariants(input.skuCode, input.color, standardSizeStock),
+      ...createVariants(
+        input.skuCode,
+        input.color,
+        input.stockBySize ?? standardSizeStock,
+        input.slug,
+      ),
     ],
   };
 }
@@ -183,6 +296,7 @@ type MultiColorOversizedProductInput = {
   slug: string;
   name: string;
   shortName: string;
+  active?: boolean;
   description: string;
   salesNote: string;
   badge?: string;
@@ -199,7 +313,7 @@ function createMultiColorOversizedProduct(
     slug: input.slug,
     name: input.name,
     shortName: input.shortName,
-    active: true,
+    active: input.active ?? true,
     description: input.description,
     salesNote: input.salesNote,
     details: [...oversizedDetails],
@@ -237,6 +351,7 @@ function createMultiColorOversizedProduct(
         option.skuCode,
         option.color,
         option.stockBySize ?? standardSizeStock,
+        input.slug,
       ),
     ),
   };
@@ -247,6 +362,7 @@ export const products: Product[] = [
     slug: "oversized-box-preta",
     name: "Camiseta Oversized Box",
     shortName: "Box Oversized",
+    active: false,
     description:
       "Camiseta oversized Box com patch frontal contrastante, visual limpo e presença urbana em cores selecionadas.",
     salesNote:
@@ -276,13 +392,14 @@ export const products: Product[] = [
   createOversizedProduct({
     slug: "oversized-pre-treino-preta",
     skuCode: "GMC-OVS-PTPR",
-    name: "Camiseta Oversized Pré-Treino Preta",
-    shortName: "Pré-Treino Preta",
+    name: "Camiseta Oversized Pré-Treino",
+    shortName: "Pré-Treino",
     color: colors.black,
     description:
       "Camiseta oversized preta com arte frontal pequena, pegada de treino e linguagem streetwear para presença no dia a dia.",
     salesNote:
       "Uma preta com atitude. Estampa compacta, caimento amplo e visual pronto para quem gosta de academia, rua e identidade.",
+    stockBySize: { M: 10, G: 10, GG: 10 },
     tags: ["preto", "camiseta preta", "academia", "pré-treino"],
   }),
   createOversizedProduct({
@@ -290,6 +407,7 @@ export const products: Product[] = [
     skuCode: "GMC-OVS-GRMR",
     name: "Camiseta Oversized Graphic Marrom",
     shortName: "Graphic Marrom",
+    active: false,
     color: colors.brown,
     description:
       "Camiseta oversized marrom com arte gráfica laranja no peito, contraste quente e caimento amplo.",
@@ -299,8 +417,8 @@ export const products: Product[] = [
   }),
   createMultiColorOversizedProduct({
     slug: "oversized-essential-preta",
-    name: "Camiseta Oversized Essential",
-    shortName: "Essential Oversized",
+    name: "Camiseta Oversized Essential Zara",
+    shortName: "Essential Zara",
     description:
       "Camiseta oversized minimalista, com visual clean e caimento amplo para looks premium de uso diário.",
     salesNote:
@@ -323,8 +441,8 @@ export const products: Product[] = [
   }),
   createMultiColorOversizedProduct({
     slug: "oversized-court-verde-militar",
-    name: "Camiseta Oversized Court",
-    shortName: "Court Oversized",
+    name: "Camiseta Oversized Jordan",
+    shortName: "Jordan",
     description:
       "Camiseta oversized Court com referência de quadra, caimento amplo e estética streetwear esportiva.",
     salesNote:
@@ -347,8 +465,8 @@ export const products: Product[] = [
   }),
   createMultiColorOversizedProduct({
     slug: "oversized-graphic-azul-preta",
-    name: "Camiseta Oversized Graphic Azul",
-    shortName: "Graphic Azul",
+    name: "Camiseta Oversized Air Jordan",
+    shortName: "Air Jordan",
     description:
       "Camiseta oversized com arte azul no peito, contraste frio e estética limpa de streetwear esportivo.",
     salesNote:
@@ -373,7 +491,7 @@ export const products: Product[] = [
     slug: "oversized-faith-division",
     name: "Camiseta Oversized Faith Division",
     shortName: "Faith Division",
-    active: true,
+    active: false,
     description:
       "Peso, presença e propósito. Uma oversized essencial com assinatura GM discreta.",
     salesNote:
@@ -409,7 +527,7 @@ export const products: Product[] = [
     slug: "oversized-court-01",
     name: "Camiseta Oversized Court 01",
     shortName: "Court 01",
-    active: true,
+    active: false,
     description:
       "Referência das quadras, construída para a rua. Volume amplo e visual preciso.",
     salesNote:
@@ -442,7 +560,7 @@ export const products: Product[] = [
     slug: "oversized-salmo-23",
     name: "Camiseta Oversized Salmo 23",
     shortName: "Salmo 23",
-    active: true,
+    active: false,
     description:
       "Identidade que não precisa gritar. Mensagem sutil, construção premium.",
     salesNote:
@@ -478,7 +596,7 @@ export const products: Product[] = [
     slug: "camiseta-brasil-versao-jogador",
     name: "Camiseta Brasil Versão Jogador — Copa 2026",
     shortName: "Brasil Versão Jogador",
-    active: true,
+    active: false,
     description:
       "Camiseta Brasil versão jogador em tecido premium Dry Fit, com visual moderno, toque leve e acabamento superior.",
     salesNote:
@@ -556,7 +674,7 @@ export const products: Product[] = [
     slug: "camiseta-argentina-versao-jogador",
     name: "Camiseta Argentina Versão Jogador — Copa 2026",
     shortName: "Argentina Versão Jogador",
-    active: true,
+    active: false,
     description:
       "Camiseta Argentina versão jogador com tecido leve, visual de campo e acabamento premium para viver a temporada da Copa.",
     salesNote:
@@ -629,7 +747,7 @@ export const products: Product[] = [
     slug: "brasil-retro-2006-kaka",
     name: "Camisa Brasil Retrô Kaká 2006",
     shortName: "Retrô Kaká 2006",
-    active: true,
+    active: false,
     description:
       "Camisa Brasil retrô Kaká 2006 com visual clássico, presença de Copa e leitura vintage para coleção e uso urbano.",
     salesNote:
@@ -766,6 +884,7 @@ export const products: Product[] = [
         "GMC-COPA-BRR06",
         colors.brazilYellow,
         standardSizeStock,
+        "brasil-retro-2006-ronaldinho",
       ),
     ],
   },
@@ -877,13 +996,23 @@ export const products: Product[] = [
       },
     ]),
     variants: [
-      ...createVariants("GMC-COPA-CR7OF", colors.offWhite, standardSizeStock),
-      ...createVariants("GMC-COPA-CR7PR", colors.black, standardSizeStock),
+      ...createVariants(
+        "GMC-COPA-CR7OF",
+        colors.offWhite,
+        standardSizeStock,
+        "camisa-cr7",
+      ),
+      ...createVariants(
+        "GMC-COPA-CR7PR",
+        colors.black,
+        standardSizeStock,
+        "camisa-cr7",
+      ),
     ],
   },
   {
     slug: "oversized-brasil",
-    name: "Camiseta Oversized Brasil — Copa 2026",
+    name: "Camiseta Oversized Brasil",
     shortName: "Oversized Brasil",
     active: true,
     description:
@@ -965,8 +1094,18 @@ export const products: Product[] = [
       },
     ]),
     variants: [
-      ...createVariants("GMC-COPA-OVBROF", colors.offWhite, standardSizeStock),
-      ...createVariants("GMC-COPA-OVBRPR", colors.black, standardSizeStock),
+      ...createVariants(
+        "GMC-COPA-OVBROF",
+        colors.offWhite,
+        standardSizeStock,
+        "oversized-brasil",
+      ),
+      ...createVariants(
+        "GMC-COPA-OVBRPR",
+        colors.black,
+        standardSizeStock,
+        "oversized-brasil",
+      ),
     ],
   },
   {
@@ -987,6 +1126,7 @@ export const products: Product[] = [
     ],
     price: winterPromoPricing.price,
     promotionalPrice: winterPromoPricing.promotionalPrice,
+    shopifyHandle: "sueter-chenile-zara",
     yampiCheckoutUrl: null,
     collection: "Coleção Frio",
     category: "Suéter",
@@ -1190,10 +1330,30 @@ export const products: Product[] = [
       ]),
     ],
     variants: [
-      ...createVariants("GMC-FRIO-CHCA", colors.caramel, standardSizeStock),
-      ...createVariants("GMC-FRIO-CHPR", colors.black, standardSizeStock),
-      ...createVariants("GMC-FRIO-CHAZ", colors.navy, standardSizeStock),
-      ...createVariants("GMC-FRIO-CHCM", colors.mixedGray, standardSizeStock),
+      ...createShopifyReadyVariants(
+        "sueter-chenile-zara",
+        "GMC-CHENILE-CA",
+        colors.caramel,
+        standardSizeStock,
+      ),
+      ...createShopifyReadyVariants(
+        "sueter-chenile-zara",
+        "GMC-CHENILE-PR",
+        colors.black,
+        standardSizeStock,
+      ),
+      ...createShopifyReadyVariants(
+        "sueter-chenile-zara",
+        "GMC-CHENILE-AZ",
+        colors.navy,
+        standardSizeStock,
+      ),
+      ...createShopifyReadyVariants(
+        "sueter-chenile-zara",
+        "GMC-CHENILE-CM",
+        colors.mixedGray,
+        standardSizeStock,
+      ),
     ],
   },
   {
@@ -1256,7 +1416,12 @@ export const products: Product[] = [
       },
     ]),
     variants: [
-      ...createVariants("GMC-FRIO-STMPR", colors.black, standardSizeStock),
+      ...createVariants(
+        "GMC-FRIO-STMPR",
+        colors.black,
+        standardSizeStock,
+        "sueter-tricot-minimal-preto",
+      ),
     ],
   },
   {
@@ -1319,7 +1484,12 @@ export const products: Product[] = [
       },
     ]),
     variants: [
-      ...createVariants("GMC-FRIO-STGOF", colors.offWhite, standardSizeStock),
+      ...createVariants(
+        "GMC-FRIO-STGOF",
+        colors.offWhite,
+        standardSizeStock,
+        "sueter-tricot-geometrico-off-white",
+      ),
     ],
   },
   {
@@ -1382,7 +1552,12 @@ export const products: Product[] = [
       },
     ]),
     variants: [
-      ...createVariants("GMC-FRIO-STTAZ", colors.navy, standardSizeStock),
+      ...createVariants(
+        "GMC-FRIO-STTAZ",
+        colors.navy,
+        standardSizeStock,
+        "sueter-tricot-texturizado-azul-marinho",
+      ),
     ],
   },
   {
@@ -1445,7 +1620,12 @@ export const products: Product[] = [
       },
     ]),
     variants: [
-      ...createVariants("GMC-FRIO-STTPR", colors.black, standardSizeStock),
+      ...createVariants(
+        "GMC-FRIO-STTPR",
+        colors.black,
+        standardSizeStock,
+        "sueter-tricot-trancado-preto",
+      ),
     ],
   },
   {
@@ -1561,8 +1741,18 @@ export const products: Product[] = [
       ]),
     ],
     variants: [
-      ...createVariants("GMC-FRIO-PTOF", colors.offWhite, standardSizeStock),
-      ...createVariants("GMC-FRIO-PTPR", colors.black, standardSizeStock),
+      ...createVariants(
+        "GMC-FRIO-PTOF",
+        colors.offWhite,
+        standardSizeStock,
+        "polo-tricot",
+      ),
+      ...createVariants(
+        "GMC-FRIO-PTPR",
+        colors.black,
+        standardSizeStock,
+        "polo-tricot",
+      ),
     ],
   },
   {
@@ -1695,7 +1885,7 @@ export const products: Product[] = [
     slug: "jersey-brazil-identity",
     name: "Jersey Brazil Identity",
     shortName: "Brazil Identity",
-    active: true,
+    active: false,
     description:
       "Brasil em outra frequência. Uma jersey urbana para representar com presença.",
     salesNote:

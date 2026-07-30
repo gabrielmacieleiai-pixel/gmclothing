@@ -2,9 +2,12 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { AccessoryCrossSell } from "@/components/accessory-cross-sell";
 import { useCart } from "@/components/cart-provider";
+import { getCheckoutPrefill } from "@/lib/checkout-prefill";
 import { formatPrice } from "@/lib/format";
+import { getShopifyCartPermalink } from "@/lib/shopify";
 
 export function CartDrawer() {
   const {
@@ -19,9 +22,20 @@ export function CartDrawer() {
     total,
     updateQuantity,
   } = useCart();
+  const [checkoutZip] = useState(() => getCheckoutPrefill().zip);
 
   const hasItems = items.length > 0;
-
+  const shopifyItems = items.map((item) => ({
+    quantity: item.quantity,
+    variantId: item.shopifyVariantId,
+  }));
+  const canUseShopifyCheckout =
+    hasItems && shopifyItems.every((item) => Boolean(item.variantId));
+  const checkoutHref = canUseShopifyCheckout
+    ? getShopifyCartPermalink(shopifyItems, {
+        checkout: { zip: checkoutZip },
+      })
+    : "/checkout";
   return (
     <div
       aria-hidden={!isOpen}
@@ -185,18 +199,19 @@ export function CartDrawer() {
               className="flex h-12 items-center justify-center border border-black/15 px-5 py-4 text-[10px] font-bold uppercase tracking-[0.18em]"
               href="/carrinho"
               onClick={closeCart}
+              prefetch={false}
             >
               Ver carrinho
             </Link>
-            <Link
+            <a
               className={`flex h-14 items-center justify-center px-5 py-4 text-[10px] font-bold uppercase tracking-[0.18em] text-white ${
                 hasItems ? "bg-[#050505]" : "pointer-events-none bg-black/35"
               }`}
-              href="/checkout"
+              href={checkoutHref ?? "/checkout"}
               onClick={closeCart}
             >
-              Ir para checkout
-            </Link>
+              Finalizar compra
+            </a>
           </div>
           <p className="mt-3 text-center text-[10px] leading-4 text-black/40">
             Sem gateway próprio. O pagamento final continua preparado para

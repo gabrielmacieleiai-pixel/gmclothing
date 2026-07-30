@@ -26,12 +26,12 @@ export function Footer() {
               Navegue
             </p>
             <div className="flex flex-col gap-3 text-sm">
-              <Link href="/">Início</Link>
-              <Link href="/colecao/frio">Inverno</Link>
-              <Link href="/colecao">Coleção</Link>
-              <Link href="/colecao?categoria=ultimas-pecas">Últimas peças</Link>
-              <Link href="/acessorios">Acessórios</Link>
-              <Link href="/carrinho">Carrinho</Link>
+              <Link href="/" prefetch={false}>Início</Link>
+              <Link href="/colecao/frio" prefetch={false}>Inverno</Link>
+              <Link href="/colecao" prefetch={false}>Coleção</Link>
+              <Link href="/colecao?categoria=ultimas-pecas" prefetch={false}>Últimas peças</Link>
+              <Link href="/acessorios" prefetch={false}>Acessórios</Link>
+              <Link href="/carrinho" prefetch={false}>Carrinho</Link>
             </div>
           </div>
 
@@ -41,7 +41,7 @@ export function Footer() {
             </p>
             <div className="flex flex-col gap-3 text-sm">
               {footerHelpLinks.map((item) => (
-                <Link href={item.href} key={item.href}>
+                <Link href={item.href} key={item.href} prefetch={false}>
                   {item.title}
                 </Link>
               ))}

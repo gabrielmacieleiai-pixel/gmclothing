@@ -7,6 +7,8 @@ export default defineConfig([
   ...nextTypescript,
   globalIgnores([
     ".next/**",
+    ".next-stale-*/**",
+    "*-.next/**",
     ".vercel/**",
     "out/**",
     "build/**",

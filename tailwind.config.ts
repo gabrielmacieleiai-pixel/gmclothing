@@ -18,7 +18,8 @@ const config: Config = {
         stone: "#a6a39b",
       },
       fontFamily: {
-        sans: ["Arial", "Helvetica", "sans-serif"],
+        sans: ["Inter", "Arial", "Helvetica", "sans-serif"],
+        display: ["Helvetica Neue", "Helvetica", "Arial", "sans-serif"],
       },
       letterSpacing: {
         display: "-0.06em",

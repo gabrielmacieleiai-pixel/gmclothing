@@ -4,16 +4,33 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useCart } from "@/components/cart-provider";
-import { ArrowUpRight } from "@/components/icons";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  SearchIcon,
+  XIcon,
+} from "@/components/icons";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { getProductPricing } from "@/data/products";
+import { formatCheckoutZip, saveCheckoutPrefill } from "@/lib/checkout-prefill";
 import { formatPrice } from "@/lib/format";
+import { getImageVariantSrc } from "@/lib/image-variants";
+import { getShopifyCartUrl } from "@/lib/shopify";
 import type { Product, ProductMedia } from "@/types/product";
 
 type ProductDetailsProps = {
   product: Product;
   whatsappUrl: string;
   initialColorId?: string;
+};
+
+type ShippingQuoteOption = {
+  id: string;
+  name: string;
+  company: string;
+  price: number;
+  deliveryTime: number | null;
 };
 
 const LOW_STOCK_THRESHOLD = 3;
@@ -80,7 +97,14 @@ export function ProductDetails({
   const [selectedSize, setSelectedSize] = useState<string>();
   const [selectedMediaId, setSelectedMediaId] =
     useState<string | undefined>(initialMediaId);
+  const [isZoomOpen, setIsZoomOpen] = useState(false);
   const [checkoutMessage, setCheckoutMessage] = useState<string | null>(null);
+  const [shippingCep, setShippingCep] = useState("");
+  const [shippingMessage, setShippingMessage] = useState<string | null>(null);
+  const [shippingOptions, setShippingOptions] = useState<ShippingQuoteOption[]>(
+    [],
+  );
+  const [isShippingLoading, setIsShippingLoading] = useState(false);
 
   const selectedColor = colors.find((color) => color.id === selectedColorId);
   const selectedVariant = product.variants.find(
@@ -114,10 +138,26 @@ export function ProductDetails({
     product.features && product.features.length > 0
       ? product.features
       : product.details;
+  const selectedPreview = getMediaPreview(selectedMedia);
 
   useEffect(() => {
     window.scrollTo({ behavior: "auto", left: 0, top: 0 });
   }, [initialSelectedColorId, product.slug]);
+
+  useEffect(() => {
+    if (!isZoomOpen) {
+      return;
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        setIsZoomOpen(false);
+      }
+    }
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isZoomOpen]);
 
   function handleGalleryScroll() {
     const gallery = galleryRef.current;
@@ -142,6 +182,24 @@ export function ProductDetails({
     });
   }
 
+  function moveMedia(direction: -1 | 1) {
+    if (visibleMedia.length <= 1) {
+      return;
+    }
+
+    const currentIndex = Math.max(
+      visibleMedia.findIndex((media) => media.id === selectedMedia?.id),
+      0,
+    );
+    const nextIndex =
+      (currentIndex + direction + visibleMedia.length) % visibleMedia.length;
+    const nextMedia = visibleMedia[nextIndex];
+
+    if (nextMedia) {
+      goToMedia(nextMedia.id, nextIndex);
+    }
+  }
+
   function selectColor(colorId: string) {
     const firstColorMedia = allMedia.find(
       (media) => !media.colorId || media.colorId === colorId,
@@ -159,6 +217,67 @@ export function ProductDetails({
     setCheckoutMessage(null);
   }
 
+  function updateShippingCep(value: string) {
+    const nextCep = formatCheckoutZip(value);
+    const cepDigits = nextCep.replace(/\D/g, "");
+
+    setShippingCep(nextCep);
+
+    if (cepDigits.length === 8) {
+      saveCheckoutPrefill({ zip: nextCep });
+    }
+  }
+
+  async function handleShippingQuote() {
+    const cep = shippingCep.replace(/\D/g, "");
+
+    if (cep.length !== 8) {
+      setShippingOptions([]);
+      setShippingMessage("Digite um CEP válido com 8 números.");
+      return;
+    }
+
+    setIsShippingLoading(true);
+    setShippingMessage(null);
+    setShippingOptions([]);
+
+    try {
+      const response = await fetch("/api/shipping/quote", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          cep,
+          price: currentPrice,
+          productSlug: product.slug,
+          quantity: 1,
+        }),
+      });
+      const data = (await response.json()) as {
+        message?: string;
+        options?: ShippingQuoteOption[];
+      };
+
+      if (!response.ok || !data.options?.length) {
+        setShippingMessage(
+          data.message ??
+            "Não foi possível calcular o envio agora. Finalize pelo checkout ou fale no WhatsApp.",
+        );
+        return;
+      }
+
+      setShippingOptions(data.options);
+      setShippingMessage("Envio calculado para este CEP.");
+    } catch {
+      setShippingMessage(
+        "Não foi possível calcular o envio agora. Tente novamente em instantes.",
+      );
+    } finally {
+      setIsShippingLoading(false);
+    }
+  }
+
   function buildCartItem() {
     if (!selectedColorId || !selectedSize) {
       setCheckoutMessage("Selecione cor e tamanho para continuar.");
@@ -172,21 +291,24 @@ export function ProductDetails({
       return null;
     }
 
+    const previewImage =
+      getMediaPreview(selectedMedia) ??
+      getMediaPreview(allMedia[0]) ??
+      "/products/detail-fabric.svg";
+
     return {
       id: `${product.slug}-${selectedVariant.id}`,
       productSlug: product.slug,
       productName: product.name,
       shortName: product.shortName,
-      image:
-        getMediaPreview(selectedMedia) ??
-        getMediaPreview(allMedia[0]) ??
-        "/products/detail-fabric.svg",
+      image: getImageVariantSrc(previewImage, "card"),
       price: currentPrice,
       compareAtPrice: pricing.promotionalPrice ? pricing.price : undefined,
       colorName: selectedVariant.color.name,
       colorHex: selectedVariant.color.hex,
       size: selectedVariant.size,
       sku: selectedVariant.sku,
+      shopifyVariantId: selectedVariant.shopifyVariantId,
       checkoutUrl: selectedVariant.yampiCheckoutUrl,
       quantity: 1,
       availableStock: selectedVariant.stock,
@@ -212,7 +334,13 @@ export function ProductDetails({
       return;
     }
 
-    if (!cartItem.checkoutUrl) {
+    const checkoutUrl =
+      getShopifyCartUrl(cartItem.shopifyVariantId, cartItem.quantity, {
+        checkout: { zip: shippingCep },
+      }) ??
+      cartItem.checkoutUrl;
+
+    if (!checkoutUrl) {
       setCheckoutMessage(
         "Essa combinação ainda não está disponível para checkout. Fale conosco pelo WhatsApp.",
       );
@@ -220,31 +348,93 @@ export function ProductDetails({
     }
 
     addItem(cartItem);
-    window.location.href = cartItem.checkoutUrl;
+    window.location.href = checkoutUrl;
   }
 
   return (
     <>
       <section className="mx-auto grid max-w-[1440px] gap-8 overflow-hidden px-4 pb-36 sm:px-6 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14 lg:px-10 lg:pb-24">
-        <div className="order-2 min-w-0 lg:order-1 lg:sticky lg:top-24 lg:self-start">
-          <div
-            className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth bg-[#dedbd3] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-            onScroll={handleGalleryScroll}
-            ref={galleryRef}
-          >
-            {visibleMedia.map((media) => (
-              <div
-                className="relative aspect-[4/5] w-full shrink-0 snap-center overflow-hidden"
-                key={media.id}
-              >
-                {product.badge ? (
-                  <span className="absolute left-4 top-4 z-10 bg-[#050505] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white">
-                    {product.badge}
+        <div className="order-1 min-w-0 lg:sticky lg:top-24 lg:self-start">
+          <div className="mb-5 lg:hidden">
+            <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-black/45">
+              {product.collection} / {product.category}
+            </p>
+            <h1 className="break-words text-3xl font-black uppercase leading-[0.9] tracking-display">
+              {product.name}
+            </h1>
+
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              {pricing.promotionalPrice ? (
+                <span className="text-xs uppercase tracking-[0.12em] text-black/35">
+                  De{" "}
+                  <span className="line-through">
+                    {formatPrice(pricing.price)}
                   </span>
-                ) : null}
-                <MediaFrame media={media} priority />
-              </div>
-            ))}
+                </span>
+              ) : null}
+              <span className="text-xl font-black">
+                Por {formatPrice(currentPrice)}
+              </span>
+              {pricing.discountPercentage ? (
+                <span className="bg-[#050505] px-3 py-2 text-[9px] font-black uppercase tracking-[0.14em] text-white">
+                  {pricing.discountPercentage}% off
+                </span>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="relative">
+            <div
+              className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth bg-[#dedbd3] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              onScroll={handleGalleryScroll}
+              ref={galleryRef}
+            >
+              {visibleMedia.map((media, index) => (
+                <div
+                  className="relative aspect-[4/5] w-full shrink-0 snap-center overflow-hidden"
+                  key={media.id}
+                >
+                  {product.badge ? (
+                    <span className="absolute left-4 top-4 z-10 bg-[#050505] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white">
+                      {product.badge}
+                    </span>
+                  ) : null}
+                  <MediaFrame media={media} priority={index === 0} />
+                </div>
+              ))}
+            </div>
+
+            {visibleMedia.length > 1 ? (
+              <>
+                <button
+                  aria-label="Imagem anterior"
+                  className="absolute left-3 top-1/2 z-20 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-white/35 bg-[#050505]/65 text-white backdrop-blur-sm transition hover:bg-[#050505] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  onClick={() => moveMedia(-1)}
+                  type="button"
+                >
+                  <ChevronLeft />
+                </button>
+                <button
+                  aria-label="Próxima imagem"
+                  className="absolute right-3 top-1/2 z-20 grid size-10 -translate-y-1/2 place-items-center rounded-full border border-white/35 bg-[#050505]/65 text-white backdrop-blur-sm transition hover:bg-[#050505] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                  onClick={() => moveMedia(1)}
+                  type="button"
+                >
+                  <ChevronRight />
+                </button>
+              </>
+            ) : null}
+
+            {selectedPreview ? (
+              <button
+                aria-label="Ampliar imagem do produto"
+                className="absolute right-3 top-3 z-20 grid size-10 place-items-center rounded-full border border-white/35 bg-[#050505]/65 text-white backdrop-blur-sm transition hover:bg-[#050505] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                onClick={() => setIsZoomOpen(true)}
+                type="button"
+              >
+                <SearchIcon />
+              </button>
+            ) : null}
           </div>
 
           <div className="mt-3 grid grid-cols-3 gap-2 sm:gap-3">
@@ -266,9 +456,19 @@ export function ProductDetails({
               </button>
             ))}
           </div>
+
+          <div className="mt-5 lg:hidden">
+            <p className="text-sm leading-6 text-black/55">
+              {product.description}
+            </p>
+            <p className="mt-3 text-sm leading-6 text-black/70">
+              {product.salesNote}
+            </p>
+          </div>
         </div>
 
-        <div className="order-1 min-w-0 lg:order-2 lg:py-10">
+        <div className="order-2 min-w-0 lg:py-10">
+          <div className="hidden lg:block">
           <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-black/45">
             {product.collection} / {product.category}
           </p>
@@ -304,9 +504,10 @@ export function ProductDetails({
           <p className="mt-3 max-w-md text-sm leading-6 text-black/70">
             {product.salesNote}
           </p>
+          </div>
 
           <div className="my-6 grid grid-cols-2 gap-3 border-y border-black/15 py-4 text-[9px] font-bold uppercase tracking-[0.13em] text-black/50 sm:grid-cols-3 sm:text-center">
-            <span>Checkout Yampi</span>
+              <span>Checkout seguro</span>
             <span>Compra via WhatsApp</span>
             <span className="col-span-2 sm:col-span-1">
               {selectedColorStock <= 0
@@ -451,14 +652,76 @@ export function ProductDetails({
             </div>
           ) : null}
 
-          {selectedVariant && !selectedVariant.yampiCheckoutUrl ? (
+          {selectedVariant &&
+          !selectedVariant.shopifyVariantId &&
+          !selectedVariant.yampiCheckoutUrl ? (
             <p className="mt-3 text-[10px] leading-4 text-black/45">
-              Checkout Yampi ainda não configurado para esta variante. Você
-              ainda pode comprar pelo WhatsApp.
+              Compra direta ainda não configurada para esta variante. Você ainda
+              pode comprar pelo WhatsApp.
             </p>
           ) : null}
 
           <WhatsAppButton href={whatsappUrl} label="Tirar dúvida no WhatsApp" />
+
+          <div className="mt-6 border-t border-black/15 py-5">
+            <div className="mb-4 flex items-center justify-between gap-4">
+              <h2 className="text-[10px] font-bold uppercase tracking-[0.18em]">
+                Calcular envio
+              </h2>
+              <span className="text-[9px] uppercase tracking-[0.14em] text-black/35">
+                Por CEP
+              </span>
+            </div>
+
+            <div className="grid gap-2 sm:grid-cols-[1fr_auto]">
+              <input
+                aria-label="CEP para calcular envio"
+                className="h-12 border border-black/15 bg-transparent px-4 text-sm outline-none transition focus:border-[#050505]"
+                inputMode="numeric"
+                maxLength={9}
+                onChange={(event) => updateShippingCep(event.target.value)}
+                placeholder="Digite seu CEP"
+                value={shippingCep}
+              />
+              <button
+                className="h-12 border border-[#050505] px-5 text-[10px] font-bold uppercase tracking-[0.16em] transition-colors hover:bg-[#050505] hover:text-white disabled:cursor-wait disabled:opacity-55"
+                disabled={isShippingLoading}
+                onClick={handleShippingQuote}
+                type="button"
+              >
+                {isShippingLoading ? "Calculando" : "Calcular"}
+              </button>
+            </div>
+
+            {shippingMessage ? (
+              <p className="mt-3 text-xs leading-5 text-black/50">
+                {shippingMessage}
+              </p>
+            ) : null}
+
+            {shippingOptions.length > 0 ? (
+              <div className="mt-4 grid gap-2">
+                {shippingOptions.map((option) => (
+                  <div
+                    className="flex items-center justify-between gap-4 border border-black/10 px-4 py-3 text-xs"
+                    key={option.id}
+                  >
+                    <div>
+                      <p className="font-bold uppercase tracking-[0.12em]">
+                        {option.company} · {option.name}
+                      </p>
+                      <p className="mt-1 text-black/45">
+                        {option.deliveryTime
+                          ? `${option.deliveryTime} dias úteis`
+                          : "Prazo a confirmar"}
+                      </p>
+                    </div>
+                    <strong>{formatPrice(option.price)}</strong>
+                  </div>
+                ))}
+              </div>
+            ) : null}
+          </div>
 
           <div className="mt-8 border-t border-black/15">
             <details className="border-b border-black/15 py-5" open>
@@ -473,11 +736,11 @@ export function ProductDetails({
             </details>
             <details className="border-b border-black/15 py-5">
               <summary className="cursor-pointer text-[10px] font-bold uppercase tracking-[0.18em]">
-                Envio e trocas
+                Envio
               </summary>
               <p className="mt-4 text-xs leading-5 text-black/50">
-                Envio calculado no checkout. Trocas seguem a política da loja e
-                atendimento pelo WhatsApp quando necessário.
+                O frete é calculado pelo CEP. A emissão automática da etiqueta
+                fica preparada para integração com uma ferramenta de envio real.
               </p>
             </details>
             {showSizeGuide && product.sizeGuide ? (
@@ -493,10 +756,13 @@ export function ProductDetails({
       </section>
 
       {showOversizedMaterialProof ? (
-        <section className="mx-auto grid max-w-[1440px] gap-4 px-4 pb-20 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
+        <section className="mx-auto hidden max-w-[1440px] gap-4 px-4 pb-20 sm:px-6 lg:grid lg:grid-cols-[0.95fr_1.05fr] lg:px-10">
           <div className="relative min-h-[360px] overflow-hidden bg-[#050505] sm:min-h-[460px]">
             <Image
-              src="/products/brand-assets/tecido-premium-alta-gramatura.webp"
+              src={getImageVariantSrc(
+                "/products/brand-assets/tecido-premium-alta-gramatura.webp",
+                "hero",
+              )}
               alt="Material de apoio mostrando tecido premium de alta gramatura"
               fill
               sizes="(max-width: 1024px) 100vw, 45vw"
@@ -529,7 +795,7 @@ export function ProductDetails({
         </section>
       ) : null}
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-[#f5f1e8]/95 px-4 py-3 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] backdrop-blur md:hidden">
+      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-[#f5f1e8] px-4 py-3 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] md:hidden">
         <div className="mb-2 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.14em] text-black/45">
           <span>
             {selectedSize
@@ -550,6 +816,39 @@ export function ProductDetails({
           <ArrowUpRight />
         </button>
       </div>
+
+      {isZoomOpen && selectedPreview ? (
+        <div
+          aria-label="Imagem ampliada do produto"
+          aria-modal="true"
+          className="fixed inset-0 z-[80] flex items-center justify-center bg-[#050505]/95 p-4 sm:p-8"
+          onClick={() => setIsZoomOpen(false)}
+          role="dialog"
+        >
+          <div
+            className="relative h-full w-full max-w-5xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <Image
+              alt={selectedMedia?.alt ?? product.name}
+              className="object-contain"
+              fill
+              priority
+              quality={90}
+              sizes="100vw"
+              src={getImageVariantSrc(selectedPreview, "detail")}
+            />
+            <button
+              aria-label="Fechar imagem ampliada"
+              className="absolute right-0 top-0 grid size-11 place-items-center rounded-full border border-white/25 bg-white/10 text-white backdrop-blur-sm"
+              onClick={() => setIsZoomOpen(false)}
+              type="button"
+            >
+              <XIcon />
+            </button>
+          </div>
+        </div>
+      ) : null}
     </>
   );
 }
@@ -581,9 +880,10 @@ function MediaFrame({
     if (media.disabled || !media.src) {
       return media.poster ? (
         <Image
-          src={media.poster}
+          src={getImageVariantSrc(media.poster, "detail")}
           alt={media.alt ?? "Vídeo do produto"}
           fill
+          quality={78}
           sizes={sizes}
           className="object-contain"
         />
@@ -610,10 +910,11 @@ function MediaFrame({
 
   return (
     <Image
-      src={media.src}
+      src={getImageVariantSrc(media.src, "detail")}
       alt={media.alt}
       fill
       priority={priority}
+      quality={82}
       sizes={sizes}
       className="object-contain"
     />

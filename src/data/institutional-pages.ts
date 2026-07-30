@@ -11,10 +11,10 @@ export type InstitutionalPageContent = {
 
 export const institutionalPages = {
   exchanges: {
-    title: "Trocas e devolucoes",
+    title: "Trocas e devoluções",
     eyebrow: "Atendimento GM",
     description:
-      "Entenda como solicitar troca ou devolucao de forma simples e segura.",
+      "Entenda como solicitar troca ou devolução de forma simples e segura.",
     href: "/trocas-e-devolucoes",
     sections: [
       {
@@ -27,7 +27,7 @@ export const institutionalPages = {
       },
       {
         title: "Como solicitar",
-        body: "Fale com a GM Clothing pelo WhatsApp informando numero do pedido, produto e motivo da solicitacao. Nosso atendimento orienta os proximos passos.",
+        body: "Fale com a GM Clothing pelo WhatsApp informando número do pedido, produto e motivo da solicitação. Nosso atendimento orienta os próximos passos.",
       },
     ],
   },
@@ -35,16 +35,16 @@ export const institutionalPages = {
     title: "Prazo de envio",
     eyebrow: "Entrega",
     description:
-      "Informacoes claras sobre preparo, envio e acompanhamento do pedido.",
+      "Informações claras sobre preparo, envio e acompanhamento do pedido.",
     href: "/prazo-de-envio",
     sections: [
       {
-        title: "Preparacao do pedido",
-        body: "Apos a confirmacao do pagamento, o pedido entra em separacao. O prazo de preparo pode variar conforme o volume do drop.",
+        title: "Preparação do pedido",
+        body: "Após a confirmação do pagamento, o pedido entra em separação. O prazo de preparo pode variar conforme o volume do drop.",
       },
       {
         title: "Prazo de transporte",
-        body: "O prazo final depende do endereço de entrega e da modalidade escolhida no checkout externo.",
+        body: "O prazo final depende do endereço de entrega e da modalidade escolhida no checkout seguro.",
       },
       {
         title: "Acompanhamento",
@@ -56,25 +56,25 @@ export const institutionalPages = {
     title: "Formas de pagamento",
     eyebrow: "Checkout",
     description:
-      "A compra e finalizada em ambiente externo seguro, preparado para Yampi.",
+      "A compra é finalizada em ambiente seguro da Shopify, com formas de pagamento configuradas na plataforma.",
     href: "/formas-de-pagamento",
     sections: [
       {
-        title: "Checkout externo",
-        body: "A GM Clothing utiliza checkout externo para finalizar pedidos com mais seguranca e praticidade.",
+        title: "Checkout seguro",
+        body: "A GM Clothing direciona o pedido para o checkout da Shopify para finalizar a compra com mais segurança e praticidade.",
       },
       {
-        title: "Opcoes disponiveis",
-        body: "As formas de pagamento aparecem diretamente no checkout no momento da compra, conforme as opcoes ativas na plataforma.",
+        title: "Opções disponíveis",
+        body: "As formas de pagamento aparecem diretamente no checkout no momento da compra, conforme as opções ativas na Shopify.",
       },
       {
         title: "Suporte na compra",
-        body: "Se alguma combinação de produto ainda não estiver com checkout configurado, o cliente pode finalizar pelo WhatsApp com suporte da equipe.",
+        body: "Se alguma combinação de produto ainda não estiver configurada para compra direta, o cliente pode finalizar pelo WhatsApp com suporte da equipe.",
       },
     ],
   },
   privacy: {
-    title: "Politica de privacidade",
+    title: "Política de privacidade",
     eyebrow: "Dados",
     description:
       "Como tratamos informações de contato, compra e atendimento no site.",
@@ -89,13 +89,13 @@ export const institutionalPages = {
         body: "As informações são usadas para processar pedidos, prestar suporte, melhorar a experiência de compra e enviar comunicações quando autorizadas.",
       },
       {
-        title: "Seguranca",
-        body: "Não publicamos dados sensíveis no site. Pagamentos são direcionados para checkout externo, sem criar gateway próprio dentro da loja.",
+        title: "Segurança",
+        body: "Não publicamos dados sensíveis no site. Pagamentos são direcionados para checkout seguro externo, sem criar gateway próprio dentro da loja.",
       },
     ],
   },
   faq: {
-    title: "Duvidas frequentes",
+    title: "Dúvidas frequentes",
     eyebrow: "FAQ",
     description:
       "Respostas rápidas para comprar com menos fricção e mais confiança.",
@@ -111,7 +111,7 @@ export const institutionalPages = {
       },
       {
         title: "A compra é feita no site?",
-        body: "O site funciona como vitrine premium. A finalização acontece em checkout externo quando a variante tem link configurado.",
+        body: "O cliente escolhe o produto no site da GM Clothing e finaliza o pagamento no checkout seguro da Shopify.",
       },
       {
         title: "Posso comprar pelo WhatsApp?",

@@ -6,9 +6,10 @@ import { CollectionBrowser } from "@/components/collection-browser";
 import { ArrowUpRight } from "@/components/icons";
 import { brandAssets } from "@/data/brand-assets";
 import { catalogProducts } from "@/data/products";
+import { getImageVariantSrc } from "@/lib/image-variants";
 
 export const metadata: Metadata = {
-  title: "Coleção | GM Clothing",
+  title: "Coleção",
   description:
     "Coleção de streetwear premium da GM Clothing com inverno, oversized e últimas peças selecionadas.",
   alternates: {
@@ -62,7 +63,7 @@ export default async function CollectionPage({
       <section className="relative overflow-hidden bg-ink px-4 py-14 text-bone sm:px-6 lg:px-10 lg:py-20">
         <div className="absolute inset-0 opacity-18">
           <Image
-            src={brandAssets.brands2.chenileDetail}
+            src={getImageVariantSrc(brandAssets.brands2.chenileDetail, "hero")}
             alt=""
             fill
             priority
@@ -72,7 +73,7 @@ export default async function CollectionPage({
         </div>
         <div className="absolute inset-y-0 right-0 hidden w-[52%] lg:block">
           <Image
-            src={brandAssets.brands2.chenileHero}
+            src={getImageVariantSrc(brandAssets.brands2.chenileHero, "hero")}
             alt=""
             fill
             priority
@@ -109,9 +110,10 @@ export default async function CollectionPage({
               className="group relative min-h-[300px] overflow-hidden bg-[#050505] text-white"
               href={highlight.href}
               key={highlight.label}
+              prefetch={false}
             >
               <Image
-                src={highlight.image}
+                src={getImageVariantSrc(highlight.image, "hero")}
                 alt=""
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"

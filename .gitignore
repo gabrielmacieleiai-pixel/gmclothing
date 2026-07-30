@@ -3,6 +3,8 @@
 
 # next.js
 /.next/
+.next-stale-*/
+*-.next/
 /out/
 
 # production
@@ -23,6 +25,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 vercel-*.log
+tmp-next-start*.log
 
 # typescript
 *.tsbuildinfo
