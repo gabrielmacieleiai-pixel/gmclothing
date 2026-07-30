@@ -4,14 +4,18 @@ export type HeroSlide = {
   id: string;
   eyebrow: string;
   title: string;
+  offer?: string;
   description: string;
   href: string;
   cta: string;
+  secondaryHref?: string;
+  secondaryCta?: string;
   image?: string;
   mobileImage?: string;
   palette: "black" | "navy" | "military" | "bone" | "gold";
   imageFit?: "cover" | "contain";
   mobileImageFit?: "cover" | "contain";
+  composedImage?: boolean;
   imagePosition?: string;
   mobileImagePosition?: string;
 };
@@ -20,27 +24,34 @@ export const heroSlides: HeroSlide[] = [
   {
     id: "colecao-frio",
     eyebrow: "Nova coleção inverno",
-    title: "Chenile Zara",
+    title: "Sale Inverno",
+    offer: "Chenile Zara de R$399,90 por R$249,90",
     description:
-      "O suéter que abre a temporada: textura real, toque macio e presença premium para vender agora.",
-    href: "/colecao/frio",
+      "O suéter principal da temporada: textura real, toque macio e visual premium para comprar agora.",
+    href: "/colecoes/chenille-zara",
     cta: "Ver coleção",
-    image: brandAssets.brands2.chenileHero,
-    mobileImage: brandAssets.brands2.chenileHero,
+    secondaryHref: "/colecao/frio",
+    secondaryCta: "Ver inverno",
+    image: "/products/imagens para o site/2855d6bb-8bdb-4316-a4a1-2788772328aa.png",
+    mobileImage: "/products/imagens para o site/6af50d10-d52c-477a-9b65-36ee207a0da7.png",
     palette: "gold",
     imageFit: "cover",
     mobileImageFit: "cover",
+    composedImage: true,
     imagePosition: "center top",
     mobileImagePosition: "center top",
   },
   {
     id: "oversized-essentials",
     eyebrow: "Streetwear premium",
-    title: "Oversized com atitude",
+    title: "Oversized",
+    offer: "Modelagem ampla. Presença real.",
     description:
-      "Modelagens amplas, fotos reais e peças diretas para quem quer presença sem exagero.",
+      "Fotos reais, cortes amplos e peças diretas para quem quer presença sem exagero.",
     href: "/colecao/oversized",
     cta: "Ver oversized",
+    secondaryHref: "/colecao",
+    secondaryCta: "Ver coleção",
     image: brandAssets.brands2.oversizedHeroDesktop,
     mobileImage: brandAssets.brands2.oversizedHeroMobile,
     palette: "black",
@@ -48,5 +59,24 @@ export const heroSlides: HeroSlide[] = [
     mobileImageFit: "cover",
     imagePosition: "center",
     mobileImagePosition: "center",
+  },
+  {
+    id: "ultimas-pecas",
+    eyebrow: "Peças finais",
+    title: "Últimas Peças",
+    offer: "Estoque curto para girar agora.",
+    description:
+      "Seleção enxuta com produtos de Copa, icons e streetwear para compra rápida antes de acabar.",
+    href: "/colecao?categoria=ultimas-pecas",
+    cta: "Ver ofertas",
+    secondaryHref: "/colecao",
+    secondaryCta: "Explorar loja",
+    image: brandAssets.brands2.oversizedBrasil,
+    mobileImage: brandAssets.brands2.oversizedBrasil,
+    palette: "military",
+    imageFit: "cover",
+    mobileImageFit: "cover",
+    imagePosition: "center 18%",
+    mobileImagePosition: "center 18%",
   },
 ];

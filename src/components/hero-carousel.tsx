@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 import { ArrowUpRight } from "@/components/icons";
 import type { HeroSlide } from "@/data/hero-slides";
+import { getImageVariantSrc } from "@/lib/image-variants";
 
 type HeroCarouselProps = {
   slides: HeroSlide[];
@@ -28,17 +29,28 @@ const accentClasses: Record<HeroSlide["palette"], string> = {
 
 export function HeroCarousel({ slides }: HeroCarouselProps) {
   const scrollerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
 
   function handleScroll() {
-    const scroller = scrollerRef.current;
-
-    if (!scroller) {
+    if (rafRef.current !== null) {
       return;
     }
 
-    const nextIndex = Math.round(scroller.scrollLeft / scroller.clientWidth);
-    setActiveIndex(Math.min(Math.max(nextIndex, 0), slides.length - 1));
+    rafRef.current = window.requestAnimationFrame(() => {
+      rafRef.current = null;
+      const scroller = scrollerRef.current;
+
+      if (!scroller) {
+        return;
+      }
+
+      const nextIndex = Math.round(scroller.scrollLeft / scroller.clientWidth);
+      const clampedIndex = Math.min(Math.max(nextIndex, 0), slides.length - 1);
+      setActiveIndex((currentIndex) =>
+        currentIndex === clampedIndex ? currentIndex : clampedIndex,
+      );
+    });
   }
 
   function goToSlide(index: number) {
@@ -55,89 +67,34 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
   }
 
   return (
-    <section className="relative overflow-hidden bg-[#050505]">
+    <section aria-label="Campanha principal GM Clothing" className="relative overflow-hidden bg-[#050505]">
       <div
         className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         onScroll={handleScroll}
         ref={scrollerRef}
       >
-        {slides.map((slide, index) => (
-          <article
-            className={`relative min-h-[calc(100svh-88px)] w-full shrink-0 snap-start overflow-hidden ${paletteClasses[slide.palette]}`}
-            key={slide.id}
-          >
-            <div className="absolute inset-0 opacity-70">
-              <div className="absolute -right-28 top-[-18%] size-[85vw] rounded-full bg-white/10 blur-[140px]" />
-              <div className="absolute bottom-[-24%] left-[-30%] size-[75vw] rounded-full bg-[#c8a96a]/15 blur-[150px]" />
-            </div>
+        {slides.map((slide, index) => {
+          const hasSeparateMobileImage =
+            Boolean(slide.mobileImage) && slide.mobileImage !== slide.image;
+          const isComposedImage = slide.composedImage === true;
 
-            <div className="relative mx-auto grid w-full max-w-[1440px] gap-4 px-4 pb-12 pt-6 sm:px-6 lg:min-h-[calc(100svh-88px)] lg:grid-cols-[0.72fr_1.28fr] lg:items-stretch lg:px-10 lg:py-8">
-              <div className="relative z-10 flex min-w-0 flex-col justify-between border border-current/10 bg-black/10 px-5 py-7 backdrop-blur-sm sm:px-7 lg:px-10 lg:py-10">
-                <div className="flex items-center justify-between gap-5">
-                  <div className="flex shrink-0 items-center gap-3">
-                    <div className="grid size-14 place-items-center border border-current/15 bg-white/5">
-                      <span className="font-serif text-3xl font-black leading-none tracking-[-0.12em]">
-                        GM
-                      </span>
-                    </div>
-                    <div className="text-[9px] font-bold uppercase leading-4 tracking-[0.24em] opacity-55">
-                      Clothing
-                      <br />
-                      For Men
-                    </div>
-                  </div>
-                  <p
-                    className={`max-w-[11rem] text-right text-[10px] font-bold uppercase leading-4 tracking-[0.22em] ${accentClasses[slide.palette]}`}
-                  >
-                    {slide.eyebrow}
-                  </p>
-                </div>
-
-                <div className="py-12 sm:py-16 lg:py-10">
-                  <p
-                    className={`mb-5 text-[10px] font-bold uppercase tracking-[0.28em] ${accentClasses[slide.palette]}`}
-                  >
-                    GM Clothing / For Men
-                  </p>
-                  <h1 className="max-w-[9ch] text-[clamp(3.4rem,8vw,6.8rem)] font-black uppercase leading-[0.9] tracking-display [text-wrap:balance]">
-                    {slide.title}
-                  </h1>
-                </div>
-
-                <div className="grid gap-5 border-t border-current/15 pt-5 sm:grid-cols-[1fr_auto] sm:items-end">
-                  <p className="max-w-md text-sm leading-6 opacity-65">
-                    {slide.description}
-                  </p>
-                  <Link
-                    className="flex h-12 items-center justify-between gap-8 bg-white px-5 text-[10px] font-bold uppercase tracking-[0.18em] text-[#050505] transition duration-200 hover:bg-[#d4b06a] active:scale-[0.98]"
-                    href={slide.href}
-                  >
-                    {slide.cta} <ArrowUpRight />
-                  </Link>
-                </div>
-
-                <ul className="mt-6 flex flex-wrap gap-x-4 gap-y-2 text-[9px] font-bold uppercase tracking-[0.14em] opacity-60">
-                  <li>Drops limitados</li>
-                  <li>Fotos reais</li>
-                  <li>Compra rápida</li>
-                </ul>
-              </div>
-
-              <div className="relative min-h-[430px] overflow-hidden border border-white/10 bg-[#050505]/35 shadow-[0_24px_70px_rgba(0,0,0,0.35)] sm:min-h-[560px] lg:min-h-0">
+          return (
+            <article
+              className={"relative min-h-[calc(100svh-104px)] w-full shrink-0 snap-start overflow-hidden " + paletteClasses[slide.palette]}
+              key={slide.id}
+            >
+              <div className="absolute inset-0">
                 {slide.image ? (
                   <>
-                    {slide.mobileImage ? (
+                    {hasSeparateMobileImage && slide.mobileImage ? (
                       <Image
                         alt={slide.eyebrow}
-                        className={`lg:hidden ${
-                          slide.mobileImageFit === "contain"
-                            ? "object-contain p-4 sm:p-8"
-                            : "object-cover"
-                        }`}
+                        className="object-cover lg:hidden"
                         fill
                         priority={index === 0}
+                        quality={80}
                         sizes="100vw"
-                        src={slide.mobileImage}
+                        src={getImageVariantSrc(slide.mobileImage, "hero")}
                         style={{
                           objectPosition:
                             slide.mobileImagePosition ??
@@ -148,59 +105,90 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                     ) : null}
                     <Image
                       alt={slide.eyebrow}
-                      className={`${slide.mobileImage ? "hidden lg:block" : ""} ${
-                        slide.imageFit === "contain"
-                          ? "object-contain p-4 sm:p-8"
-                          : "object-cover"
-                      }`}
+                      className={(hasSeparateMobileImage ? "hidden lg:block " : "") + "object-cover"}
                       fill
                       priority={index === 0}
-                      sizes="(max-width: 1024px) 100vw, 55vw"
-                      src={slide.image}
-                      style={{ objectPosition: slide.imagePosition ?? "center" }}
+                      quality={80}
+                      sizes="100vw"
+                      src={getImageVariantSrc(slide.image, "hero")}
+                      style={{
+                        objectPosition: slide.imagePosition ?? "center",
+                      }}
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/20 via-transparent to-transparent" />
                   </>
-                ) : (
-                  <div className="absolute inset-0 overflow-hidden bg-[radial-gradient(circle_at_72%_18%,rgba(200,169,106,0.22),transparent_28%),linear-gradient(135deg,#050505_0%,#102316_56%,#050505_100%)]">
-                    <div className="absolute -right-12 top-10 h-[120%] w-32 rotate-12 bg-[#f4d21e]/10 blur-sm" />
-                    <div className="absolute right-16 top-0 h-full w-px bg-[#f4d21e]/30" />
-                    <div className="absolute bottom-0 left-0 h-28 w-full bg-gradient-to-t from-[#050505] to-transparent" />
-                    <div className="relative z-10 flex h-full min-h-[360px] flex-col justify-end p-6 sm:min-h-[500px] sm:p-9 lg:p-12">
-                      <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.3em] text-[#c8a96a]">
-                        GM Clothing
-                      </p>
-                      <p className="text-[20vw] font-black uppercase leading-[0.74] tracking-display text-white/95 sm:text-8xl lg:text-[9rem]">
-                        Premium
-                      </p>
-                      <p className="mt-3 max-w-sm text-xs font-bold uppercase leading-5 tracking-[0.18em] text-white/58">
-                        Streetwear masculino com fotos reais, curadoria limpa e
-                        compra direta.
-                      </p>
-                    </div>
-                  </div>
-                )}
+                ) : null}
+                {!isComposedImage ? (
+                  <>
+                    <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/20 via-[#050505]/20 to-[#050505]/90" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/65 via-transparent to-[#050505]/20" />
+                  </>
+                ) : null}
               </div>
-            </div>
-          </article>
-        ))}
+
+              {isComposedImage ? (
+                <>
+                  <span className="sr-only">
+                    {slide.title}. {slide.description}
+                  </span>
+                  <Link
+                    aria-label="Ver coleção Chenille Zara"
+                    className="absolute left-[6%] top-[59%] z-10 h-[12%] w-[42%] cursor-pointer rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white lg:left-[4%] lg:top-[61%] lg:h-[15%] lg:w-[29%]"
+                    href={slide.href}
+                    prefetch={false}
+                  />
+                </>
+              ) : (
+                <div className="relative z-10 mx-auto flex min-h-[calc(100svh-104px)] w-full max-w-[1440px] flex-col justify-between px-5 pb-28 pt-14 sm:px-8 sm:pt-16 lg:px-12 lg:pb-32 lg:pt-20">
+                <div className="flex items-start justify-between gap-6 text-[9px] font-bold uppercase tracking-[0.24em] text-white/65">
+                  <span>GM Clothing / For Men</span>
+                  <span className={accentClasses[slide.palette]}>{slide.eyebrow}</span>
+                </div>
+
+                <div className="max-w-3xl">
+                  <p
+                    className={"mb-5 text-[10px] font-bold uppercase tracking-[0.3em] " + accentClasses[slide.palette]}
+                  >
+                    Coleção atual
+                  </p>
+                  <h1 className="font-display max-w-[11ch] text-[clamp(3.8rem,15vw,9.5rem)] font-bold uppercase leading-[0.82] tracking-[-0.075em] text-white [text-wrap:balance]">
+                    {slide.title}
+                  </h1>
+                  {slide.offer ? (
+                    <p className="mt-6 max-w-xl text-base font-bold uppercase leading-tight tracking-[-0.02em] text-white sm:text-xl">
+                      {slide.offer}
+                    </p>
+                  ) : null}
+                  <p className="mt-4 max-w-md text-sm leading-6 text-white/70 sm:text-base">
+                    {slide.description}
+                  </p>
+                  <Link
+                    className="mt-8 inline-flex h-14 items-center gap-8 bg-white px-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#050505] transition-colors hover:bg-[#d4b06a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                    href={slide.href}
+                    prefetch={false}
+                  >
+                    {slide.cta} <ArrowUpRight />
+                  </Link>
+                </div>
+                </div>
+              )}
+            </article>
+          );
+        })}
       </div>
 
-      <div className="absolute bottom-5 left-4 right-4 z-20 mx-auto flex max-w-[1440px] items-center justify-between gap-4 sm:left-6 sm:right-6 lg:left-10 lg:right-10">
+      <div className="absolute bottom-6 left-5 right-5 z-20 mx-auto flex max-w-[1440px] items-center justify-between gap-4 sm:left-8 sm:right-8 lg:left-12 lg:right-12">
         <div className="flex gap-2">
           {slides.map((slide, index) => (
             <button
-              aria-label={`Ir para banner ${index + 1}: ${slide.eyebrow}`}
-              className={`h-1.5 rounded-full transition-all ${
-                activeIndex === index ? "w-8 bg-white" : "w-3 bg-white/35"
-              }`}
+              aria-label={"Ir para banner " + (index + 1) + ": " + slide.eyebrow}
+              className={"h-1.5 rounded-full transition-all " + (activeIndex === index ? "w-8 bg-white" : "w-3 bg-white/40")}
               key={slide.id}
               onClick={() => goToSlide(index)}
               type="button"
             />
           ))}
         </div>
-        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/45">
+        <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-white/55">
           {String(activeIndex + 1).padStart(2, "0")} /{" "}
           {String(slides.length).padStart(2, "0")}
         </p>
