@@ -34,7 +34,13 @@ const collectionPages = {
     image: brandAssets.brands2.oversizedHeroDesktop,
     accent: "text-[#9faa83]",
     filterProducts: (products) =>
-      products.filter((product) => product.category === "Oversized"),
+      products.filter(
+        (product) =>
+          product.category === "Oversized" ||
+          product.subcollection === "Oversized Futebol" ||
+          product.styleTags?.includes("oversized") ||
+          product.tags?.includes("oversized"),
+      ),
   },
   frio: {
     label: "Coleção Frio",

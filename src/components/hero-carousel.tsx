@@ -131,7 +131,7 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                     {slide.title}. {slide.description}
                   </span>
                   <Link
-                    aria-label="Ver coleção Chenille Zara"
+                    aria-label={`${slide.cta} - ${slide.title}`}
                     className="absolute left-[7%] top-[70%] z-10 h-[6%] w-[38%] cursor-pointer rounded-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white sm:left-[6.5%] sm:top-[72%] sm:h-[6%] sm:w-[34%] lg:left-[5%] lg:top-[88%] lg:h-[7%] lg:w-[23%] xl:left-[5%] xl:top-[88.5%] xl:h-[7%] xl:w-[23%]"
                     href={slide.href}
                     prefetch={false}
