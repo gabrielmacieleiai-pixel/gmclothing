@@ -73,7 +73,7 @@ export default function ChenilleZaraCollectionPage() {
             </div>
 
             {products.length > 0 ? (
-              <ProductGrid products={products} priorityCount={2} />
+              <ProductGrid products={products} />
             ) : (
               <div className="border border-black/10 bg-white px-5 py-14 text-center">
                 <p className="text-sm text-black/60">
