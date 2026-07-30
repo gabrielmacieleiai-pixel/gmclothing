@@ -38,7 +38,7 @@ export const heroSlides: HeroSlide[] = [
     imageFit: "cover",
     mobileImageFit: "cover",
     composedImage: true,
-    imagePosition: "center top",
+    imagePosition: "center center",
     mobileImagePosition: "center top",
   },
   {
@@ -58,7 +58,7 @@ export const heroSlides: HeroSlide[] = [
     imageFit: "cover",
     mobileImageFit: "cover",
     composedImage: true,
-    imagePosition: "center top",
+    imagePosition: "center center",
     mobileImagePosition: "center top",
   },
   {
