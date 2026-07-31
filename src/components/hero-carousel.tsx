@@ -1,7 +1,8 @@
 "use client";
 
-import Image from "next/image";
+import Image, { getImageProps } from "next/image";
 import Link from "next/link";
+import type { CSSProperties } from "react";
 import { useRef, useState } from "react";
 import { ArrowUpRight } from "@/components/icons";
 import type { HeroSlide } from "@/data/hero-slides";
@@ -25,6 +26,16 @@ const accentClasses: Record<HeroSlide["palette"], string> = {
   military: "text-[#9faa83]",
   bone: "text-[#5b5139]",
   gold: "text-[#d4b06a]",
+};
+
+const HERO_IMAGE_WIDTHS = {
+  desktop: 1920,
+  mobile: 900,
+};
+
+const HERO_IMAGE_HEIGHTS = {
+  desktop: 1080,
+  mobile: 1400,
 };
 
 export function HeroCarousel({ slides }: HeroCarouselProps) {
@@ -85,37 +96,22 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
             >
               <div className="absolute inset-0">
                 {slide.image ? (
-                  <>
-                    {hasSeparateMobileImage && slide.mobileImage ? (
-                      <Image
-                        alt={slide.eyebrow}
-                        className="object-cover lg:hidden"
-                        fill
-                        priority={index === 0}
-                        quality={80}
-                        sizes="100vw"
-                        src={getImageVariantSrc(slide.mobileImage, "hero")}
-                        style={{
-                          objectPosition:
-                            slide.mobileImagePosition ??
-                            slide.imagePosition ??
-                            "center",
-                        }}
-                      />
-                    ) : null}
+                  hasSeparateMobileImage && slide.mobileImage ? (
+                    <HeroPicture priority={index === 0} slide={slide} />
+                  ) : (
                     <Image
                       alt={slide.eyebrow}
-                      className={(hasSeparateMobileImage ? "hidden lg:block " : "") + "object-cover"}
+                      className="object-cover"
                       fill
                       priority={index === 0}
-                      quality={80}
+                      quality={82}
                       sizes="100vw"
                       src={getImageVariantSrc(slide.image, "hero")}
                       style={{
                         objectPosition: slide.imagePosition ?? "center",
                       }}
                     />
-                  </>
+                  )
                 ) : null}
                 {!isComposedImage ? (
                   <>
@@ -194,5 +190,72 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
         </p>
       </div>
     </section>
+  );
+}
+
+function HeroPicture({
+  priority,
+  slide,
+}: {
+  priority: boolean;
+  slide: HeroSlide;
+}) {
+  const mobileImage = slide.mobileImage ?? slide.image;
+  const desktopImage = slide.image ?? mobileImage;
+
+  if (!mobileImage || !desktopImage) {
+    return null;
+  }
+
+  const imageAlt = slide.eyebrow;
+  const desktopPosition = slide.imagePosition ?? "center";
+  const mobilePosition =
+    slide.mobileImagePosition ?? slide.imagePosition ?? "center";
+  const imageStyle = {
+    "--desktop-position": desktopPosition,
+    "--mobile-position": mobilePosition,
+  } as CSSProperties;
+  const loadingProps = priority
+    ? { fetchPriority: "high" as const, loading: "eager" as const }
+    : { fetchPriority: "auto" as const, loading: "lazy" as const };
+  const {
+    props: { srcSet: desktopSrcSet, ...desktopProps },
+  } = getImageProps({
+    alt: imageAlt,
+    height: HERO_IMAGE_HEIGHTS.desktop,
+    quality: 82,
+    sizes: "100vw",
+    src: getImageVariantSrc(desktopImage, "hero"),
+    width: HERO_IMAGE_WIDTHS.desktop,
+    ...loadingProps,
+  });
+  const {
+    props: { srcSet: mobileSrcSet, ...mobileProps },
+  } = getImageProps({
+    alt: imageAlt,
+    height: HERO_IMAGE_HEIGHTS.mobile,
+    quality: 82,
+    sizes: "100vw",
+    src: getImageVariantSrc(mobileImage, "hero"),
+    width: HERO_IMAGE_WIDTHS.mobile,
+    ...loadingProps,
+  });
+
+  return (
+    <picture>
+      <source
+        media="(min-width: 1024px)"
+        sizes={desktopProps.sizes}
+        srcSet={desktopSrcSet}
+      />
+      <source sizes={mobileProps.sizes} srcSet={mobileSrcSet} />
+      <img
+        {...mobileProps}
+        alt={imageAlt}
+        className="size-full object-cover [object-position:var(--mobile-position)] lg:[object-position:var(--desktop-position)]"
+        decoding={priority ? "sync" : "async"}
+        style={imageStyle}
+      />
+    </picture>
   );
 }

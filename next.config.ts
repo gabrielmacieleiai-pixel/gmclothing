@@ -3,10 +3,10 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     deviceSizes: [360, 414, 640, 768, 1024, 1280, 1536],
-    formats: ["image/webp"],
+    formats: ["image/avif", "image/webp"],
     imageSizes: [64, 96, 128, 256, 384],
     minimumCacheTTL: 31536000,
-    unoptimized: true,
+    qualities: [70, 75, 76, 78, 80, 82, 85, 90],
   },
   poweredByHeader: false,
 };

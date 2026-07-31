@@ -170,7 +170,6 @@ export default function Home() {
                 alt="Sueter Chenile Zara em editorial de inverno"
                 className="object-cover transition duration-700 group-hover:scale-[1.03]"
                 fill
-                priority
                 quality={80}
                 sizes="(max-width: 1024px) 100vw, 38vw"
                 src={getImageVariantSrc(
@@ -192,7 +191,7 @@ export default function Home() {
               </div>
             </Link>
 
-            <ProductGrid products={winterProducts} priorityCount={2} />
+            <ProductGrid products={winterProducts} />
           </div>
         </div>
       </section>
@@ -205,7 +204,7 @@ export default function Home() {
             href="/colecao"
             title="Os favoritos da GM."
           />
-          <ProductGrid products={featuredProducts.slice(0, 4)} priorityCount={2} />
+          <ProductGrid products={featuredProducts.slice(0, 4)} />
         </div>
       </section>
 
@@ -218,7 +217,7 @@ export default function Home() {
             title="Chegou agora."
           />
           {newProducts.length > 0 ? (
-            <ProductGrid products={newProducts} priorityCount={2} />
+            <ProductGrid products={newProducts} />
           ) : (
             <div className="border border-black/10 bg-white/50 p-8 text-sm text-black/55">
               Novas peças entram em breve no catalogo.
@@ -322,7 +321,7 @@ export default function Home() {
               Ver ultimas peças <ArrowUpRight />
             </Link>
           </div>
-          <ProductGrid products={lastPieces} priorityCount={1} />
+          <ProductGrid products={lastPieces} />
         </div>
       </section>
 
