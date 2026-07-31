@@ -60,3 +60,26 @@ summary::-webkit-details-marker {
     contain-intrinsic-size: 560px;
   }
 }
+.gm-trust-marquee {
+  animation: gm-trust-marquee 28s linear infinite;
+}
+
+.gm-trust-marquee:hover {
+  animation-play-state: paused;
+}
+
+@keyframes gm-trust-marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gm-trust-marquee {
+    animation: none;
+  }
+}
