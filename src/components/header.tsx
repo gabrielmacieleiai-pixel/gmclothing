@@ -21,33 +21,33 @@ const links = [
 const salesLinks = [
   {
     href: "/colecao/frio",
-    eyebrow: "❄️ Coleção Inverno",
-    label: "Suéteres premium para vender agora",
+    eyebrow: "Coleção Inverno",
+    label: "Suéteres premium para os dias frios",
   },
   {
     href: "/colecoes/chenille-zara",
-    eyebrow: "🧶 Suéteres",
-    label: "Chenille Zara em cores selecionadas",
+    eyebrow: "Chenille Zara",
+    label: "Textura macia em cores selecionadas",
   },
   {
     href: "/colecao/oversized",
-    eyebrow: "👕 Oversized",
+    eyebrow: "Oversized",
     label: "Modelagens amplas por R$ 99,90",
   },
   {
     href: "/colecao?categoria=promocao",
-    eyebrow: "🔥 Promoções",
-    label: "Peças com condição especial",
+    eyebrow: "Promoções",
+    label: "Peças selecionadas com condição especial",
   },
   {
     href: "/colecao?categoria=mais-vendidos",
-    eyebrow: "⭐ Mais vendidos",
-    label: "Escolhas fortes da vitrine GM",
+    eyebrow: "Mais vendidos",
+    label: "Os produtos mais procurados da GM",
   },
   {
     href: "/colecao?categoria=lancamentos",
-    eyebrow: "🆕 Novidades",
-    label: "Drops recentes e últimas peças",
+    eyebrow: "Novidades",
+    label: "Drops recentes e últimas unidades",
   },
 ];
 
@@ -284,6 +284,12 @@ function MobileMenu() {
     });
   }
 
+  function closeMenuAfterNavigation() {
+    window.setTimeout(() => {
+      setIsMenuOpen(false);
+    }, 0);
+  }
+
   return (
     <div className="relative lg:hidden">
       <button
@@ -317,22 +323,21 @@ function MobileMenu() {
             <div className="grid gap-2">
               {salesLinks.map((link) => (
                 <Link
-                  className="group flex items-center justify-between gap-4 border border-black/10 bg-[#f5f1e8] px-4 py-3 active:bg-white/70"
+                  className="group flex items-center justify-between gap-4 border border-black/10 bg-[#f5f1e8] px-4 py-3 transition-colors hover:bg-white active:bg-white"
                   href={link.href}
                   key={link.href}
-                  onClick={closeMenu}
-                  onPointerDown={closeMenu}
+                  onClick={closeMenuAfterNavigation}
                   prefetch={false}
                 >
                   <span>
-                    <span className="block text-sm font-black uppercase tracking-[0.08em]">
+                    <span className="block text-[13px] font-black uppercase tracking-[0.16em]">
                       {link.eyebrow}
                     </span>
-                    <span className="mt-1 block text-[10px] font-bold uppercase tracking-[0.12em] text-black/45">
+                    <span className="mt-1.5 block text-[10px] font-bold uppercase tracking-[0.12em] text-black/45">
                       {link.label}
                     </span>
                   </span>
-                  <span className="text-lg transition-transform group-active:translate-x-1" aria-hidden="true">
+                  <span className="text-base transition-transform group-hover:translate-x-1 group-active:translate-x-1" aria-hidden="true">
                     →
                   </span>
                 </Link>
@@ -345,8 +350,7 @@ function MobileMenu() {
                   className="block border-b border-black/10 py-3 text-xs font-bold uppercase tracking-[0.18em] active:bg-white/70"
                   href={link.href}
                   key={link.href}
-                  onClick={closeMenu}
-                  onPointerDown={closeMenu}
+                  onClick={closeMenuAfterNavigation}
                   prefetch={false}
                 >
                   {link.label}
