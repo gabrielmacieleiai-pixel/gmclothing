@@ -1,5 +1,3 @@
-import { brandAssets } from "@/data/brand-assets";
-
 export type HeroSlide = {
   id: string;
   eyebrow: string;
@@ -68,16 +66,16 @@ export const heroSlides: HeroSlide[] = [
     offer: "Estoque curto para girar agora.",
     description:
       "Seleção enxuta com produtos de Copa, icons e streetwear para compra rápida antes de acabar.",
-    href: "/colecao?categoria=ultimas-pecas",
+    href: "/colecao/ultimas-pecas",
     cta: "Ver ofertas",
     secondaryHref: "/colecao",
     secondaryCta: "Explorar loja",
-    image: brandAssets.brands2.oversizedBrasil,
-    mobileImage: brandAssets.brands2.oversizedBrasil,
+    image: "/products/imagens para o site/a41dfd0b-7b0f-40c6-9252-85d515446a38.png",
+    mobileImage: "/products/imagens para o site/665e3737-402f-48b5-94f2-2f5ba1295bca.png",
     palette: "military",
     imageFit: "cover",
     mobileImageFit: "cover",
-    imagePosition: "center 18%",
-    mobileImagePosition: "center 18%",
+    imagePosition: "center center",
+    mobileImagePosition: "center top",
   },
 ];

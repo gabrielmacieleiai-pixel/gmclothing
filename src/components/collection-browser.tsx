@@ -36,47 +36,69 @@ const filters: CollectionFilter[] = [
   {
     id: "frio",
     label: "Frio",
-    matches: (product) =>
-      product.collection === "Coleção Frio" ||
-      product.category === "Suéter" ||
-      product.category === "Polo Tricot",
+    matches: (product) => isWinterProduct(product),
+  },
+  {
+    id: "caneladas",
+    label: "Caneladas",
+    matches: (product) => hasAnyText(product, ["canelada", "caneladas"]),
   },
   {
     id: "oversized",
     label: "Oversized",
-    matches: (product) => product.category === "Oversized",
+    matches: (product) => isOversizedProduct(product),
   },
   {
-    id: "jerseys",
-    label: "Jerseys",
+    id: "faith",
+    label: "Linha Faith",
+    matches: (product) => isFaithProduct(product),
+  },
+  {
+    id: "futebol",
+    label: "Futebol",
+    matches: (product) => isFootballProduct(product),
+  },
+  {
+    id: "mais-vendidos",
+    label: "Mais vendidos",
     matches: (product) =>
-      product.category === "Jerseys" ||
-      hasAnyText(product, ["jersey", "camisa de futebol", "camiseta brasil"]),
+      isChenilleProduct(product) ||
+      isOversizedProduct(product) ||
+      hasAnyText(product, ["canelada", "caneladas"]),
   },
   {
     id: "ultimas-pecas",
     label: "Últimas peças",
     matches: (product) =>
-      product.campaign === "copa-2026" ||
-      hasAnyText(product, ["últimas peças", "promoção", "queima", "final"]),
+      isFootballProduct(product) || isFaithProduct(product) || product.category === "Polo Tricot",
   },
   {
-    id: "lancamentos",
-    label: "Lançamentos",
+    id: "promocao",
+    label: "Promoções",
     matches: (product) =>
-      hasAnyText(product, ["lançamento", "novo", "destaque", "drop atual"]),
+      Boolean(product.promotionalPrice) ||
+      Boolean(product.colorPricing) ||
+      hasAnyText(product, ["promoção", "queima", "final", "oferta"]),
   },
 ];
-
 const collectionVisuals: Record<string, CollectionVisual> = {
-  jerseys: {
-    eyebrow: "Jerseys",
-    title: "Futebol com linguagem GM.",
+  frio: {
+    eyebrow: "Coleção de frio",
+    title: "Tricô, textura e presença.",
     description:
-      "Camisas de futebol dentro de uma vitrine limpa, esportiva e premium, sem tirar o foco da coleção principal.",
-    image: brandAssets.brands2.copaProductHero,
-    mobileImage: brandAssets.brands2.copaProductClean,
-    accent: "text-[#72c7ef]",
+      "Suéteres e polos de tricô com acabamento limpo, leitura premium e sensação de lançamento.",
+    image: brandAssets.brands2.chenileHero,
+    mobileImage: brandAssets.brands2.chenileHeroAlt,
+    accent: "text-[#c8a96a]",
+  },
+  caneladas: {
+    eyebrow: "Caneladas",
+    title: "Base premium para o próximo drop.",
+    description:
+      "A estrutura já está preparada para receber as camisetas caneladas assim que as fotos reais entrarem no catálogo.",
+    image: brandAssets.brands2.premiumDetails,
+    mobileImage: brandAssets.brands2.productDetails,
+    accent: "text-[#c8a96a]",
   },
   oversized: {
     eyebrow: "Coleção Oversized",
@@ -87,35 +109,52 @@ const collectionVisuals: Record<string, CollectionVisual> = {
     mobileImage: brandAssets.brands2.oversizedHeroMobile,
     accent: "text-[#9faa83]",
   },
-  "ultimas-pecas": {
-    eyebrow: "Preço de giro",
-    title: "Peças finais selecionadas.",
+  faith: {
+    eyebrow: "Linha Faith",
+    title: "Identidade discreta. Presença real.",
     description:
-      "Uma curadoria curta para vender estoque parado com leitura premium e compra rápida.",
-    image: brandAssets.brands2.oversizedBrasil,
-    mobileImage: brandAssets.brands2.oversizedBrasil,
-    accent: "text-[#c8a96a]",
+      "Peças com linguagem cristã limpa, urbana e alinhada à identidade GM Clothing.",
+    image: brandAssets.brands2.oversizedManifesto,
+    mobileImage: brandAssets.brands2.oversizedManifesto,
+    accent: "text-[#d4b06a]",
   },
-  frio: {
-    eyebrow: "Coleção de frio",
-    title: "Tricô, textura e presença.",
+  futebol: {
+    eyebrow: "Football Culture",
+    title: "Futebol para vestir fora de campo.",
     description:
-      "Suéteres e polos de tricô com acabamento limpo, leitura premium e sensação de lançamento.",
+      "Brasil, retrô, seleções e oversized futebol em uma curadoria com leitura streetwear.",
+    image: brandAssets.brands2.copaProductHero,
+    mobileImage: brandAssets.brands2.copaProductClean,
+    accent: "text-[#72c7ef]",
+  },
+  "mais-vendidos": {
+    eyebrow: "Mais vendidos",
+    title: "O que precisa girar agora.",
+    description:
+      "Chenille Zara, oversized e estrutura pronta para caneladas em uma seleção direta para conversão.",
     image: brandAssets.brands2.chenileHero,
     mobileImage: brandAssets.brands2.chenileHeroAlt,
     accent: "text-[#c8a96a]",
   },
-  lancamentos: {
-    eyebrow: "Lançamentos",
-    title: "Novidades da estação.",
+  "ultimas-pecas": {
+    eyebrow: "Últimas peças",
+    title: "Poucas unidades. Giro rápido.",
     description:
-      "Uma curadoria visual para destacar peças novas sem transformar a página em marketplace.",
-    image: brandAssets.brands2.chenileDetail,
-    mobileImage: brandAssets.brands2.chenileHero,
-    accent: "text-[#c8a96a]",
+      "Futebol, linha faith e polos em uma seleção temporária para destacar peças com maior urgência comercial.",
+    image: "/products/imagens para o site/a41dfd0b-7b0f-40c6-9252-85d515446a38.png",
+    mobileImage: "/products/imagens para o site/665e3737-402f-48b5-94f2-2f5ba1295bca.png",
+    accent: "text-[#d4b06a]",
+  },
+  promocao: {
+    eyebrow: "Promoções",
+    title: "Preço claro. Compra rápida.",
+    description:
+      "Peças selecionadas com condição especial, sem perder a leitura premium da GM Clothing.",
+    image: brandAssets.brands2.oversizedHeroDesktop,
+    mobileImage: brandAssets.brands2.oversizedHeroMobile,
+    accent: "text-[#d4b06a]",
   },
 };
-
 export function CollectionBrowser({
   products,
   initialFilterId,
@@ -228,6 +267,56 @@ export function CollectionBrowser({
   );
 }
 
+function isWinterProduct(product: Product) {
+  return (
+    product.collection === "Coleção Frio" ||
+    product.category === "Suéter" ||
+    product.category === "Polo Tricot"
+  );
+}
+
+function isChenilleProduct(product: Product) {
+  return hasAnyText(product, ["chenile", "chenille"]);
+}
+
+function isOversizedProduct(product: Product) {
+  return (
+    product.category === "Oversized" ||
+    product.subcollection === "Oversized Futebol" ||
+    product.styleTags?.includes("oversized") ||
+    product.tags?.includes("oversized") ||
+    hasAnyText(product, ["oversized"])
+  );
+}
+
+function isFaithProduct(product: Product) {
+  return hasAnyText(product, ["faith", "jesus", "salmo", "cristã", "crista", "propósito", "proposito"]);
+}
+
+function isFootballProduct(product: Product) {
+  return (
+    product.campaign === "copa-2026" ||
+    product.collection === "Copa do Mundo" ||
+    product.category === "Jerseys" ||
+    hasAnyText(product, [
+      "futebol",
+      "football",
+      "copa",
+      "brasil",
+      "argentina",
+      "portugal",
+      "espanha",
+      "cr7",
+      "cristiano",
+      "ronaldinho",
+      "kaká",
+      "kaka",
+      "seleção",
+      "selecao",
+      "jersey",
+    ])
+  );
+}
 function getValidFilterId(filterId?: string) {
   return filters.some((filter) => filter.id === filterId) ? filterId! : "todos";
 }

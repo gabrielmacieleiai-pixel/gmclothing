@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
 import { CartButton } from "@/components/cart-button";
 import { MenuIcon, SearchIcon, XIcon } from "@/components/icons";
@@ -22,7 +22,7 @@ const salesLinks = [
   {
     href: "/colecao/frio",
     eyebrow: "Coleção Inverno",
-    label: "Suéteres premium para os dias frios",
+    label: "Tricôs, polos e suéteres para vender agora",
   },
   {
     href: "/colecoes/chenille-zara",
@@ -30,27 +30,41 @@ const salesLinks = [
     label: "Textura macia em cores selecionadas",
   },
   {
+    href: "/colecao?categoria=caneladas",
+    eyebrow: "Caneladas",
+    label: "Base premium pronta para receber o drop",
+  },
+  {
     href: "/colecao/oversized",
     eyebrow: "Oversized",
     label: "Modelagens amplas por R$ 99,90",
   },
   {
-    href: "/colecao?categoria=promocao",
-    eyebrow: "Promoções",
-    label: "Peças selecionadas com condição especial",
+    href: "/colecao?categoria=faith",
+    eyebrow: "Linha Faith",
+    label: "Estampas cristãs com identidade discreta",
+  },
+  {
+    href: "/colecao?categoria=futebol",
+    eyebrow: "Football Culture",
+    label: "Brasil, retrô, Portugal e seleções",
   },
   {
     href: "/colecao?categoria=mais-vendidos",
     eyebrow: "Mais vendidos",
-    label: "Os produtos mais procurados da GM",
+    label: "Chenille, caneladas e oversized em destaque",
   },
   {
-    href: "/colecao?categoria=lancamentos",
-    eyebrow: "Novidades",
-    label: "Drops recentes e últimas unidades",
+    href: "/colecao/ultimas-pecas",
+    eyebrow: "Últimas peças",
+    label: "Futebol, faith e polos em giro rápido",
+  },
+  {
+    href: "/colecao?categoria=promocao",
+    eyebrow: "Promoções",
+    label: "Condições especiais no fim da seleção",
   },
 ];
-
 const trustMessages = [
   "🚚 Frete grátis acima de R$ 299,90",
   "🔥 Oversized Premium por R$ 99,90",
@@ -278,6 +292,19 @@ function SearchButton() {
 function MobileMenu() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  useEffect(() => {
+    if (!isMenuOpen) {
+      return;
+    }
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+    };
+  }, [isMenuOpen]);
+
   function closeMenu() {
     flushSync(() => {
       setIsMenuOpen(false);
@@ -310,13 +337,13 @@ function MobileMenu() {
             onClick={closeMenu}
             type="button"
           />
-          <nav className="absolute -left-4 top-[52px] z-50 w-screen border-b border-black/10 bg-[#f5f1e8] p-4 shadow-xl">
+          <nav className="fixed inset-x-0 bottom-0 top-[130px] z-50 overflow-y-auto overscroll-contain border-b border-black/10 bg-[#f5f1e8] p-4 pb-8 shadow-xl sm:top-[138px]">
             <div className="mb-4 border border-black/10 bg-white/35 p-4">
               <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-black/45">
-                Comprar por interesse
+                Comprar por linha
               </p>
               <p className="mt-2 text-lg font-black uppercase tracking-[-0.04em]">
-                Encontre sua peça em poucos toques.
+                Chegue na peça certa em poucos toques.
               </p>
             </div>
 

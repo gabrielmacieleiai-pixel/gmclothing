@@ -42,6 +42,22 @@ const collectionPages = {
           product.tags?.includes("oversized"),
       ),
   },
+  "ultimas-pecas": {
+    label: "Últimas peças",
+    eyebrow: "Poucas unidades",
+    title: "Peças finais para girar agora.",
+    description:
+      "Futebol, linha faith e polos reunidos em uma vitrine temporária até o controle real de estoque entrar no site.",
+    image: "/products/imagens para o site/a41dfd0b-7b0f-40c6-9252-85d515446a38.png",
+    accent: "text-[#d4b06a]",
+    filterProducts: (products) =>
+      products.filter(
+        (product) =>
+          isFootballProduct(product) ||
+          isFaithProduct(product) ||
+          product.category === "Polo Tricot",
+      ),
+  },
   frio: {
     label: "Coleção Frio",
     eyebrow: "Textura e inverno",
@@ -100,7 +116,7 @@ export default async function CollectionLandingPage({
     notFound();
   }
 
-  const products = collection.filterProducts(catalogProducts);
+  const products = sortCollectionProducts(slug, collection.filterProducts(catalogProducts));
   const highlightProduct = products[0];
 
   return (
@@ -200,6 +216,66 @@ export default async function CollectionLandingPage({
   );
 }
 
+function sortCollectionProducts(slug: string, products: Product[]) {
+  if (slug !== "frio") {
+    return products;
+  }
+
+  return [...products].sort((firstProduct, secondProduct) => {
+    return Number(isChenilleProduct(firstProduct)) - Number(isChenilleProduct(secondProduct));
+  });
+}
+
+function isChenilleProduct(product: Product) {
+  return hasAnyText(product, ["chenile", "chenille"]);
+}
+
+function isFaithProduct(product: Product) {
+  return hasAnyText(product, ["faith", "jesus", "salmo", "cristã", "crista", "propósito", "proposito"]);
+}
+
+function isFootballProduct(product: Product) {
+  return (
+    product.campaign === "copa-2026" ||
+    product.collection === "Copa do Mundo" ||
+    product.category === "Jerseys" ||
+    hasAnyText(product, [
+      "futebol",
+      "football",
+      "copa",
+      "brasil",
+      "argentina",
+      "portugal",
+      "espanha",
+      "cr7",
+      "cristiano",
+      "ronaldinho",
+      "kaká",
+      "kaka",
+      "seleção",
+      "selecao",
+      "jersey",
+    ])
+  );
+}
+
+function hasAnyText(product: Product, values: string[]) {
+  const haystack = [
+    product.name,
+    product.shortName,
+    product.collection,
+    product.category,
+    product.subcollection,
+    ...(product.tags ?? []),
+    ...(product.styleTags ?? []),
+    product.badge,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  return values.some((value) => haystack.includes(value.toLowerCase()));
+}
 function getCollectionConfig(slug: string) {
   return collectionPages[slug as keyof typeof collectionPages];
 }
