@@ -214,8 +214,8 @@ const oversizedCatalogPhotoSources: Record<string, string[]> = {
     "/products/Oversized/8292a2e4-11c9-40b3-bb94-a969d1b4965f.webp",
   ],
   "oversized-graphic-marrom": [
-    "/products/Oversized/7dedb7b8-a896-40ab-b3e7-19819c73988b.webp",
     "/products/Oversized/d23564ad-8380-427c-be10-9898efcaf484.webp",
+    "/products/Oversized/7dedb7b8-a896-40ab-b3e7-19819c73988b.webp",
     "/products/Oversized/77e279a5-451d-4c26-b3e2-6207e0b70ea3.webp",
     "/products/Oversized/a7df4077-860e-4fb5-ae55-baa04438ddf0.webp",
     "/products/Oversized/946cbfdc-2e70-4a90-84d1-e2321be0e3d8.webp",
@@ -399,14 +399,14 @@ function createMultiColorOversizedProduct(
 export const products: Product[] = [
   createMultiColorOversizedProduct({
     slug: "oversized-fate-eu-sou-jesus-branca",
-    name: "Camiseta Oversized Fate Eu Sou Jesus",
-    shortName: "Fate Eu Sou Jesus",
+    name: "Camiseta Oversized Faith Eu Sou Jesus",
+    shortName: "Faith Eu Sou Jesus",
     description:
-      "Camiseta oversized da linha Fate com mensagem cristã de impacto nas costas e assinatura minimalista no peito.",
+      "Camiseta oversized da linha Faith com mensagem cristã de impacto nas costas e assinatura minimalista no peito.",
     salesNote:
       "A verdade vira presença. Arte traseira forte, leitura urbana e caimento amplo para vestir propósito sem perder identidade.",
-    badge: "Novo • Linha Fate",
-    tags: ["fate", "linha cristã", "cristã", "jesus", "propósito", "estampa nas costas"],
+    badge: "Novo • Linha Faith",
+    tags: ["faith", "linha cristã", "cristã", "jesus", "propósito", "estampa nas costas"],
     colorOptions: [
       {
         productCode: "oversized-fate-eu-sou-jesus-branca",
@@ -424,14 +424,14 @@ export const products: Product[] = [
   }),
   createMultiColorOversizedProduct({
     slug: "oversized-fate-jesus-is-king-marrom",
-    name: "Camiseta Oversized Fate Jesus Is King",
-    shortName: "Fate Jesus Is King",
+    name: "Camiseta Oversized Faith Jesus Is King",
+    shortName: "Faith Jesus Is King",
     description:
-      "Camiseta oversized da linha Fate com tipografia Jesus Is King em azul e referência bíblica nas costas.",
+      "Camiseta oversized da linha Faith com tipografia Jesus Is King em azul e referência bíblica nas costas.",
     salesNote:
       "Mensagem direta, contraste marcante e presença streetwear. Uma peça feita para quem veste aquilo em que acredita.",
-    badge: "Novo • Linha Fate",
-    tags: ["fate", "linha cristã", "cristã", "jesus is king", "apocalipse 19:16", "estampa nas costas"],
+    badge: "Novo • Linha Faith",
+    tags: ["faith", "linha cristã", "cristã", "jesus is king", "apocalipse 19:16", "estampa nas costas"],
     colorOptions: [
       {
         productCode: "oversized-fate-jesus-is-king-marrom",
@@ -856,9 +856,9 @@ export const products: Product[] = [
     type: "apparel",
     campaign: "copa-2026",
     subcollection: "Retrô",
-    styleTags: ["futebol", "retro", "street"],
+    styleTags: ["futebol", "retrô", "street"],
     tags: [
-      "camisa brasil retro",
+      "camisa brasil retrô",
       "camisa kaka 2006",
       "copa 2006",
       "copa do mundo",
@@ -926,9 +926,9 @@ export const products: Product[] = [
     type: "apparel",
     campaign: "copa-2026",
     subcollection: "Retrô",
-    styleTags: ["futebol", "retro", "street"],
+    styleTags: ["futebol", "retrô", "street"],
     tags: [
-      "camisa brasil retro",
+      "camisa brasil retrô",
       "camisa ronaldinho 2006",
       "copa 2006",
       "copa do mundo",
@@ -983,7 +983,7 @@ export const products: Product[] = [
     shortName: "Brasil Manga Longa",
     active: true,
     description:
-      "Camisa Brasil manga longa com visual esportivo, cor marcante e presenca pronta para jogos, roles e composicoes streetwear.",
+      "Camisa Brasil manga longa com visual esportivo, cor marcante e presença pronta para jogos, rolês e composições streetwear.",
     salesNote:
       "Uma leitura diferente da camisa do Brasil: manga longa, visual limpo e energia de Copa para usar dentro e fora dos jogos.",
     details: [
@@ -1013,7 +1013,7 @@ export const products: Product[] = [
       "moda masculina",
       "streetwear esportivo",
     ],
-    badge: "Ultimas pecas",
+    badge: "Últimas peças",
     hideStockCount: true,
     showSizeGuide: false,
     photos: createProductPhotos("brasil-manga-longa-copa", [
@@ -1059,15 +1059,15 @@ export const products: Product[] = [
   },
   {
     slug: "camisa-espanha-versao-jogador",
-    name: "Camisa Espanha Versao Jogador",
-    shortName: "Espanha Versao Jogador",
+    name: "Camisa Espanha Versão Jogador",
+    shortName: "Espanha Versão Jogador",
     active: true,
     description:
-      "Camisa Espanha versao jogador com visual vermelho intenso, acabamento esportivo e leitura premium para a temporada da Copa.",
+      "Camisa Espanha versão jogador com visual vermelho intenso, acabamento esportivo e leitura premium para a temporada da Copa.",
     salesNote:
-      "Uma peca de futebol com impacto visual direto: vermelho forte, detalhes de selecao e presenca para jogo, rua e colecao.",
+      "Uma peça de futebol com impacto visual direto: vermelho forte, detalhes de seleção e presença para jogo, rua e coleção.",
     details: [
-      "Versao jogador",
+      "Versão jogador",
       "Caimento esportivo",
       "Tecido leve",
       "Visual Espanha",
@@ -1085,7 +1085,7 @@ export const products: Product[] = [
     tags: [
       "camisa espanha",
       "camiseta espanha",
-      "versao jogador",
+      "versão jogador",
       "copa do mundo",
       "copa 2026",
       "futebol",
@@ -1100,32 +1100,32 @@ export const products: Product[] = [
       {
         id: "frente",
         src: "/products/copa/9fdab3b8-4187-4f7b-bcf3-d71e54291f91.png",
-        alt: "Camisa Espanha versao jogador frente",
+        alt: "Camisa Espanha versão jogador frente",
       },
       {
         id: "look",
         src: "/products/copa/dc170bdf-3f9a-4977-abd9-865a8e8e05c6.png",
-        alt: "Camisa Espanha versao jogador em look masculino",
+        alt: "Camisa Espanha versão jogador em look masculino",
       },
       {
         id: "costas",
         src: "/products/copa/cdb2da6d-3507-4407-a4d4-3d2bf7017c94.png",
-        alt: "Camisa Espanha versao jogador costas",
+        alt: "Camisa Espanha versão jogador costas",
       },
       {
         id: "detalhe-peito",
         src: "/products/copa/05e72f52-3962-4716-b61f-4fcc80691a6f.png",
-        alt: "Detalhe frontal da Camisa Espanha versao jogador",
+        alt: "Detalhe frontal da Camisa Espanha versão jogador",
       },
       {
         id: "detalhe-costas",
         src: "/products/copa/078b08a9-2518-4c41-af0d-ed2f34651266.png",
-        alt: "Detalhe das costas da Camisa Espanha versao jogador",
+        alt: "Detalhe das costas da Camisa Espanha versão jogador",
       },
       {
         id: "lifestyle",
         src: "/products/copa/7346ffbf-7bdd-466c-b61a-d4e16f6debe2.png",
-        alt: "Camisa Espanha versao jogador em composicao lifestyle",
+        alt: "Camisa Espanha versão jogador em composição lifestyle",
       },
     ]),
     variants: [
@@ -1139,17 +1139,17 @@ export const products: Product[] = [
   },
   {
     slug: "camisa-brasil-retro-azul-ronaldo",
-    name: "Camisa Brasil Retro Azul Ronaldo 9",
-    shortName: "Brasil Retro Azul 9",
+    name: "Camisa Brasil Retrô Azul Ronaldo 9",
+    shortName: "Brasil Retrô Azul 9",
     active: true,
     description:
-      "Camisa Brasil retro azul Ronaldo 9 com visual classico, contraste branco e presenca de colecao para quem vive futebol.",
+      "Camisa Brasil retrô azul Ronaldo 9 com visual clássico, contraste branco e presença de coleção para quem vive futebol.",
     salesNote:
-      "Nostalgia em azul. Uma camisa com leitura vintage, numero 9 nas costas e energia de futebol para usar no dia a dia.",
+      "Nostalgia em azul. Uma camisa com leitura vintage, número 9 nas costas e energia de futebol para usar no dia a dia.",
     details: [
-      "Linha Brasil Retro",
-      "Visual azul classico",
-      "Numero 9 nas costas",
+      "Linha Brasil Retrô",
+      "Visual azul clássico",
+      "Número 9 nas costas",
       "Caimento esportivo",
       "Produto da linha Copa do Mundo GM Clothing",
     ],
@@ -1160,10 +1160,10 @@ export const products: Product[] = [
     category: "Brasil",
     type: "apparel",
     campaign: "copa-2026",
-    subcollection: "Retro",
-    styleTags: ["futebol", "retro", "street"],
+    subcollection: "Retrô",
+    styleTags: ["futebol", "retrô", "street"],
     tags: [
-      "camisa brasil retro",
+      "camisa brasil retrô",
       "camisa brasil azul",
       "ronaldo 9",
       "copa do mundo",
@@ -1173,34 +1173,34 @@ export const products: Product[] = [
       "gm clothing",
       "streetwear esportivo",
     ],
-    badge: "Retro azul",
+    badge: "Retrô azul",
     hideStockCount: true,
     showSizeGuide: false,
     photos: createProductPhotos("brasil-retro-azul-ronaldo", [
       {
         id: "costas",
         src: "/products/copa/55ebee77-0861-432a-aae5-3ee0901e3ff1.png",
-        alt: "Camisa Brasil retro azul Ronaldo 9 costas",
+        alt: "Camisa Brasil retrô azul Ronaldo 9 costas",
       },
       {
         id: "frente",
         src: "/products/copa/0c38c747-81ce-409f-844d-7dc26d5687e4.png",
-        alt: "Camisa Brasil retro azul Ronaldo 9 frente",
+        alt: "Camisa Brasil retrô azul Ronaldo 9 frente",
       },
       {
         id: "look",
         src: "/products/copa/a3b817f6-eaa4-4d33-8ce6-776ecac7f633.png",
-        alt: "Camisa Brasil retro azul Ronaldo 9 em look masculino",
+        alt: "Camisa Brasil retrô azul Ronaldo 9 em look masculino",
       },
       {
         id: "detalhe-costas",
         src: "/products/copa/a5b6fba1-9e18-467d-bd68-beea522ebdb0.png",
-        alt: "Detalhe das costas da Camisa Brasil retro azul Ronaldo 9",
+        alt: "Detalhe das costas da Camisa Brasil retrô azul Ronaldo 9",
       },
       {
         id: "costas-lifestyle",
         src: "/products/copa/9d52ee87-5ca6-4100-9f87-1df06ddf00ef.png",
-        alt: "Camisa Brasil retro azul Ronaldo 9 em composicao lifestyle",
+        alt: "Camisa Brasil retrô azul Ronaldo 9 em composição lifestyle",
       },
     ]),
     variants: [
@@ -1214,15 +1214,15 @@ export const products: Product[] = [
   },
   {
     slug: "camiseta-brasil-versao-jogador-azul",
-    name: "Camiseta Brasil Versao Jogador Azul",
+    name: "Camiseta Brasil Versão Jogador Azul",
     shortName: "Brasil Jogador Azul",
     active: true,
     description:
-      "Camiseta Brasil versao jogador azul com textura esportiva, acabamento leve e visual premium para a temporada da Copa.",
+      "Camiseta Brasil versão jogador azul com textura esportiva, acabamento leve e visual premium para a temporada da Copa.",
     salesNote:
-      "A versao azul chega com presenca mais urbana: tecido leve, detalhes de campo e leitura forte para jogo, rua e colecao.",
+      "A versão azul chega com presença mais urbana: tecido leve, detalhes de campo e leitura forte para jogo, rua e coleção.",
     details: [
-      "Versao jogador",
+      "Versão jogador",
       "Tecido leve e respiravel",
       "Caimento esportivo",
       "Detalhes em verde e amarelo",
@@ -1240,7 +1240,7 @@ export const products: Product[] = [
     tags: [
       "camiseta brasil",
       "camisa brasil azul",
-      "versao jogador",
+      "versão jogador",
       "copa do mundo",
       "copa 2026",
       "dry fit",
@@ -1256,27 +1256,27 @@ export const products: Product[] = [
       {
         id: "frente",
         src: "/products/copa/62035479-0bbe-45df-8976-a18f9340488a.png",
-        alt: "Camiseta Brasil versao jogador azul frente",
+        alt: "Camiseta Brasil versão jogador azul frente",
       },
       {
         id: "look",
         src: "/products/copa/d01297d8-c8eb-4f78-b794-481df294f15c.png",
-        alt: "Camiseta Brasil versao jogador azul em look masculino",
+        alt: "Camiseta Brasil versão jogador azul em look masculino",
       },
       {
         id: "costas",
         src: "/products/copa/48018ef2-cc40-433c-a760-55ec4b8473e7.png",
-        alt: "Camiseta Brasil versao jogador azul costas",
+        alt: "Camiseta Brasil versão jogador azul costas",
       },
       {
         id: "detalhe-peito",
         src: "/products/copa/ef9d8df2-3847-4c25-bb1e-7e1543b6e2e8.png",
-        alt: "Detalhe frontal da Camiseta Brasil versao jogador azul",
+        alt: "Detalhe frontal da Camiseta Brasil versão jogador azul",
       },
       {
         id: "detalhe-lateral",
         src: "/products/copa/a081211b-55ad-4fa3-967b-0c78e551052a.png",
-        alt: "Detalhe lateral da Camiseta Brasil versao jogador azul",
+        alt: "Detalhe lateral da Camiseta Brasil versão jogador azul",
       },
     ]),
     variants: [
@@ -2644,3 +2644,5 @@ function getBrasilPriority(product: Product) {
 
   return values.includes("brasil") ? 1 : 0;
 }
+
+

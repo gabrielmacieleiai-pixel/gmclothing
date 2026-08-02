@@ -34,14 +34,14 @@ const collectionPages = {
   },
   crista: {
     label: "Linha Cristã",
-    eyebrow: "Linha Fate",
+    eyebrow: "Linha Faith",
     title: "Vista propósito.",
     description: "Peças cristãs com linguagem urbana e identidade GM Clothing.",
     filterProducts: (products) => products.filter(isFaithProduct),
   },
   futebol: {
     label: "Futebol",
-    eyebrow: "Football Culture",
+    eyebrow: "Seleção e rua",
     title: "Futebol para vestir.",
     description: "Brasil, seleções, retrôs e oversized de futebol em uma única linha.",
     filterProducts: (products) => products.filter(isFootballProduct),
@@ -61,9 +61,9 @@ const collectionPages = {
     filterProducts: (products) =>
       products.filter(
         (product) =>
-          isFootballProduct(product) ||
-          isFaithProduct(product) ||
-          product.category === "Polo Tricot",
+          product.slug !== "camisa-brasil-retro-azul-ronaldo" &&
+          !isFaithProduct(product) &&
+          (isFootballProduct(product) || product.category === "Polo Tricot"),
       ),
   },
 } satisfies Record<string, CollectionConfig>;
@@ -102,6 +102,8 @@ export default async function CollectionLandingPage({
   const products = sortCollectionProducts(
     slug,
     collection.filterProducts(catalogProducts),
+  ).map((product) =>
+    slug === "ultimas-pecas" ? { ...product, badge: "Últimas peças" } : product,
   );
 
   return (
@@ -145,14 +147,22 @@ export default async function CollectionLandingPage({
 }
 
 function sortCollectionProducts(slug: string, products: Product[]) {
+  if (slug === "oversized") {
+    return [...products].sort(
+      (firstProduct, secondProduct) =>
+        Number(isFaithProduct(firstProduct)) -
+        Number(isFaithProduct(secondProduct)),
+    );
+  }
+
   if (slug !== "frio") {
     return products;
   }
 
   return [...products].sort(
     (firstProduct, secondProduct) =>
-      Number(isChenilleProduct(secondProduct)) -
-      Number(isChenilleProduct(firstProduct)),
+      Number(isChenilleProduct(firstProduct)) -
+      Number(isChenilleProduct(secondProduct)),
   );
 }
 

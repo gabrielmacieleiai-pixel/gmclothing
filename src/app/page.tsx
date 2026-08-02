@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 };
 
 const benefits = [
-  "Fotos reais",
+  "Frete grátis acima de R$299,90",
   "Envio rápido",
   "Drops limitados",
   "Compra segura",
@@ -47,12 +47,12 @@ const categoryTiles = [
   },
   {
     label: "Linha Cristã",
-    eyebrow: "Fate / Vista propósito",
+    eyebrow: "Faith / Vista propósito",
     href: "/colecao/crista",
   },
   {
     label: "Futebol",
-    eyebrow: "Football Culture",
+    eyebrow: "Seleção e rua",
     href: "/colecao/futebol",
   },
   {
@@ -91,8 +91,13 @@ const websiteSchema = {
 
 export default function Home() {
   const winterProducts = catalogProducts
-    .filter((product) => (product.collection?.toLowerCase().includes("frio") ?? false))
-    .slice(0, 4);
+    .filter(isWinterProduct)
+    .sort(
+      (firstProduct, secondProduct) =>
+        Number(isChenilleProduct(firstProduct)) -
+        Number(isChenilleProduct(secondProduct)),
+    )
+    .slice(0, 8);
 
   const newProducts = catalogProducts
     .filter((product) => {
@@ -102,7 +107,18 @@ export default function Home() {
     .slice(0, 4);
 
   const lastPieces = catalogProducts
-    .filter((product) => product.campaign === "copa-2026")
+    .filter(isLastChanceProduct)
+    .map((product) => ({ ...product, badge: "Últimas peças" }))
+    .slice(0, 4);
+
+  const bestSellerProducts = catalogProducts
+    .filter((product) => !isChenilleProduct(product))
+    .filter(
+      (product) =>
+        isOversizedProduct(product) ||
+        product.category === "Polo Tricot" ||
+        product.slug === "camiseta-brasil-versao-jogador",
+    )
     .slice(0, 4);
 
   return (
@@ -141,7 +157,7 @@ export default function Home() {
             action="Ver inverno"
             eyebrow="Coleção Inverno"
             href="/colecao/frio"
-            title="Camadas com presenca."
+            title="Camadas com presença."
           />
           <ProductGrid products={winterProducts} />
         </div>
@@ -155,7 +171,13 @@ export default function Home() {
             href="/colecao"
             title="Os favoritos da GM."
           />
-          <ProductGrid products={featuredProducts.slice(0, 4)} />
+          <ProductGrid
+            products={
+              bestSellerProducts.length > 0
+                ? bestSellerProducts
+                : featuredProducts.slice(0, 4)
+            }
+          />
         </div>
       </section>
 
@@ -235,13 +257,13 @@ export default function Home() {
         <div className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
           <div>
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-black/45">
-              Ultimas peças
+              Últimas peças
             </p>
             <h2 className="font-display mt-4 max-w-[8ch] text-5xl font-bold uppercase leading-[0.84] tracking-[-0.07em] sm:text-7xl">
               Presença sem repetição.
             </h2>
             <p className="mt-6 max-w-md text-sm leading-6 text-black/55">
-              Uma selecao curta de peças prontas para sair. Estoque enxuto,
+              Uma seleção curta de peças prontas para sair. Estoque enxuto,
               escolha direta e compra segura.
             </p>
             <Link
@@ -249,7 +271,7 @@ export default function Home() {
               href="/colecao/ultimas-pecas"
               prefetch={false}
             >
-              Ver ultimas peças <ArrowUpRight />
+              Ver últimas peças <ArrowUpRight />
             </Link>
           </div>
           <ProductGrid products={lastPieces} />
@@ -270,8 +292,8 @@ export default function Home() {
             </h2>
           </div>
           <p className="max-w-xl text-sm leading-7 text-black/55 lg:ml-auto">
-            As avaliacoes verificadas serao publicadas aqui conforme os pedidos
-            forem entregues. A GM Clothing nao usa depoimentos inventados.
+            As avaliações verificadas serão publicadas aqui conforme os pedidos
+            forem entregues. A GM Clothing não usa depoimentos inventados.
           </p>
         </div>
       </section>
@@ -301,4 +323,92 @@ export default function Home() {
       </section>
     </>
   );
+}
+
+function isWinterProduct(product: (typeof catalogProducts)[number]) {
+  return (
+    product.collection === "Coleção Frio" ||
+    product.category === "Suéter" ||
+    product.category === "Polo Tricot"
+  );
+}
+
+function isChenilleProduct(product: (typeof catalogProducts)[number]) {
+  return hasAnyProductText(product, ["chenile", "chenille"]);
+}
+
+function isOversizedProduct(product: (typeof catalogProducts)[number]) {
+  return (
+    product.category === "Oversized" ||
+    product.subcollection === "Oversized Futebol" ||
+    product.styleTags?.includes("oversized") ||
+    product.tags?.includes("oversized") ||
+    hasAnyProductText(product, ["oversized"])
+  );
+}
+
+function isFaithProduct(product: (typeof catalogProducts)[number]) {
+  return hasAnyProductText(product, [
+    "fate",
+    "faith",
+    "jesus",
+    "salmo",
+    "cristã",
+    "crista",
+    "propósito",
+    "proposito",
+  ]);
+}
+
+function isFootballProduct(product: (typeof catalogProducts)[number]) {
+  return (
+    product.campaign === "copa-2026" ||
+    product.collection === "Copa do Mundo" ||
+    product.category === "Jerseys" ||
+    hasAnyProductText(product, [
+      "futebol",
+      "football",
+      "copa",
+      "brasil",
+      "portugal",
+      "espanha",
+      "cr7",
+      "cristiano",
+      "ronaldinho",
+      "kaká",
+      "kaka",
+      "seleção",
+      "selecao",
+      "jersey",
+    ])
+  );
+}
+
+function isLastChanceProduct(product: (typeof catalogProducts)[number]) {
+  return (
+    product.slug !== "camisa-brasil-retro-azul-ronaldo" &&
+    !isFaithProduct(product) &&
+    (isFootballProduct(product) || product.category === "Polo Tricot")
+  );
+}
+
+function hasAnyProductText(
+  product: (typeof catalogProducts)[number],
+  values: string[],
+) {
+  const haystack = [
+    product.name,
+    product.shortName,
+    product.collection,
+    product.category,
+    product.subcollection,
+    ...(product.tags ?? []),
+    ...(product.styleTags ?? []),
+    product.badge,
+  ]
+    .filter(Boolean)
+    .join(" ")
+    .toLowerCase();
+
+  return values.some((value) => haystack.includes(value.toLowerCase()));
 }

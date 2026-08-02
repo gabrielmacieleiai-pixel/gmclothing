@@ -38,7 +38,7 @@ const filters: CollectionFilter[] = [
   },
   {
     id: "faith",
-    label: "Linha Fate",
+    label: "Linha Faith",
     matches: (product) => isFaithProduct(product),
   },
   {
@@ -58,7 +58,9 @@ const filters: CollectionFilter[] = [
     id: "ultimas-pecas",
     label: "Últimas peças",
     matches: (product) =>
-      isFootballProduct(product) || isFaithProduct(product) || product.category === "Polo Tricot",
+      product.slug !== "camisa-brasil-retro-azul-ronaldo" &&
+      !isFaithProduct(product) &&
+      (isFootballProduct(product) || product.category === "Polo Tricot"),
   },
   {
     id: "promocao",
@@ -78,10 +80,36 @@ export function CollectionBrowser({
   );
   const selectedFilter =
     filters.find((filter) => filter.id === selectedFilterId) ?? filters[0];
-  const visibleProducts = useMemo(
-    () => products.filter((product) => selectedFilter.matches(product)),
-    [products, selectedFilter],
-  );
+  const visibleProducts = useMemo(() => {
+    const filteredProducts = products.filter((product) =>
+      selectedFilter.matches(product),
+    );
+
+    if (selectedFilter.id === "frio") {
+      return [...filteredProducts].sort(
+        (firstProduct, secondProduct) =>
+          Number(isChenilleProduct(firstProduct)) -
+          Number(isChenilleProduct(secondProduct)),
+      );
+    }
+
+    if (selectedFilter.id === "oversized") {
+      return [...filteredProducts].sort(
+        (firstProduct, secondProduct) =>
+          Number(isFaithProduct(firstProduct)) -
+          Number(isFaithProduct(secondProduct)),
+      );
+    }
+
+    if (selectedFilter.id === "ultimas-pecas") {
+      return filteredProducts.map((product) => ({
+        ...product,
+        badge: "Últimas peças",
+      }));
+    }
+
+    return filteredProducts;
+  }, [products, selectedFilter]);
 
   function selectFilter(filterId: string) {
     setSelectedFilterId(filterId);

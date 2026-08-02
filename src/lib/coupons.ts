@@ -2,7 +2,7 @@ export type CouponResult =
   | {
       valid: true;
       code: string;
-      discount: 0;
+      discount: number;
       message: string;
     }
   | {
@@ -10,6 +10,20 @@ export type CouponResult =
       discount: 0;
       message: string;
     };
+
+type CouponDefinition = {
+  active: boolean;
+  type: "percentage";
+  value: number;
+};
+
+const couponMap: Record<string, CouponDefinition> = {
+  FDR20: {
+    active: true,
+    type: "percentage",
+    value: 20,
+  },
+};
 
 export function normalizeCouponCode(code: string) {
   return code.trim().toUpperCase();
@@ -19,7 +33,6 @@ export function calculateCouponDiscount(
   code: string,
   subtotal: number,
 ): CouponResult {
-  void subtotal;
   const normalizedCode = normalizeCouponCode(code);
 
   if (!normalizedCode) {
@@ -30,10 +43,25 @@ export function calculateCouponDiscount(
     };
   }
 
+  const coupon = couponMap[normalizedCode];
+
+  if (!coupon || !coupon.active) {
+    return {
+      valid: false,
+      discount: 0,
+      message: "Cupom inválido ou indisponível.",
+    };
+  }
+
+  const discount =
+    coupon.type === "percentage"
+      ? Math.round(subtotal * (coupon.value / 100) * 100) / 100
+      : 0;
+
   return {
     valid: true,
     code: normalizedCode,
-    discount: 0,
-    message: "Cupom adicionado. O desconto será validado pela Shopify no checkout.",
+    discount,
+    message: `Cupom ${normalizedCode} aplicado: ${coupon.value}% de desconto.`,
   };
 }

@@ -21,12 +21,23 @@ export function ProductCard({
 }: ProductCardProps) {
   const colors = getProductColors(product);
   const pricing = getProductPricing(product, product.defaultColorId);
+  const isLastChanceBadge = product.badge
+    ?.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .includes("ultimas");
 
   return (
     <article className="group w-[84vw] max-w-[410px] shrink-0 snap-center md:w-auto md:max-w-none">
       {product.badge ? (
         <div className="mb-2 min-h-5 md:mb-3 md:min-h-6">
-          <span className="inline-flex max-w-full border border-black/15 px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.14em] text-ink md:px-3 md:py-1.5 md:text-[9px] md:tracking-[0.16em]">
+          <span
+            className={`inline-flex max-w-full border px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.14em] md:px-3 md:py-1.5 md:text-[9px] md:tracking-[0.16em] ${
+              isLastChanceBadge
+                ? "border-red-800 bg-red-800 text-white"
+                : "border-black/15 text-ink"
+            }`}
+          >
             {product.badge}
           </span>
         </div>

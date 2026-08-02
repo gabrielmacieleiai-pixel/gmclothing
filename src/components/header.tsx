@@ -36,18 +36,18 @@ const salesLinks = [
   },
   {
     href: "/colecao/crista",
-    eyebrow: "Linha Fate",
+    eyebrow: "Linha Faith",
     label: "Streetwear cristão com identidade",
   },
   {
     href: "/colecao/futebol",
-    eyebrow: "Football Culture",
+    eyebrow: "Futebol Brasil",
     label: "Brasil, retrô, Portugal e seleções",
   },
   {
     href: "/colecao/ultimas-pecas",
     eyebrow: "Últimas peças",
-    label: "Futebol, faith e polos em giro rápido",
+    label: "Futebol, polos e peças finais em giro rápido",
   },
   {
     href: "/colecao/promocao",
