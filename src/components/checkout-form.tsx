@@ -6,7 +6,9 @@ import { useCart } from "@/components/cart-provider";
 import { ArrowUpRight } from "@/components/icons";
 import { getCheckoutUrlBySku } from "@/lib/checkout";
 import { formatPrice } from "@/lib/format";
+import { isLocalDeliveryCity } from "@/lib/local-delivery";
 import { getShopifyCartPermalink } from "@/lib/shopify";
+import { createWhatsAppUrl } from "@/lib/whatsapp";
 import type { FormEvent } from "react";
 
 type CheckoutField =
@@ -122,12 +124,20 @@ const initialForm = fieldOrder.reduce(
 );
 
 export function CheckoutForm() {
-  const { discount, items, subtotal, total } = useCart();
+  const { couponCode, discount, items, subtotal, total } = useCart();
   const [form, setForm] = useState(initialForm);
   const [message, setMessage] = useState<string | null>(null);
   const [cepMessage, setCepMessage] = useState<string | null>(null);
+  const [localDeliveryCity, setLocalDeliveryCity] = useState<string | null>(
+    null,
+  );
   const [isCepLoading, setIsCepLoading] = useState(false);
   const hasItems = items.length > 0;
+  const localDeliveryWhatsAppUrl = localDeliveryCity
+    ? createWhatsAppUrl(
+        `Olá! Quero combinar a entrega local do meu pedido. Meu CEP é ${form.cep} (${localDeliveryCity}/SC).`,
+      )
+    : null;
 
   function updateField(field: CheckoutField, value: string) {
     setForm((currentForm) => ({ ...currentForm, [field]: value }));
@@ -147,6 +157,7 @@ export function CheckoutForm() {
     setForm((currentForm) => ({ ...currentForm, cep: nextCep }));
     setMessage(null);
     setCepMessage(null);
+    setLocalDeliveryCity(null);
 
     if (cepDigits.length !== 8) {
       return;
@@ -171,7 +182,14 @@ export function CheckoutForm() {
         city: currentForm.city || data.localidade || "",
         state: currentForm.state || data.uf || "",
       }));
-      setCepMessage("Endereço preenchido pelo CEP.");
+      const hasLocalDelivery = isLocalDeliveryCity(data.localidade, data.uf);
+
+      setLocalDeliveryCity(hasLocalDelivery ? data.localidade?.trim() ?? null : null);
+      setCepMessage(
+        hasLocalDelivery
+          ? "Endereço preenchido. Entrega local disponível."
+          : "Endereço preenchido pelo CEP.",
+      );
     } catch {
       setCepMessage("Não foi possível buscar o CEP agora. Preencha manualmente.");
     } finally {
@@ -203,6 +221,7 @@ export function CheckoutForm() {
     );
     const shopifyCheckoutUrl = allItemsHaveShopifyVariant
       ? getShopifyCartPermalink(shopifyItems, {
+          discountCode: couponCode || undefined,
           checkout: { zip: form.cep },
         })
       : null;
@@ -299,6 +318,26 @@ export function CheckoutForm() {
                 </label>
               );
             })}
+
+            {localDeliveryWhatsAppUrl ? (
+              <a
+                className="flex items-center justify-between gap-4 bg-[#050505] px-5 py-4 text-white transition hover:bg-black/80 sm:col-span-2"
+                href={localDeliveryWhatsAppUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <span>
+                  <strong className="block text-[10px] uppercase tracking-[0.16em]">
+                    Combinar entrega pelo WhatsApp
+                  </strong>
+                  <span className="mt-1 block text-xs text-white/65">
+                    {localDeliveryCity} · valor, prazo e horário combinados com a
+                    GM Clothing.
+                  </span>
+                </span>
+                <ArrowUpRight />
+              </a>
+            ) : null}
 
             {message ? (
               <p className="border border-[#8a2d1d]/25 bg-[#8a2d1d]/5 px-4 py-3 text-[10px] font-bold uppercase leading-4 tracking-[0.12em] text-[#8a2d1d] sm:col-span-2">

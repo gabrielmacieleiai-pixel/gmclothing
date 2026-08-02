@@ -37,6 +37,7 @@ export function CartPage() {
     hasItems && shopifyItems.every((item) => Boolean(item.variantId));
   const shopifyCheckoutUrl = canUseShopifyCheckout
     ? getShopifyCartPermalink(shopifyItems, {
+        discountCode: couponCode || undefined,
         checkout: { zip: checkoutZip },
       })
     : null;
@@ -232,10 +233,17 @@ export function CartPage() {
               <span className="text-black/50">Subtotal</span>
               <span className="font-bold">{formatPrice(subtotal)}</span>
             </div>
-            <div className="flex justify-between">
-              <span className="text-black/50">Desconto</span>
-              <span className="font-bold">-{formatPrice(discount)}</span>
-            </div>
+            {discount > 0 ? (
+              <div className="flex justify-between">
+                <span className="text-black/50">Desconto</span>
+                <span className="font-bold">-{formatPrice(discount)}</span>
+              </div>
+            ) : couponCode ? (
+              <div className="flex justify-between gap-4 text-xs">
+                <span className="text-black/50">Cupom {couponCode}</span>
+                <span className="text-right font-bold">Calculado na Shopify</span>
+              </div>
+            ) : null}
             <div className="flex justify-between">
               <span className="text-black/50">Frete</span>
               <span className="font-bold">A calcular</span>

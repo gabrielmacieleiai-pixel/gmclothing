@@ -141,11 +141,13 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                 </div>
 
                 <div className="max-w-3xl">
-                  <p
-                    className={"mb-5 text-[10px] font-bold uppercase tracking-[0.3em] " + accentClasses[slide.palette]}
-                  >
-                    Coleção atual
-                  </p>
+                  {slide.id !== "ultimas-pecas" ? (
+                    <p
+                      className={"mb-5 text-[10px] font-bold uppercase tracking-[0.3em] " + accentClasses[slide.palette]}
+                    >
+                      Coleção atual
+                    </p>
+                  ) : null}
                   <h1 className="font-display max-w-[11ch] text-[clamp(3.8rem,15vw,9.5rem)] font-bold uppercase leading-[0.82] tracking-[-0.075em] text-white [text-wrap:balance]">
                     {slide.title}
                   </h1>

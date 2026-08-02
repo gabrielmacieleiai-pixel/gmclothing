@@ -33,6 +33,13 @@ type ShippingQuoteOption = {
   deliveryTime: number | null;
 };
 
+type LocalDeliveryOption = {
+  city: string;
+  label: string;
+  message: string;
+  whatsappUrl: string;
+};
+
 const LOW_STOCK_THRESHOLD = 3;
 
 export function ProductDetails({
@@ -40,7 +47,7 @@ export function ProductDetails({
   whatsappUrl,
   initialColorId,
 }: ProductDetailsProps) {
-  const { addItem } = useCart();
+  const { addItem, couponCode } = useCart();
   const router = useRouter();
   const galleryRef = useRef<HTMLDivElement>(null);
   const productMedia = useMemo(
@@ -104,6 +111,8 @@ export function ProductDetails({
   const [shippingOptions, setShippingOptions] = useState<ShippingQuoteOption[]>(
     [],
   );
+  const [localDelivery, setLocalDelivery] =
+    useState<LocalDeliveryOption | null>(null);
   const [isShippingLoading, setIsShippingLoading] = useState(false);
 
   const selectedColor = colors.find((color) => color.id === selectedColorId);
@@ -223,6 +232,10 @@ export function ProductDetails({
 
     setShippingCep(nextCep);
 
+    if (cepDigits.length !== 8) {
+      setLocalDelivery(null);
+    }
+
     if (cepDigits.length === 8) {
       saveCheckoutPrefill({ zip: nextCep });
     }
@@ -233,6 +246,7 @@ export function ProductDetails({
 
     if (cep.length !== 8) {
       setShippingOptions([]);
+      setLocalDelivery(null);
       setShippingMessage("Digite um CEP válido com 8 números.");
       return;
     }
@@ -240,6 +254,7 @@ export function ProductDetails({
     setIsShippingLoading(true);
     setShippingMessage(null);
     setShippingOptions([]);
+    setLocalDelivery(null);
 
     try {
       const response = await fetch("/api/shipping/quote", {
@@ -257,9 +272,12 @@ export function ProductDetails({
       const data = (await response.json()) as {
         message?: string;
         options?: ShippingQuoteOption[];
+        localDelivery?: LocalDeliveryOption | null;
       };
 
-      if (!response.ok || !data.options?.length) {
+      setLocalDelivery(data.localDelivery ?? null);
+
+      if (!response.ok || (!data.options?.length && !data.localDelivery)) {
         setShippingMessage(
           data.message ??
             "Não foi possível calcular o envio agora. Finalize pelo checkout ou fale no WhatsApp.",
@@ -267,8 +285,12 @@ export function ProductDetails({
         return;
       }
 
-      setShippingOptions(data.options);
-      setShippingMessage("Envio calculado para este CEP.");
+      setShippingOptions(data.options ?? []);
+      setShippingMessage(
+        data.localDelivery
+          ? `Entrega local disponível para ${data.localDelivery.city}.`
+          : "Envio calculado para este CEP.",
+      );
     } catch {
       setShippingMessage(
         "Não foi possível calcular o envio agora. Tente novamente em instantes.",
@@ -336,6 +358,7 @@ export function ProductDetails({
 
     const checkoutUrl =
       getShopifyCartUrl(cartItem.shopifyVariantId, cartItem.quantity, {
+        discountCode: couponCode || undefined,
         checkout: { zip: shippingCep },
       }) ??
       cartItem.checkoutUrl;
@@ -353,7 +376,7 @@ export function ProductDetails({
 
   return (
     <>
-      <section className="mx-auto grid max-w-[1440px] gap-8 overflow-hidden px-4 pb-36 sm:px-6 lg:grid-cols-[1.35fr_0.65fr] lg:gap-14 lg:px-10 lg:pb-24">
+      <section className="mx-auto grid max-w-[1536px] gap-8 overflow-hidden px-4 pb-36 sm:px-6 lg:grid-cols-[1.42fr_0.58fr] lg:gap-14 lg:px-10 lg:pb-24">
         <div className="order-1 min-w-0 lg:sticky lg:top-24 lg:self-start">
           <div className="mb-5 lg:hidden">
             <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-black/45">
@@ -383,15 +406,15 @@ export function ProductDetails({
             </div>
           </div>
 
-          <div className="relative">
+          <div className="relative -mx-4 sm:-mx-6 lg:mx-0">
             <div
-              className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth bg-[#dedbd3] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+              className="flex snap-x snap-mandatory overflow-x-auto scroll-smooth bg-[#050505] [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
               onScroll={handleGalleryScroll}
               ref={galleryRef}
             >
               {visibleMedia.map((media, index) => (
                 <div
-                  className="relative aspect-[4/5] w-full shrink-0 snap-center overflow-hidden"
+                  className="relative aspect-[2/3] w-full shrink-0 snap-center overflow-hidden sm:aspect-[3/4]"
                   key={media.id}
                 >
                   {product.badge ? (
@@ -440,7 +463,7 @@ export function ProductDetails({
           <div className="mt-3 grid grid-cols-3 gap-2 sm:gap-3">
             {visibleMedia.map((media, index) => (
               <button
-                className={`relative aspect-[4/5] overflow-hidden border bg-[#dedbd3] ${
+                className={`relative aspect-[2/3] overflow-hidden border bg-[#050505] ${
                   selectedMedia?.id === media.id
                     ? "border-[#050505]"
                     : "border-transparent opacity-65 hover:opacity-100"
@@ -721,6 +744,25 @@ export function ProductDetails({
                 ))}
               </div>
             ) : null}
+
+            {localDelivery ? (
+              <a
+                className="mt-4 flex items-center justify-between gap-4 bg-[#050505] px-4 py-4 text-white transition hover:bg-black/80"
+                href={localDelivery.whatsappUrl}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <span>
+                  <strong className="block text-[10px] uppercase tracking-[0.14em]">
+                    {localDelivery.label}
+                  </strong>
+                  <span className="mt-1 block text-xs text-white/65">
+                    {localDelivery.city} · {localDelivery.message}
+                  </span>
+                </span>
+                <ArrowUpRight />
+              </a>
+            ) : null}
           </div>
 
           <div className="mt-8 border-t border-black/15">
@@ -885,7 +927,7 @@ function MediaFrame({
           fill
           quality={78}
           sizes={sizes}
-          className="object-contain"
+          className="object-cover"
         />
       ) : (
         <div className="flex size-full items-center justify-center bg-[#050505] text-[10px] font-bold uppercase tracking-[0.18em] text-white/45">
@@ -916,7 +958,7 @@ function MediaFrame({
       priority={priority}
       quality={82}
       sizes={sizes}
-      className="object-contain"
+      className="object-cover"
     />
   );
 }

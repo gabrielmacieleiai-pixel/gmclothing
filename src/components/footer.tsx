@@ -29,7 +29,7 @@ export function Footer() {
               <Link href="/" prefetch={false}>Início</Link>
               <Link href="/colecao/frio" prefetch={false}>Inverno</Link>
               <Link href="/colecao" prefetch={false}>Coleção</Link>
-              <Link href="/colecao?categoria=ultimas-pecas" prefetch={false}>Últimas peças</Link>
+              <Link href="/colecao/ultimas-pecas" prefetch={false}>Últimas peças</Link>
               <Link href="/acessorios" prefetch={false}>Acessórios</Link>
               <Link href="/carrinho" prefetch={false}>Carrinho</Link>
             </div>

@@ -6,6 +6,7 @@ const SHOPIFY_STORE_DOMAIN =
   DEFAULT_SHOPIFY_STORE_DOMAIN;
 
 type ShopifyCheckoutOptions = {
+  discountCode?: string;
   checkout?: {
     zip?: string;
   };
@@ -97,15 +98,19 @@ export function getShopifyCartPermalink(
 
 function withCheckoutParams(url: string, options?: ShopifyCheckoutOptions) {
   const zip = options?.checkout?.zip?.replace(/\D/g, "");
+  const discountCode = options?.discountCode?.trim();
+  const params = new URLSearchParams();
 
-  if (!zip || zip.length !== 8) {
-    return url;
+  if (discountCode) {
+    params.set("discount", discountCode);
   }
 
-  const params = new URLSearchParams({
-    "checkout[shipping_address][zip]": zip,
-    "checkout[shipping_address][country]": "Brazil",
-  });
+  if (zip?.length === 8) {
+    params.set("checkout[shipping_address][zip]", zip);
+    params.set("checkout[shipping_address][country]", "Brazil");
+  }
 
-  return `${url}?${params.toString()}`;
+  const query = params.toString();
+
+  return query ? `${url}?${query}` : url;
 }

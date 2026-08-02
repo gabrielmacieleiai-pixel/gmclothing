@@ -8,6 +8,66 @@ function normalizeKey(value: string) {
 }
 
 export const shopifyVariantIds: ShopifyVariantIdMap = {
+  "oversized-fate-eu-sou-jesus-branca": {
+    branco: {
+      p: "46069624373318",
+      m: "46069624406086",
+      g: "46069624438854",
+      gg: "46069624471622",
+    },
+    preto: {
+      p: "46069624504390",
+      m: "46069624537158",
+      g: "46069624569926",
+      gg: "46069624602694",
+    },
+  },
+  "oversized-fate-jesus-is-king-marrom": {
+    marrom: {
+      p: "46069624635462",
+      m: "46069624668230",
+      g: "46069624700998",
+      gg: "46069624733766",
+    },
+    preto: {
+      p: "46069624766534",
+      m: "46069624799302",
+      g: "46069624832070",
+      gg: "46069624864838",
+    },
+  },
+  "camisa-brasil-manga-longa-copa": {
+    amarelo: {
+      p: "46015798739014",
+      m: "46015798771782",
+      g: "46015798804550",
+      gg: "46015798837318",
+    },
+  },
+  "camisa-espanha-versao-jogador": {
+    vermelho: {
+      p: "46015798870086",
+      m: "46015798902854",
+      g: "46015798935622",
+      gg: "46015798968390",
+    },
+  },
+  "camisa-brasil-retro-azul-ronaldo": {
+    azul: {
+      p: "46015799001158",
+      m: "46015799033926",
+      g: "46015799066694",
+      gg: "46015799099462",
+    },
+  },
+  "camiseta-brasil-versao-jogador-azul": {
+    "azul-marinho": {
+      p: "46015799132230",
+      m: "46015799164998",
+      g: "46015799197766",
+      gg: "46015799230534",
+    },
+  },
   "oversized-essential-preta": {
     preto: {
       p: "45870364033094",
@@ -131,6 +191,12 @@ export const shopifyVariantIds: ShopifyVariantIdMap = {
       m: "45832155398214",
       g: "45832155430982",
       gg: "45832155463750",
+    },
+    "cinza-claro": {
+      p: "46069678899270",
+      m: "46069678932038",
+      g: "46069678964806",
+      gg: "46069678997574",
     },
   },
   "sueter-tricot-trancado-preto": {

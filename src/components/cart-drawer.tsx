@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import type { FormEvent } from "react";
 import { AccessoryCrossSell } from "@/components/accessory-cross-sell";
 import { useCart } from "@/components/cart-provider";
 import { getCheckoutPrefill } from "@/lib/checkout-prefill";
@@ -11,9 +12,13 @@ import { getShopifyCartPermalink } from "@/lib/shopify";
 
 export function CartDrawer() {
   const {
+    applyCoupon,
     cartMessage,
     clearCartMessage,
+    clearCoupon,
     closeCart,
+    couponCode,
+    couponMessage,
     discount,
     isOpen,
     items,
@@ -22,6 +27,7 @@ export function CartDrawer() {
     total,
     updateQuantity,
   } = useCart();
+  const [couponInput, setCouponInput] = useState(couponCode);
   const [checkoutZip] = useState(() => getCheckoutPrefill().zip);
 
   const hasItems = items.length > 0;
@@ -33,9 +39,15 @@ export function CartDrawer() {
     hasItems && shopifyItems.every((item) => Boolean(item.variantId));
   const checkoutHref = canUseShopifyCheckout
     ? getShopifyCartPermalink(shopifyItems, {
+        discountCode: couponCode || undefined,
         checkout: { zip: checkoutZip },
       })
     : "/checkout";
+
+  function handleCouponSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    applyCoupon(couponInput);
+  }
   return (
     <div
       aria-hidden={!isOpen}
@@ -178,6 +190,48 @@ export function CartDrawer() {
         </div>
 
         <div className="border-t border-black/10 bg-[#f5f1e8] p-4">
+          {hasItems ? (
+            <form className="mb-4" onSubmit={handleCouponSubmit}>
+              <label
+                className="text-[9px] font-bold uppercase tracking-[0.16em] text-black/45"
+                htmlFor="drawer-coupon"
+              >
+                Cupom de desconto
+              </label>
+              <div className="mt-2 grid grid-cols-[1fr_auto] border border-black/15">
+                <input
+                  className="min-w-0 bg-transparent px-3 py-3 text-sm uppercase outline-none"
+                  id="drawer-coupon"
+                  onChange={(event) => setCouponInput(event.target.value)}
+                  placeholder="Digite seu cupom"
+                  value={couponInput}
+                />
+                <button
+                  className="bg-[#050505] px-4 text-[9px] font-bold uppercase tracking-[0.14em] text-white"
+                  type="submit"
+                >
+                  Aplicar
+                </button>
+              </div>
+              {couponMessage ? (
+                <div className="mt-2 flex items-start justify-between gap-3 text-[9px] uppercase leading-4 tracking-[0.1em] text-black/45">
+                  <span>{couponMessage}</span>
+                  {couponCode ? (
+                    <button
+                      className="shrink-0 font-bold text-black/70"
+                      onClick={() => {
+                        clearCoupon();
+                        setCouponInput("");
+                      }}
+                      type="button"
+                    >
+                      Remover
+                    </button>
+                  ) : null}
+                </div>
+              ) : null}
+            </form>
+          ) : null}
           <div className="mb-2 flex items-center justify-between text-sm">
             <span className="font-bold uppercase tracking-[0.14em]">
               Subtotal
@@ -188,6 +242,11 @@ export function CartDrawer() {
             <div className="mb-2 flex items-center justify-between text-xs text-black/50">
               <span>Desconto</span>
               <span>-{formatPrice(discount)}</span>
+            </div>
+          ) : couponCode ? (
+            <div className="mb-2 flex items-center justify-between gap-3 text-[10px] text-black/50">
+              <span>Cupom {couponCode}</span>
+              <span className="text-right">Calculado na Shopify</span>
             </div>
           ) : null}
           <div className="mb-4 flex items-center justify-between text-sm">

@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { HeroCarousel } from "@/components/hero-carousel";
 import { ArrowUpRight } from "@/components/icons";
@@ -9,10 +8,8 @@ import { brandAssets } from "@/data/brand-assets";
 import {
   catalogProducts,
   featuredProducts,
-  getProductHref,
 } from "@/data/products";
 import { heroSlides } from "@/data/hero-slides";
-import { getImageVariantSrc } from "@/lib/image-variants";
 
 export const metadata: Metadata = {
   title: "GM Clothing | Streetwear com identidade",
@@ -42,37 +39,31 @@ const categoryTiles = [
     label: "Inverno",
     eyebrow: "Texturas para a estação",
     href: "/colecao/frio",
-    image: brandAssets.brands2.frioHeroDesktop,
-    mobileImage: brandAssets.brands2.frioHeroMobile,
   },
   {
     label: "Oversized",
     eyebrow: "Modelagens amplas",
     href: "/colecao/oversized",
-    image: brandAssets.brands2.oversizedHeroDesktop,
-    mobileImage: brandAssets.brands2.oversizedHeroMobile,
   },
   {
-    label: "Ultimas peças",
-    eyebrow: "Seleção de estoque curto",
-    href: "/colecao?categoria=ultimas-peças",
-    image: brandAssets.brands2.oversizedBrasil,
-    mobileImage: brandAssets.brands2.oversizedBrasil,
-  },
-];
-
-const instagramTiles = [
-  {
-    src: brandAssets.brands2.frioLifestyle,
-    alt: "Editorial de inverno GM Clothing",
+    label: "Linha Cristã",
+    eyebrow: "Fate / Vista propósito",
+    href: "/colecao/crista",
   },
   {
-    src: brandAssets.brands2.oversizedLifestyle,
-    alt: "Editorial oversized GM Clothing",
+    label: "Futebol",
+    eyebrow: "Football Culture",
+    href: "/colecao/futebol",
   },
   {
-    src: brandAssets.brands2.brandAtmosphere,
-    alt: "Atmosfera da GM Clothing",
+    label: "Promoções",
+    eyebrow: "Condições especiais",
+    href: "/colecao/promocao",
+  },
+  {
+    label: "Últimas peças",
+    eyebrow: "Estoque limitado",
+    href: "/colecao/ultimas-pecas",
   },
 ];
 
@@ -114,10 +105,6 @@ export default function Home() {
     .filter((product) => product.campaign === "copa-2026")
     .slice(0, 4);
 
-  const highlightChenile = catalogProducts.find(
-    (product) => product.canonicalSlug === "sueter-chenile-zara",
-  );
-
   return (
     <>
       <script
@@ -156,43 +143,7 @@ export default function Home() {
             href="/colecao/frio"
             title="Camadas com presenca."
           />
-          <div className="grid gap-8 lg:grid-cols-[0.78fr_1.22fr] lg:items-stretch">
-            <Link
-              className="group relative min-h-[440px] overflow-hidden bg-[#17130f] text-white sm:min-h-[560px]"
-              href={
-                highlightChenile
-                  ? getProductHref(highlightChenile)
-                  : "/colecao/frio"
-              }
-              prefetch={false}
-            >
-              <Image
-                alt="Sueter Chenile Zara em editorial de inverno"
-                className="object-cover transition duration-700 group-hover:scale-[1.03]"
-                fill
-                quality={80}
-                sizes="(max-width: 1024px) 100vw, 38vw"
-                src={getImageVariantSrc(
-                  brandAssets.brands2.chenileHero,
-                  "hero",
-                )}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/90 via-[#050505]/15 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#d4b06a]">
-                  Produto principal
-                </p>
-                <h3 className="font-display mt-3 max-w-[10ch] text-4xl font-bold uppercase leading-[0.88] tracking-[-0.06em] sm:text-6xl">
-                  Sueter Chenile Zara
-                </h3>
-                <span className="mt-6 inline-flex items-center gap-3 border-b border-white pb-2 text-[10px] font-bold uppercase tracking-[0.18em]">
-                  Conhecer peca <ArrowUpRight />
-                </span>
-              </div>
-            </Link>
-
-            <ProductGrid products={winterProducts} />
-          </div>
+          <ProductGrid products={winterProducts} />
         </div>
       </section>
 
@@ -234,51 +185,31 @@ export default function Home() {
             href="/colecao"
             title="Encontre sua próxima peça."
           />
-          <div className="grid gap-3 sm:grid-cols-3">
-            {categoryTiles.map((category) => {
-              const hasMobileImage =
-                category.mobileImage !== category.image;
-
-              return (
-                <Link
-                  className="group relative min-h-[300px] overflow-hidden bg-[#050505] text-white sm:min-h-[390px]"
-                  href={category.href}
-                  key={category.label}
-                  prefetch={false}
-                >
-                  {hasMobileImage ? (
-                    <Image
-                      alt={category.label}
-                      className="object-cover lg:hidden"
-                      fill
-                      quality={76}
-                      sizes="(max-width: 640px) 100vw, 33vw"
-                      src={getImageVariantSrc(category.mobileImage, "card")}
-                    />
-                  ) : null}
-                  <Image
-                    alt={category.label}
-                    className={(hasMobileImage ? "hidden lg:block " : "") + "object-cover transition duration-700 group-hover:scale-[1.03]"}
-                    fill
-                    quality={76}
-                    sizes="(max-width: 640px) 100vw, 33vw"
-                    src={getImageVariantSrc(category.image, "card")}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/90 via-[#050505]/20 to-transparent" />
-                  <div className="absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                    <p className="text-[9px] font-bold uppercase tracking-[0.22em] text-white/60">
-                      {category.eyebrow}
-                    </p>
-                    <h3 className="font-display mt-2 text-3xl font-bold uppercase leading-none tracking-[-0.06em]">
-                      {category.label}
-                    </h3>
-                    <span className="mt-5 inline-flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em]">
-                      Explorar <ArrowUpRight />
-                    </span>
-                  </div>
-                </Link>
-              );
-            })}
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            {categoryTiles.map((category, index) => (
+              <Link
+                className={`group flex min-h-[220px] flex-col justify-between p-6 transition-colors sm:min-h-[260px] sm:p-8 ${
+                  index % 2 === 0
+                    ? "bg-[#050505] text-white hover:bg-[#171715]"
+                    : "border border-black/15 bg-white text-[#050505] hover:bg-[#eee9df]"
+                }`}
+                href={category.href}
+                key={category.label}
+                prefetch={false}
+              >
+                <p className="text-[9px] font-bold uppercase tracking-[0.22em] opacity-55">
+                  {category.eyebrow}
+                </p>
+                <div className="flex items-end justify-between gap-5">
+                  <h3 className="font-display max-w-[9ch] text-4xl font-bold uppercase leading-[0.88] tracking-[-0.06em]">
+                    {category.label}
+                  </h3>
+                  <span className="grid size-11 shrink-0 place-items-center border border-current/25">
+                    <ArrowUpRight />
+                  </span>
+                </div>
+              </Link>
+            ))}
             <Link
               className="group flex min-h-[300px] flex-col justify-between bg-[#050505] p-6 text-white sm:min-h-[390px] sm:p-8"
               href="/acessorios"
@@ -315,7 +246,7 @@ export default function Home() {
             </p>
             <Link
               className="mt-8 inline-flex min-h-12 items-center gap-4 bg-[#050505] px-5 py-3.5 text-[10px] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#c8a96a] hover:text-[#050505]"
-              href="/colecao?categoria=ultimas-peças"
+              href="/colecao/ultimas-pecas"
               prefetch={false}
             >
               Ver ultimas peças <ArrowUpRight />
@@ -346,48 +277,26 @@ export default function Home() {
       </section>
 
       <section
-        className="home-section bg-[#050505] px-5 py-14 text-white sm:px-8 sm:py-16 lg:px-12 lg:py-24"
+        className="home-section bg-[#050505] px-5 py-12 text-white sm:px-8 lg:px-12"
         id="instagram"
       >
-        <div className="mx-auto max-w-[1440px]">
-          <div className="mb-8 flex items-end justify-between gap-6 border-b border-white/15 pb-5">
-            <div>
-              <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/45">
-                Instagram
-              </p>
-              <h2 className="font-display mt-3 text-4xl font-bold uppercase leading-none tracking-[-0.06em] sm:text-6xl">
-                GM em movimento.
-              </h2>
-            </div>
-            <a
-              className="hidden items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] transition-colors hover:text-[#c8a96a] sm:flex"
-              href="https://www.instagram.com/gm.clo/"
-              rel="noreferrer"
-              target="_blank"
-            >
-              @gm.clo <ArrowUpRight />
-            </a>
+        <div className="mx-auto flex max-w-[1440px] flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-white/45">
+              Instagram
+            </p>
+            <h2 className="font-display mt-3 text-4xl font-bold uppercase leading-none tracking-[-0.06em] sm:text-5xl">
+              Acompanhe a GM.
+            </h2>
           </div>
-          <div className="grid grid-cols-3 gap-2 sm:gap-4">
-            {instagramTiles.map((tile) => (
-              <a
-                className="group relative aspect-[4/5] overflow-hidden bg-white/5"
-                href="https://www.instagram.com/gm.clo/"
-                key={tile.src}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <Image
-                  alt={tile.alt}
-                  className="object-cover transition duration-700 group-hover:scale-[1.04]"
-                  fill
-                  quality={76}
-                  sizes="(max-width: 640px) 33vw, 30vw"
-                  src={getImageVariantSrc(tile.src, "card")}
-                />
-              </a>
-            ))}
-          </div>
+          <a
+            className="inline-flex min-h-12 items-center justify-center gap-3 border border-white/25 px-6 text-[10px] font-bold uppercase tracking-[0.18em] transition-colors hover:border-[#c8a96a] hover:text-[#c8a96a]"
+            href="https://www.instagram.com/gm.clo/"
+            rel="noreferrer"
+            target="_blank"
+          >
+            @gm.clo <ArrowUpRight />
+          </a>
         </div>
       </section>
     </>

@@ -17,3 +17,9 @@ yarn-error.log*
 pnpm-debug.log*
 *.tsbuildinfo
 public/products/winter/*.png
+!public/products/winter/a73666a0-9970-42fc-88e5-c1e5842122cb.png
+!public/products/winter/2e44eb0d-d7f0-4c44-9a4c-aad15e50e635.png
+!public/products/winter/370e48a8-b0d3-4e93-b97a-1e7176ef7a97.png
+!public/products/winter/e15aaef8-7758-47f0-8b74-b48fe8fd159d.png
+!public/products/winter/f9862fa8-b6db-4ef4-9fa2-62403b4d8c8c.png
+!public/products/winter/965b7825-250c-477b-8ac3-24021ef045d5.png

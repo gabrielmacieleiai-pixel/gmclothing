@@ -1,10 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useMemo, useState } from "react";
 import { ProductGrid } from "@/components/product-grid";
-import { brandAssets } from "@/data/brand-assets";
-import { getImageVariantSrc } from "@/lib/image-variants";
 import type { Product } from "@/types/product";
 
 type CollectionBrowserProps = {
@@ -16,15 +13,6 @@ type CollectionFilter = {
   id: string;
   label: string;
   matches: (product: Product) => boolean;
-};
-
-type CollectionVisual = {
-  eyebrow: string;
-  title: string;
-  description: string;
-  image: string;
-  mobileImage?: string;
-  accent: string;
 };
 
 const filters: CollectionFilter[] = [
@@ -50,7 +38,7 @@ const filters: CollectionFilter[] = [
   },
   {
     id: "faith",
-    label: "Linha Faith",
+    label: "Linha Fate",
     matches: (product) => isFaithProduct(product),
   },
   {
@@ -81,80 +69,6 @@ const filters: CollectionFilter[] = [
       hasAnyText(product, ["promoção", "queima", "final", "oferta"]),
   },
 ];
-const collectionVisuals: Record<string, CollectionVisual> = {
-  frio: {
-    eyebrow: "Coleção de frio",
-    title: "Tricô, textura e presença.",
-    description:
-      "Suéteres e polos de tricô com acabamento limpo, leitura premium e sensação de lançamento.",
-    image: brandAssets.brands2.chenileHero,
-    mobileImage: brandAssets.brands2.chenileHeroAlt,
-    accent: "text-[#c8a96a]",
-  },
-  caneladas: {
-    eyebrow: "Caneladas",
-    title: "Base premium para o próximo drop.",
-    description:
-      "A estrutura já está preparada para receber as camisetas caneladas assim que as fotos reais entrarem no catálogo.",
-    image: brandAssets.brands2.premiumDetails,
-    mobileImage: brandAssets.brands2.productDetails,
-    accent: "text-[#c8a96a]",
-  },
-  oversized: {
-    eyebrow: "Coleção Oversized",
-    title: "Essenciais com peso visual.",
-    description:
-      "Caimento amplo, fotos fortes e estética streetwear para valorizar cada cor do drop.",
-    image: brandAssets.brands2.oversizedHeroDesktop,
-    mobileImage: brandAssets.brands2.oversizedHeroMobile,
-    accent: "text-[#9faa83]",
-  },
-  faith: {
-    eyebrow: "Linha Faith",
-    title: "Identidade discreta. Presença real.",
-    description:
-      "Peças com linguagem cristã limpa, urbana e alinhada à identidade GM Clothing.",
-    image: brandAssets.brands2.oversizedManifesto,
-    mobileImage: brandAssets.brands2.oversizedManifesto,
-    accent: "text-[#d4b06a]",
-  },
-  futebol: {
-    eyebrow: "Football Culture",
-    title: "Futebol para vestir fora de campo.",
-    description:
-      "Brasil, retrô, seleções e oversized futebol em uma curadoria com leitura streetwear.",
-    image: brandAssets.brands2.copaProductHero,
-    mobileImage: brandAssets.brands2.copaProductClean,
-    accent: "text-[#72c7ef]",
-  },
-  "mais-vendidos": {
-    eyebrow: "Mais vendidos",
-    title: "O que precisa girar agora.",
-    description:
-      "Chenille Zara, oversized e estrutura pronta para caneladas em uma seleção direta para conversão.",
-    image: brandAssets.brands2.chenileHero,
-    mobileImage: brandAssets.brands2.chenileHeroAlt,
-    accent: "text-[#c8a96a]",
-  },
-  "ultimas-pecas": {
-    eyebrow: "Últimas peças",
-    title: "Poucas unidades. Giro rápido.",
-    description:
-      "Futebol, linha faith e polos em uma seleção temporária para destacar peças com maior urgência comercial.",
-    image: "/products/imagens para o site/a41dfd0b-7b0f-40c6-9252-85d515446a38.png",
-    mobileImage: "/products/imagens para o site/665e3737-402f-48b5-94f2-2f5ba1295bca.png",
-    accent: "text-[#d4b06a]",
-  },
-  promocao: {
-    eyebrow: "Promoções",
-    title: "Preço claro. Compra rápida.",
-    description:
-      "Peças selecionadas com condição especial, sem perder a leitura premium da GM Clothing.",
-    image: brandAssets.brands2.oversizedHeroDesktop,
-    mobileImage: brandAssets.brands2.oversizedHeroMobile,
-    accent: "text-[#d4b06a]",
-  },
-};
 export function CollectionBrowser({
   products,
   initialFilterId,
@@ -168,7 +82,6 @@ export function CollectionBrowser({
     () => products.filter((product) => selectedFilter.matches(product)),
     [products, selectedFilter],
   );
-  const selectedVisual = collectionVisuals[selectedFilterId];
 
   function selectFilter(filterId: string) {
     setSelectedFilterId(filterId);
@@ -214,45 +127,6 @@ export function CollectionBrowser({
           ))}
         </div>
       </div>
-
-      {selectedVisual ? (
-        <section className="mb-8 overflow-hidden bg-[#050505] text-white">
-          <div className="grid min-h-[420px] lg:grid-cols-[0.85fr_1.15fr]">
-            <div className="flex flex-col justify-end px-5 py-8 sm:px-8 lg:px-10 lg:py-12">
-              <p
-                className={`mb-4 text-[10px] font-bold uppercase tracking-[0.26em] ${selectedVisual.accent}`}
-              >
-                {selectedVisual.eyebrow}
-              </p>
-              <h3 className="max-w-2xl text-5xl font-black uppercase leading-[0.86] tracking-display sm:text-7xl">
-                {selectedVisual.title}
-              </h3>
-              <p className="mt-6 max-w-md text-sm leading-6 text-white/58">
-                {selectedVisual.description}
-              </p>
-            </div>
-            <div className="relative min-h-[360px] overflow-hidden border-t border-white/10 bg-[#050505] lg:border-l lg:border-t-0">
-              {selectedVisual.mobileImage ? (
-                <Image
-                  alt=""
-                  className="object-contain p-3 lg:hidden"
-                  fill
-                  sizes="100vw"
-                  src={getImageVariantSrc(selectedVisual.mobileImage, "hero")}
-                />
-              ) : null}
-              <Image
-                alt=""
-                className={`${selectedVisual.mobileImage ? "hidden lg:block" : ""} object-contain p-4`}
-                fill
-                sizes="(max-width: 1024px) 100vw, 58vw"
-                src={getImageVariantSrc(selectedVisual.image, "hero")}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/40 via-transparent to-transparent" />
-            </div>
-          </div>
-        </section>
-      ) : null}
 
       {visibleProducts.length > 0 ? (
         <ProductGrid products={visibleProducts} />

@@ -1,4 +1,4 @@
-﻿import Link from "next/link";
+import Link from "next/link";
 import { ProductCardGallery } from "@/components/product-card-gallery";
 import {
   getProductColors,
@@ -23,10 +23,10 @@ export function ProductCard({
   const pricing = getProductPricing(product, product.defaultColorId);
 
   return (
-    <article className="group min-w-0">
+    <article className="group w-[84vw] max-w-[410px] shrink-0 snap-center md:w-auto md:max-w-none">
       {product.badge ? (
-        <div className="mb-2 min-h-5 sm:mb-3 sm:min-h-6">
-          <span className="inline-flex max-w-full border border-black/15 px-2 py-1 text-[7px] font-bold uppercase tracking-[0.13em] text-ink sm:px-3 sm:py-1.5 sm:text-[9px] sm:tracking-[0.16em]">
+        <div className="mb-2 min-h-5 md:mb-3 md:min-h-6">
+          <span className="inline-flex max-w-full border border-black/15 px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.14em] text-ink md:px-3 md:py-1.5 md:text-[9px] md:tracking-[0.16em]">
             {product.badge}
           </span>
         </div>
@@ -40,9 +40,9 @@ export function ProductCard({
       />
 
       <Link href={getProductHref(product)} prefetch={false}>
-        <div className="min-w-0 pt-3 sm:pt-4">
+        <div className="min-w-0 pt-3 md:pt-4">
           <h3
-            className={`min-h-[2.6rem] overflow-hidden text-[12px] font-bold uppercase leading-[1.18] tracking-[0.01em] sm:text-sm ${
+            className={`min-h-0 overflow-hidden text-[17px] font-black uppercase leading-[1.05] tracking-[-0.02em] md:min-h-[2.6rem] md:text-sm md:leading-[1.18] md:tracking-[0.01em] ${
               inverse ? "text-white" : "text-[#050505]"
             }`}
             style={{
@@ -55,7 +55,7 @@ export function ProductCard({
           </h3>
 
           <p
-            className={`mt-1 truncate text-[8px] uppercase tracking-[0.14em] sm:mt-2 sm:text-[10px] sm:tracking-[0.16em] ${
+            className={`mt-2 truncate text-[9px] uppercase tracking-[0.16em] md:text-[10px] ${
               inverse ? "text-white/45" : "text-black/45"
             }`}
           >
@@ -64,13 +64,13 @@ export function ProductCard({
           </p>
 
           <div
-            className={`mt-3 grid gap-1 border-t pt-2.5 sm:mt-3 sm:pt-3 ${
+            className={`mt-2 grid gap-1 border-t pt-2 md:mt-3 md:pt-3 ${
               inverse ? "border-white/15" : "border-black/10"
             }`}
           >
             {pricing.promotionalPrice ? (
               <div
-                className={`text-[8px] uppercase tracking-[0.12em] sm:text-[9px] sm:tracking-[0.16em] ${
+                className={`text-[9px] uppercase tracking-[0.14em] md:text-[9px] md:tracking-[0.16em] ${
                   inverse ? "text-white/35" : "text-black/35"
                 }`}
               >
@@ -86,13 +86,13 @@ export function ProductCard({
                 inverse ? "text-white" : "text-[#050505]"
               }`}
             >
-              <span className="text-[17px] font-black leading-none tracking-tight sm:text-base">
+              <span className="text-[22px] font-black leading-none tracking-tight md:text-base">
                 Por {formatPrice(pricing.currentPrice)}
               </span>
 
               {pricing.discountPercentage ? (
                 <span
-                  className={`w-fit shrink-0 whitespace-nowrap px-2 py-1 text-[6px] font-bold uppercase tracking-[0.1em] sm:px-2.5 sm:py-1.5 sm:text-[8px] sm:font-black sm:tracking-[0.12em] ${
+                  className={`w-fit shrink-0 whitespace-nowrap px-2 py-1 text-[7px] font-bold uppercase tracking-[0.11em] md:px-2.5 md:py-1.5 md:text-[8px] md:font-black md:tracking-[0.12em] ${
                     inverse
                       ? "bg-white text-[#050505]"
                       : "bg-[#050505] text-white"
@@ -108,3 +108,4 @@ export function ProductCard({
     </article>
   );
 }
+

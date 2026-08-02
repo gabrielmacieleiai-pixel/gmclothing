@@ -8,9 +8,9 @@ const optimizedDir = path.join(productsDir, "_optimized");
 const allowed = new Set([".jpg", ".jpeg", ".png", ".webp"]);
 
 const variants = [
-  { name: "card", width: 760, quality: 76 },
-  { name: "detail", width: 1500, quality: 82 },
-  { name: "hero", width: 1800, quality: 80 },
+  { name: "card", width: 1080, quality: 84 },
+  { name: "detail", width: 1800, quality: 88 },
+  { name: "hero", width: 2200, quality: 86 },
 ];
 
 async function walk(dir) {

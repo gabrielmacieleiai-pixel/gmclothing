@@ -8,7 +8,9 @@ import { getShopifyVariantId } from "@/data/shopify-variant-ids";
 
 const colors = {
   black: { id: "preto", name: "Preto", hex: "#171715" },
+  white: { id: "branco", name: "Branco", hex: "#f4f3ef" },
   offWhite: { id: "off-white", name: "Off-white", hex: "#e8e4d9" },
+  lightGray: { id: "cinza-claro", name: "Cinza claro", hex: "#c8c8c4" },
   charcoal: { id: "chumbo", name: "Chumbo", hex: "#4f504c" },
   brown: { id: "marrom", name: "Marrom", hex: "#6b3f2a" },
   caramel: { id: "caramelo", name: "Caramelo", hex: "#8a542f" },
@@ -16,6 +18,8 @@ const colors = {
   green: { id: "verde", name: "Verde", hex: "#183d27" },
   brazilYellow: { id: "amarelo", name: "Amarelo", hex: "#ffd500" },
   argentinaBlue: { id: "branco-azul", name: "Branco e azul", hex: "#72c7ef" },
+  royalBlue: { id: "azul", name: "Azul", hex: "#0646b5" },
+  spainRed: { id: "vermelho", name: "Vermelho", hex: "#c4121f" },
   navy: { id: "azul-marinho", name: "Azul marinho", hex: "#071f3f" },
 } satisfies Record<string, ProductColor>;
 
@@ -148,6 +152,39 @@ type OversizedProductInput = {
 };
 
 const oversizedCatalogPhotoSources: Record<string, string[]> = {
+  "oversized-fate-eu-sou-jesus-branca": [
+    "/products/Oversized/9041fd40-62c9-46ff-b522-9cdf60781cd3.png",
+    "/products/Oversized/c4c2a462-01bf-4f0e-acb5-2f54e0759d6e.png",
+    "/products/Oversized/0cde6986-5d25-446c-87da-8e56f91527df.png",
+    "/products/Oversized/245d8e75-9e62-4de6-a856-60fa20e2f3d5.png",
+    "/products/Oversized/74343e1b-b889-41e5-bc6a-d9831388361b.png",
+    "/products/Oversized/503ade75-e125-4fbd-a40f-b6b02cf43f1f.png",
+  ],
+  "oversized-fate-eu-sou-jesus-preta": [
+    "/products/Oversized/e22abe2a-6280-49db-9f75-c5b5192b51ce.png",
+    "/products/Oversized/b280a80b-e7e2-4f02-bc97-ebe494b3af11.png",
+    "/products/Oversized/752133ad-ee45-49ba-a483-e7cdcd9a79de.png",
+    "/products/Oversized/d9f756ce-07b9-4684-ae23-368b3da6b701.png",
+    "/products/Oversized/b433af53-bba2-425a-a148-3966beebe08d.png",
+    "/products/Oversized/d7dffd86-938a-4415-a23f-5d6161c7493a.png",
+  ],
+  "oversized-fate-jesus-is-king-marrom": [
+    "/products/Oversized/760c58df-af1d-492c-abfa-7e3f65490d56.png",
+    "/products/Oversized/b2d96b4c-add9-4e0f-892d-51205e2b8f73.png",
+    "/products/Oversized/7dde22d1-8719-461a-9581-0bb344cd3a53.png",
+    "/products/Oversized/49350580-a120-491d-bf0d-514411ea2b96.png",
+    "/products/Oversized/04741277-f380-414a-87ad-18c7328adb90.png",
+    "/products/Oversized/8a48a3e3-d72b-44de-a7c8-b8ae6812cc4e.png",
+    "/products/Oversized/8261168d-cb34-49aa-a3e1-018c6e64e74a.png",
+  ],
+  "oversized-fate-jesus-is-king-preta": [
+    "/products/Oversized/b1f813d2-9a75-49a7-8179-ea082cb4c714.png",
+    "/products/Oversized/592ddbf6-2726-46ff-bfe3-770b1694a287.png",
+    "/products/Oversized/19740640-95a0-4fb4-8c71-739b1db7202e.png",
+    "/products/Oversized/359cc042-9551-420b-aa27-c1ffef79212e.png",
+    "/products/Oversized/fdaf84f4-de5b-47ec-ae64-caa2fc692b50.png",
+    "/products/Oversized/1f54de62-76d9-4168-a636-67aba3fa67f8.png",
+  ],
   "oversized-box-preta": [
     "/products/Oversized/a5916e0c-712d-4785-8868-69b4fa193145.webp",
     "/products/Oversized/d3da7709-c81e-4a0f-9e3a-a042d0e10f95.webp",
@@ -170,18 +207,18 @@ const oversizedCatalogPhotoSources: Record<string, string[]> = {
     "/products/Oversized/28aa9013-9a6d-4764-9177-aaf317934cd2.webp",
   ],
   "oversized-pre-treino-preta": [
-    "/products/Oversized/220e13eb-7093-4a5d-bab7-0b4ddd0f083a.webp",
     "/products/Oversized/c8b958e2-30f7-46cf-908e-b2a13358febf.webp",
     "/products/Oversized/6cefacd8-7970-4eed-afef-337561150c31.webp",
-    "/products/Oversized/8292a2e4-11c9-40b3-bb94-a969d1b4965f.webp",
     "/products/Oversized/b4b24265-e78f-4f21-9224-13c6e1992fb9.webp",
+    "/products/Oversized/220e13eb-7093-4a5d-bab7-0b4ddd0f083a.webp",
+    "/products/Oversized/8292a2e4-11c9-40b3-bb94-a969d1b4965f.webp",
   ],
   "oversized-graphic-marrom": [
+    "/products/Oversized/7dedb7b8-a896-40ab-b3e7-19819c73988b.webp",
+    "/products/Oversized/d23564ad-8380-427c-be10-9898efcaf484.webp",
     "/products/Oversized/77e279a5-451d-4c26-b3e2-6207e0b70ea3.webp",
     "/products/Oversized/a7df4077-860e-4fb5-ae55-baa04438ddf0.webp",
     "/products/Oversized/946cbfdc-2e70-4a90-84d1-e2321be0e3d8.webp",
-    "/products/Oversized/7dedb7b8-a896-40ab-b3e7-19819c73988b.webp",
-    "/products/Oversized/d23564ad-8380-427c-be10-9898efcaf484.webp",
   ],
   "oversized-essential-preta": [
     "/products/Oversized/1c8a6912-8647-4a41-bd85-03b3228b0680.webp",
@@ -212,17 +249,17 @@ const oversizedCatalogPhotoSources: Record<string, string[]> = {
     "/products/Oversized/a04d29cf-f7d6-49bf-be6a-a9251063c206.webp",
   ],
   "oversized-graphic-azul-preta": [
+    "/products/Oversized/77601549-84d6-4b48-814d-2bbec48e8e19.webp",
+    "/products/Oversized/9f746fdf-f96b-4cc6-8526-71e3985130e8.webp",
     "/products/Oversized/5e0ff254-1750-40f0-946e-708a3308e9e6.webp",
     "/products/Oversized/1230a2c7-8d31-4b34-b86e-a9873e590748.webp",
     "/products/Oversized/82181edb-1c82-4d4d-9640-8c747950d2e1.webp",
-    "/products/Oversized/77601549-84d6-4b48-814d-2bbec48e8e19.webp",
-    "/products/Oversized/9f746fdf-f96b-4cc6-8526-71e3985130e8.webp",
   ],
   "oversized-graphic-azul-off-white": [
-    "/products/Oversized/bcfdbecf-4bb1-4120-a9b4-3c705b0eac8c.webp",
-    "/products/Oversized/6b02eadc-1ac4-4cdb-870c-f5840e9bb225.webp",
     "/products/Oversized/88ee6e28-ed7d-45bb-a004-0f6112966094.webp",
     "/products/Oversized/99493324-0630-41e2-b1d8-2d726c2df61b.webp",
+    "/products/Oversized/bcfdbecf-4bb1-4120-a9b4-3c705b0eac8c.webp",
+    "/products/Oversized/6b02eadc-1ac4-4cdb-870c-f5840e9bb225.webp",
     "/products/Oversized/481aff48-1002-4802-9bd1-48b5cd71b17f.webp",
   ],
 };
@@ -261,6 +298,7 @@ function createOversizedProduct(input: OversizedProductInput): Product {
     promotionalPrice: oversizedPromoPricing.promotionalPrice,
     colorPricing: {
       [colors.offWhite.id]: oversizedWhitePricing,
+      [colors.white.id]: oversizedWhitePricing,
     },
     yampiCheckoutUrl: null,
     collection: "Oversized",
@@ -321,6 +359,7 @@ function createMultiColorOversizedProduct(
     promotionalPrice: oversizedPromoPricing.promotionalPrice,
     colorPricing: {
       [colors.offWhite.id]: oversizedWhitePricing,
+      [colors.white.id]: oversizedWhitePricing,
     },
     yampiCheckoutUrl: null,
     collection: "Oversized",
@@ -359,6 +398,56 @@ function createMultiColorOversizedProduct(
 
 export const products: Product[] = [
   createMultiColorOversizedProduct({
+    slug: "oversized-fate-eu-sou-jesus-branca",
+    name: "Camiseta Oversized Fate Eu Sou Jesus",
+    shortName: "Fate Eu Sou Jesus",
+    description:
+      "Camiseta oversized da linha Fate com mensagem cristã de impacto nas costas e assinatura minimalista no peito.",
+    salesNote:
+      "A verdade vira presença. Arte traseira forte, leitura urbana e caimento amplo para vestir propósito sem perder identidade.",
+    badge: "Novo • Linha Fate",
+    tags: ["fate", "linha cristã", "cristã", "jesus", "propósito", "estampa nas costas"],
+    colorOptions: [
+      {
+        productCode: "oversized-fate-eu-sou-jesus-branca",
+        skuCode: "GMC-FATE-ESJ-BR",
+        color: colors.white,
+        tags: ["branco", "camiseta branca"],
+      },
+      {
+        productCode: "oversized-fate-eu-sou-jesus-preta",
+        skuCode: "GMC-FATE-ESJ-PR",
+        color: colors.black,
+        tags: ["preto", "camiseta preta"],
+      },
+    ],
+  }),
+  createMultiColorOversizedProduct({
+    slug: "oversized-fate-jesus-is-king-marrom",
+    name: "Camiseta Oversized Fate Jesus Is King",
+    shortName: "Fate Jesus Is King",
+    description:
+      "Camiseta oversized da linha Fate com tipografia Jesus Is King em azul e referência bíblica nas costas.",
+    salesNote:
+      "Mensagem direta, contraste marcante e presença streetwear. Uma peça feita para quem veste aquilo em que acredita.",
+    badge: "Novo • Linha Fate",
+    tags: ["fate", "linha cristã", "cristã", "jesus is king", "apocalipse 19:16", "estampa nas costas"],
+    colorOptions: [
+      {
+        productCode: "oversized-fate-jesus-is-king-marrom",
+        skuCode: "GMC-FATE-JIK-MR",
+        color: colors.brown,
+        tags: ["marrom", "camiseta marrom"],
+      },
+      {
+        productCode: "oversized-fate-jesus-is-king-preta",
+        skuCode: "GMC-FATE-JIK-PR",
+        color: colors.black,
+        tags: ["preto", "camiseta preta"],
+      },
+    ],
+  }),
+  createMultiColorOversizedProduct({
     slug: "oversized-box-preta",
     name: "Camiseta Oversized Box",
     shortName: "Box Oversized",
@@ -396,9 +485,9 @@ export const products: Product[] = [
     shortName: "Pré-Treino",
     color: colors.black,
     description:
-      "Camiseta oversized preta com arte frontal pequena, pegada de treino e linguagem streetwear para presença no dia a dia.",
+      "Camiseta oversized preta com detalhe frontal discreto e estampa forte nas costas, pegada de treino e linguagem streetwear para presença no dia a dia.",
     salesNote:
-      "Uma preta com atitude. Estampa compacta, caimento amplo e visual pronto para quem gosta de academia, rua e identidade.",
+      "Uma preta com atitude. Frente limpa, costas com impacto e caimento amplo para quem gosta de academia, rua e identidade.",
     stockBySize: { M: 10, G: 10, GG: 10 },
     tags: ["preto", "camiseta preta", "academia", "pré-treino"],
   }),
@@ -410,9 +499,9 @@ export const products: Product[] = [
     active: false,
     color: colors.brown,
     description:
-      "Camiseta oversized marrom com arte gráfica laranja no peito, contraste quente e caimento amplo.",
+      "Camiseta oversized marrom com detalhe frontal laranja e estampa gráfica de impacto nas costas, contraste quente e caimento amplo.",
     salesNote:
-      "Marrom premium para sair do básico. A arte pequena segura o visual limpo, mas deixa a peça com personalidade.",
+      "Marrom premium para sair do básico. Frente limpa, costas marcantes e personalidade sem perder o visual urbano.",
     tags: ["marrom", "camiseta marrom", "graphic tee"],
   }),
   createMultiColorOversizedProduct({
@@ -444,7 +533,7 @@ export const products: Product[] = [
     name: "Camiseta Oversized Jordan",
     shortName: "Jordan",
     description:
-      "Camiseta oversized Court com referência de quadra, caimento amplo e estética streetwear esportiva.",
+      "Camiseta oversized Jordan com referência de quadra, caimento amplo e estética streetwear esportiva.",
     salesNote:
       "Da quadra para a rua. Escolha verde militar ou marrom dentro da mesma página e veja as fotos da cor selecionada.",
     tags: ["basquete", "court", "streetwear esportivo"],
@@ -468,9 +557,9 @@ export const products: Product[] = [
     name: "Camiseta Oversized Air Jordan",
     shortName: "Air Jordan",
     description:
-      "Camiseta oversized com arte azul no peito, contraste frio e estética limpa de streetwear esportivo.",
+      "Camiseta oversized Air Jordan com detalhe frontal azul e estampa de impacto nas costas, contraste frio e estética limpa de streetwear esportivo.",
     salesNote:
-      "Detalhe azul para quebrar o óbvio. Escolha preta ou off-white e mantenha a compra no mesmo fluxo.",
+      "Detalhe azul na frente, presença forte nas costas. Escolha preta ou off-white e mantenha a compra no mesmo fluxo.",
     tags: ["azul", "graphic tee", "streetwear esportivo"],
     colorOptions: [
       {
@@ -889,6 +978,317 @@ export const products: Product[] = [
     ],
   },
   {
+    slug: "camisa-brasil-manga-longa-copa",
+    name: "Camisa Brasil Manga Longa - Copa",
+    shortName: "Brasil Manga Longa",
+    active: true,
+    description:
+      "Camisa Brasil manga longa com visual esportivo, cor marcante e presenca pronta para jogos, roles e composicoes streetwear.",
+    salesNote:
+      "Uma leitura diferente da camisa do Brasil: manga longa, visual limpo e energia de Copa para usar dentro e fora dos jogos.",
+    details: [
+      "Camisa de futebol manga longa",
+      "Caimento esportivo",
+      "Tecido leve",
+      "Detalhes em verde",
+      "Produto da linha Copa do Mundo GM Clothing",
+    ],
+    price: 399.9,
+    promotionalPrice: 279.9,
+    yampiCheckoutUrl: null,
+    collection: "Copa do Mundo",
+    category: "Brasil",
+    type: "apparel",
+    campaign: "copa-2026",
+    subcollection: "Brasil",
+    styleTags: ["futebol", "street", "copa"],
+    tags: [
+      "camisa brasil",
+      "camisa brasil manga longa",
+      "copa do mundo",
+      "copa 2026",
+      "futebol",
+      "brasil",
+      "gm clothing",
+      "moda masculina",
+      "streetwear esportivo",
+    ],
+    badge: "Ultimas pecas",
+    hideStockCount: true,
+    showSizeGuide: false,
+    photos: createProductPhotos("brasil-manga-longa-copa", [
+      {
+        id: "look",
+        src: "/products/copa/43761f53-6458-43d7-9c8e-1343aa420662.png",
+        alt: "Camisa Brasil manga longa em look masculino",
+      },
+      {
+        id: "frente",
+        src: "/products/copa/a56c17b9-93cb-44a6-bd7e-fb18b4a39af7.png",
+        alt: "Camisa Brasil manga longa frente",
+      },
+      {
+        id: "costas",
+        src: "/products/copa/cc444dda-21c6-47dd-963d-21cb7a45e6ed.png",
+        alt: "Camisa Brasil manga longa costas",
+      },
+      {
+        id: "detalhe-peito",
+        src: "/products/copa/228823da-c1ce-4673-ad1d-b0df537bb869.png",
+        alt: "Detalhe frontal da Camisa Brasil manga longa",
+      },
+      {
+        id: "detalhe-barra",
+        src: "/products/copa/a212eb5c-712c-4e22-9654-b989c6da8802.png",
+        alt: "Detalhe de barra da Camisa Brasil manga longa",
+      },
+      {
+        id: "detalhe-gola",
+        src: "/products/copa/98117a0d-78be-473c-874c-13538690af36.png",
+        alt: "Detalhe da gola da Camisa Brasil manga longa",
+      },
+    ]),
+    variants: [
+      ...createVariants(
+        "GMC-COPA-BRML",
+        colors.brazilYellow,
+        standardSizeStock,
+        "camisa-brasil-manga-longa-copa",
+      ),
+    ],
+  },
+  {
+    slug: "camisa-espanha-versao-jogador",
+    name: "Camisa Espanha Versao Jogador",
+    shortName: "Espanha Versao Jogador",
+    active: true,
+    description:
+      "Camisa Espanha versao jogador com visual vermelho intenso, acabamento esportivo e leitura premium para a temporada da Copa.",
+    salesNote:
+      "Uma peca de futebol com impacto visual direto: vermelho forte, detalhes de selecao e presenca para jogo, rua e colecao.",
+    details: [
+      "Versao jogador",
+      "Caimento esportivo",
+      "Tecido leve",
+      "Visual Espanha",
+      "Produto da linha Copa do Mundo GM Clothing",
+    ],
+    price: 399.9,
+    promotionalPrice: 279.9,
+    yampiCheckoutUrl: null,
+    collection: "Copa do Mundo",
+    category: "Futebol",
+    type: "apparel",
+    campaign: "copa-2026",
+    subcollection: "Futebol",
+    styleTags: ["futebol", "performance", "street"],
+    tags: [
+      "camisa espanha",
+      "camiseta espanha",
+      "versao jogador",
+      "copa do mundo",
+      "copa 2026",
+      "futebol",
+      "streetwear esportivo",
+      "gm clothing",
+      "moda masculina",
+    ],
+    badge: "Football drop",
+    hideStockCount: true,
+    showSizeGuide: false,
+    photos: createProductPhotos("espanha-player", [
+      {
+        id: "frente",
+        src: "/products/copa/9fdab3b8-4187-4f7b-bcf3-d71e54291f91.png",
+        alt: "Camisa Espanha versao jogador frente",
+      },
+      {
+        id: "look",
+        src: "/products/copa/dc170bdf-3f9a-4977-abd9-865a8e8e05c6.png",
+        alt: "Camisa Espanha versao jogador em look masculino",
+      },
+      {
+        id: "costas",
+        src: "/products/copa/cdb2da6d-3507-4407-a4d4-3d2bf7017c94.png",
+        alt: "Camisa Espanha versao jogador costas",
+      },
+      {
+        id: "detalhe-peito",
+        src: "/products/copa/05e72f52-3962-4716-b61f-4fcc80691a6f.png",
+        alt: "Detalhe frontal da Camisa Espanha versao jogador",
+      },
+      {
+        id: "detalhe-costas",
+        src: "/products/copa/078b08a9-2518-4c41-af0d-ed2f34651266.png",
+        alt: "Detalhe das costas da Camisa Espanha versao jogador",
+      },
+      {
+        id: "lifestyle",
+        src: "/products/copa/7346ffbf-7bdd-466c-b61a-d4e16f6debe2.png",
+        alt: "Camisa Espanha versao jogador em composicao lifestyle",
+      },
+    ]),
+    variants: [
+      ...createVariants(
+        "GMC-COPA-ESPJ",
+        colors.spainRed,
+        standardSizeStock,
+        "camisa-espanha-versao-jogador",
+      ),
+    ],
+  },
+  {
+    slug: "camisa-brasil-retro-azul-ronaldo",
+    name: "Camisa Brasil Retro Azul Ronaldo 9",
+    shortName: "Brasil Retro Azul 9",
+    active: true,
+    description:
+      "Camisa Brasil retro azul Ronaldo 9 com visual classico, contraste branco e presenca de colecao para quem vive futebol.",
+    salesNote:
+      "Nostalgia em azul. Uma camisa com leitura vintage, numero 9 nas costas e energia de futebol para usar no dia a dia.",
+    details: [
+      "Linha Brasil Retro",
+      "Visual azul classico",
+      "Numero 9 nas costas",
+      "Caimento esportivo",
+      "Produto da linha Copa do Mundo GM Clothing",
+    ],
+    price: 449.9,
+    promotionalPrice: 299.9,
+    yampiCheckoutUrl: null,
+    collection: "Copa do Mundo",
+    category: "Brasil",
+    type: "apparel",
+    campaign: "copa-2026",
+    subcollection: "Retro",
+    styleTags: ["futebol", "retro", "street"],
+    tags: [
+      "camisa brasil retro",
+      "camisa brasil azul",
+      "ronaldo 9",
+      "copa do mundo",
+      "copa 2026",
+      "futebol",
+      "brasil",
+      "gm clothing",
+      "streetwear esportivo",
+    ],
+    badge: "Retro azul",
+    hideStockCount: true,
+    showSizeGuide: false,
+    photos: createProductPhotos("brasil-retro-azul-ronaldo", [
+      {
+        id: "costas",
+        src: "/products/copa/55ebee77-0861-432a-aae5-3ee0901e3ff1.png",
+        alt: "Camisa Brasil retro azul Ronaldo 9 costas",
+      },
+      {
+        id: "frente",
+        src: "/products/copa/0c38c747-81ce-409f-844d-7dc26d5687e4.png",
+        alt: "Camisa Brasil retro azul Ronaldo 9 frente",
+      },
+      {
+        id: "look",
+        src: "/products/copa/a3b817f6-eaa4-4d33-8ce6-776ecac7f633.png",
+        alt: "Camisa Brasil retro azul Ronaldo 9 em look masculino",
+      },
+      {
+        id: "detalhe-costas",
+        src: "/products/copa/a5b6fba1-9e18-467d-bd68-beea522ebdb0.png",
+        alt: "Detalhe das costas da Camisa Brasil retro azul Ronaldo 9",
+      },
+      {
+        id: "costas-lifestyle",
+        src: "/products/copa/9d52ee87-5ca6-4100-9f87-1df06ddf00ef.png",
+        alt: "Camisa Brasil retro azul Ronaldo 9 em composicao lifestyle",
+      },
+    ]),
+    variants: [
+      ...createVariants(
+        "GMC-COPA-BRAZ9",
+        colors.royalBlue,
+        standardSizeStock,
+        "camisa-brasil-retro-azul-ronaldo",
+      ),
+    ],
+  },
+  {
+    slug: "camiseta-brasil-versao-jogador-azul",
+    name: "Camiseta Brasil Versao Jogador Azul",
+    shortName: "Brasil Jogador Azul",
+    active: true,
+    description:
+      "Camiseta Brasil versao jogador azul com textura esportiva, acabamento leve e visual premium para a temporada da Copa.",
+    salesNote:
+      "A versao azul chega com presenca mais urbana: tecido leve, detalhes de campo e leitura forte para jogo, rua e colecao.",
+    details: [
+      "Versao jogador",
+      "Tecido leve e respiravel",
+      "Caimento esportivo",
+      "Detalhes em verde e amarelo",
+      "Produto da linha Copa do Mundo GM Clothing",
+    ],
+    price: 399.9,
+    promotionalPrice: 279.9,
+    yampiCheckoutUrl: null,
+    collection: "Copa do Mundo",
+    category: "Brasil",
+    type: "apparel",
+    campaign: "copa-2026",
+    subcollection: "Brasil",
+    styleTags: ["futebol", "performance", "street"],
+    tags: [
+      "camiseta brasil",
+      "camisa brasil azul",
+      "versao jogador",
+      "copa do mundo",
+      "copa 2026",
+      "dry fit",
+      "futebol",
+      "brasil",
+      "gm clothing",
+      "streetwear esportivo",
+    ],
+    badge: "Brasil azul",
+    hideStockCount: true,
+    showSizeGuide: false,
+    photos: createProductPhotos("brasil-player-azul", [
+      {
+        id: "frente",
+        src: "/products/copa/62035479-0bbe-45df-8976-a18f9340488a.png",
+        alt: "Camiseta Brasil versao jogador azul frente",
+      },
+      {
+        id: "look",
+        src: "/products/copa/d01297d8-c8eb-4f78-b794-481df294f15c.png",
+        alt: "Camiseta Brasil versao jogador azul em look masculino",
+      },
+      {
+        id: "costas",
+        src: "/products/copa/48018ef2-cc40-433c-a760-55ec4b8473e7.png",
+        alt: "Camiseta Brasil versao jogador azul costas",
+      },
+      {
+        id: "detalhe-peito",
+        src: "/products/copa/ef9d8df2-3847-4c25-bb1e-7e1543b6e2e8.png",
+        alt: "Detalhe frontal da Camiseta Brasil versao jogador azul",
+      },
+      {
+        id: "detalhe-lateral",
+        src: "/products/copa/a081211b-55ad-4fa3-967b-0c78e551052a.png",
+        alt: "Detalhe lateral da Camiseta Brasil versao jogador azul",
+      },
+    ]),
+    variants: [
+      ...createVariants(
+        "GMC-COPA-BRJAZ",
+        colors.navy,
+        standardSizeStock,
+        "camiseta-brasil-versao-jogador-azul",
+      ),
+    ],
+  },
+  {
     slug: "camisa-cr7",
     name: "Camisa CR7 — Football Icons",
     shortName: "Camisa CR7",
@@ -1155,6 +1555,11 @@ export const products: Product[] = [
     showSizeGuide: false,
     catalogColorSlugs: [
       {
+        slug: "sueter-chenile-zara-cinza-claro",
+        colorId: colors.lightGray.id,
+        colorName: colors.lightGray.name,
+      },
+      {
         slug: "sueter-chenile-zara-caramelo",
         colorId: colors.caramel.id,
         colorName: colors.caramel.name,
@@ -1328,6 +1733,44 @@ export const products: Product[] = [
           colorId: colors.mixedGray.id,
         },
       ]),
+      ...createProductPhotos("sueter-chenile-zara-cinza-claro", [
+        {
+          id: "frente",
+          src: "/products/winter/a73666a0-9970-42fc-88e5-c1e5842122cb.png",
+          alt: "Suéter Chenile Zara cinza claro frente",
+          colorId: colors.lightGray.id,
+        },
+        {
+          id: "look",
+          src: "/products/winter/2e44eb0d-d7f0-4c44-9a4c-aad15e50e635.png",
+          alt: "Suéter Chenile Zara cinza claro em look masculino",
+          colorId: colors.lightGray.id,
+        },
+        {
+          id: "editorial",
+          src: "/products/winter/370e48a8-b0d3-4e93-b97a-1e7176ef7a97.png",
+          alt: "Suéter Chenile Zara cinza claro em pose editorial",
+          colorId: colors.lightGray.id,
+        },
+        {
+          id: "costas",
+          src: "/products/winter/e15aaef8-7758-47f0-8b74-b48fe8fd159d.png",
+          alt: "Suéter Chenile Zara cinza claro costas",
+          colorId: colors.lightGray.id,
+        },
+        {
+          id: "detalhe-textura",
+          src: "/products/winter/f9862fa8-b6db-4ef4-9fa2-62403b4d8c8c.png",
+          alt: "Detalhe da textura do Suéter Chenile Zara cinza claro",
+          colorId: colors.lightGray.id,
+        },
+        {
+          id: "detalhe-frente",
+          src: "/products/winter/965b7825-250c-477b-8ac3-24021ef045d5.png",
+          alt: "Detalhe frontal do Suéter Chenile Zara cinza claro",
+          colorId: colors.lightGray.id,
+        },
+      ]),
     ],
     variants: [
       ...createShopifyReadyVariants(
@@ -1352,6 +1795,12 @@ export const products: Product[] = [
         "sueter-chenile-zara",
         "GMC-CHENILE-CM",
         colors.mixedGray,
+        standardSizeStock,
+      ),
+      ...createShopifyReadyVariants(
+        "sueter-chenile-zara",
+        "GMC-CHENILE-CC",
+        colors.lightGray,
         standardSizeStock,
       ),
     ],
@@ -1933,6 +2382,30 @@ type ProductSlugRedirect = {
 };
 
 const productSlugRedirects: Record<string, ProductSlugRedirect> = {
+  "oversized-fate-eu-sou-jesus-preta": {
+    slug: "oversized-fate-eu-sou-jesus-branca",
+    colorId: colors.black.id,
+  },
+  "oversized-fate-jesus-is-king-preta": {
+    slug: "oversized-fate-jesus-is-king-marrom",
+    colorId: colors.black.id,
+  },
+  "camisa-cr7-off-white": {
+    slug: "camisa-cr7",
+    colorId: colors.offWhite.id,
+  },
+  "camisa-cr7-preta": {
+    slug: "camisa-cr7",
+    colorId: colors.black.id,
+  },
+  "oversized-brasil-off-white": {
+    slug: "oversized-brasil",
+    colorId: colors.offWhite.id,
+  },
+  "oversized-brasil-preta": {
+    slug: "oversized-brasil",
+    colorId: colors.black.id,
+  },
   "oversized-box-off-white": {
     slug: "oversized-box-preta",
     colorId: colors.offWhite.id,
@@ -1976,6 +2449,10 @@ const productSlugRedirects: Record<string, ProductSlugRedirect> = {
   "sueter-chenile-zara-cinza-mesclado": {
     slug: "sueter-chenile-zara",
     colorId: colors.mixedGray.id,
+  },
+  "sueter-chenile-zara-cinza-claro": {
+    slug: "sueter-chenile-zara",
+    colorId: colors.lightGray.id,
   },
 };
 

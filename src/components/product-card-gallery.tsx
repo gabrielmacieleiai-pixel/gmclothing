@@ -1,8 +1,8 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { ChevronLeft, ChevronRight } from "@/components/icons";
 import { getImageVariantSrc } from "@/lib/image-variants";
 import type { ProductPhoto } from "@/types/product";
@@ -21,7 +21,6 @@ export function ProductCardGallery({
   productName,
 }: ProductCardGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const pointerStartX = useRef<number | null>(null);
   const imageList = photos.filter((photo, index, allPhotos) =>
     allPhotos.findIndex((item) => item.src === photo.src) === index,
   );
@@ -40,30 +39,9 @@ export function ProductCardGallery({
     );
   }
 
-  function handlePointerDown(event: React.PointerEvent<HTMLDivElement>) {
-    pointerStartX.current = event.clientX;
-  }
-
-  function handlePointerUp(event: React.PointerEvent<HTMLDivElement>) {
-    if (pointerStartX.current === null) {
-      return;
-    }
-
-    const distance = event.clientX - pointerStartX.current;
-    pointerStartX.current = null;
-
-    if (Math.abs(distance) >= 40) {
-      moveImage(distance > 0 ? -1 : 1);
-    }
-  }
-
   return (
     <div className="min-w-0">
-      <div
-        className="relative aspect-[3/4] overflow-hidden bg-[#dedbd3] touch-pan-y lg:aspect-[4/5] lg:transition lg:duration-300 lg:group-hover:shadow-[0_18px_45px_rgba(5,5,5,0.14)]"
-        onPointerDown={handlePointerDown}
-        onPointerUp={handlePointerUp}
-      >
+      <div className="relative aspect-[4/5] touch-auto overflow-hidden bg-[#dedbd3] lg:transition lg:duration-300 lg:group-hover:shadow-[0_18px_45px_rgba(5,5,5,0.14)]">
         <Link
           aria-label={`Ver ${productName}`}
           className="absolute inset-0 block outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-[#c8a96a]"
@@ -80,8 +58,8 @@ export function ProductCardGallery({
               }`}
               fill
               priority={priority}
-              quality={76}
-              sizes="(max-width: 640px) 46vw, (max-width: 1024px) 32vw, 24vw"
+              quality={84}
+              sizes="(max-width: 767px) 84vw, (max-width: 1024px) 32vw, 24vw"
               src={getImageVariantSrc(activePhoto.src, "card")}
             />
           ) : null}
@@ -91,7 +69,7 @@ export function ProductCardGallery({
           <>
             <button
               aria-label="Imagem anterior"
-              className="absolute left-2 top-1/2 z-10 grid size-7 -translate-y-1/2 place-items-center rounded-full border border-white/45 bg-black/20 text-white/90 opacity-80 backdrop-blur-sm transition hover:bg-black/45 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:size-8"
+              className="absolute left-2 top-1/2 z-10 grid size-8 -translate-y-1/2 place-items-center rounded-full border border-white/35 bg-black/15 text-white/80 opacity-75 backdrop-blur-sm transition hover:bg-black/35 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:size-8"
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -103,7 +81,7 @@ export function ProductCardGallery({
             </button>
             <button
               aria-label="Próxima imagem"
-              className="absolute right-2 top-1/2 z-10 grid size-7 -translate-y-1/2 place-items-center rounded-full border border-white/45 bg-black/20 text-white/90 opacity-80 backdrop-blur-sm transition hover:bg-black/45 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:size-8"
+              className="absolute right-2 top-1/2 z-10 grid size-8 -translate-y-1/2 place-items-center rounded-full border border-white/35 bg-black/15 text-white/80 opacity-75 backdrop-blur-sm transition hover:bg-black/35 hover:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white md:size-8"
               onClick={(event) => {
                 event.preventDefault();
                 event.stopPropagation();
@@ -119,3 +97,4 @@ export function ProductCardGallery({
     </div>
   );
 }
+

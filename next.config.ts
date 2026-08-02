@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     formats: ["image/avif", "image/webp"],
     imageSizes: [64, 96, 128, 256, 384],
     minimumCacheTTL: 31536000,
-    qualities: [70, 75, 76, 78, 80, 82, 85, 90],
+    qualities: [70, 75, 76, 78, 80, 82, 84, 85, 86, 88, 90],
   },
   poweredByHeader: false,
 };

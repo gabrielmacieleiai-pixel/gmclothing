@@ -11,11 +11,11 @@ import { formatPrice } from "@/lib/format";
 
 const links = [
   { href: "/colecao/frio", label: "Inverno" },
-  { href: "/colecao", label: "Coleção" },
   { href: "/colecao/oversized", label: "Oversized" },
-  { href: "/colecao?categoria=ultimas-pecas", label: "Últimas peças" },
-  { href: "/acessorios", label: "Acessórios" },
-  { href: "/#manifesto", label: "Manifesto" },
+  { href: "/colecao/crista", label: "Cristã" },
+  { href: "/colecao/futebol", label: "Futebol" },
+  { href: "/colecao/promocao", label: "Promoções" },
+  { href: "/colecao/ultimas-pecas", label: "Últimas peças" },
 ];
 
 const salesLinks = [
@@ -30,29 +30,19 @@ const salesLinks = [
     label: "Textura macia em cores selecionadas",
   },
   {
-    href: "/colecao?categoria=caneladas",
-    eyebrow: "Caneladas",
-    label: "Base premium pronta para receber o drop",
-  },
-  {
     href: "/colecao/oversized",
     eyebrow: "Oversized",
     label: "Modelagens amplas por R$ 99,90",
   },
   {
-    href: "/colecao?categoria=faith",
-    eyebrow: "Linha Faith",
-    label: "Estampas cristãs com identidade discreta",
+    href: "/colecao/crista",
+    eyebrow: "Linha Fate",
+    label: "Streetwear cristão com identidade",
   },
   {
-    href: "/colecao?categoria=futebol",
+    href: "/colecao/futebol",
     eyebrow: "Football Culture",
     label: "Brasil, retrô, Portugal e seleções",
-  },
-  {
-    href: "/colecao?categoria=mais-vendidos",
-    eyebrow: "Mais vendidos",
-    label: "Chenille, caneladas e oversized em destaque",
   },
   {
     href: "/colecao/ultimas-pecas",
@@ -60,7 +50,7 @@ const salesLinks = [
     label: "Futebol, faith e polos em giro rápido",
   },
   {
-    href: "/colecao?categoria=promocao",
+    href: "/colecao/promocao",
     eyebrow: "Promoções",
     label: "Condições especiais no fim da seleção",
   },

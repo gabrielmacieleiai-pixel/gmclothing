@@ -13,7 +13,7 @@ export function ProductGrid({
   priorityCount = 0,
 }: ProductGridProps) {
   return (
-    <div className="grid min-w-0 grid-cols-2 gap-x-3 gap-y-8 md:grid-cols-3 md:gap-x-5 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-10">
+    <div className="-mx-4 flex min-w-0 snap-x snap-mandatory gap-4 overflow-x-auto px-[8vw] pb-3 scroll-px-[8vw] [-ms-overflow-style:none] [scrollbar-width:none] md:mx-0 md:grid md:grid-cols-3 md:gap-x-5 md:gap-y-8 md:overflow-visible md:px-0 md:pb-0 lg:grid-cols-4 lg:gap-x-6 lg:gap-y-10 [&::-webkit-scrollbar]:hidden">
       {products.map((product, index) => (
         <ProductCard
           inverse={inverse}
@@ -25,3 +25,4 @@ export function ProductGrid({
     </div>
   );
 }
+

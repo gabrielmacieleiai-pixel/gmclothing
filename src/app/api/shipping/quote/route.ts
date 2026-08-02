@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { getProductBySlug } from "@/data/products";
+import { formatCep, isLocalDeliveryCity } from "@/lib/local-delivery";
+import { createWhatsAppUrl } from "@/lib/whatsapp";
 
 type ShippingPackage = {
   width: number;
@@ -26,6 +28,12 @@ type FrenetQuoteResponse = {
   Message?: string;
 };
 
+type ViaCepResponse = {
+  erro?: boolean;
+  localidade?: string;
+  uf?: string;
+};
+
 const DEFAULT_PACKAGE: ShippingPackage = {
   width: 28,
   height: 6,
@@ -49,6 +57,9 @@ export async function POST(request: Request) {
     );
   }
 
+  const product = body?.productSlug ? getProductBySlug(body.productSlug) : null;
+  const localDelivery = await getLocalDelivery(recipientCep, product?.name);
+
   const token = process.env.FRENET_TOKEN;
   const sellerCep = process.env.FRENET_SELLER_CEP?.replace(/\D/g, "");
   const baseUrl =
@@ -59,8 +70,11 @@ export async function POST(request: Request) {
     return NextResponse.json({
       configured: false,
       message:
-        "Cálculo automático de envio via Frenet ainda não configurado. Preencha FRENET_TOKEN e FRENET_SELLER_CEP na Vercel e faça redeploy.",
+        localDelivery
+          ? "Entrega local disponível. Combine o valor e o horário pelo WhatsApp."
+          : "Cálculo automático de envio via Frenet ainda não configurado. Preencha FRENET_TOKEN e FRENET_SELLER_CEP na Vercel e faça redeploy.",
       options: [],
+      localDelivery,
     });
   }
 
@@ -76,7 +90,6 @@ export async function POST(request: Request) {
     );
   }
 
-  const product = body?.productSlug ? getProductBySlug(body.productSlug) : null;
   const insuranceValue = Math.max(Number(body?.price ?? product?.price ?? 0), 1);
   const quantity = Math.max(Number(body?.quantity ?? 1), 1);
   const shippingPackage = getPackageForProduct(product?.category);
@@ -112,10 +125,13 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         message:
-          "Não foi possível calcular o envio agora. Confira o token da Frenet e o CEP de origem.",
+          localDelivery
+            ? "Entrega local disponível. As outras opções de envio não puderam ser calculadas agora."
+            : "Não foi possível calcular o envio agora. Confira o token da Frenet e o CEP de origem.",
         options: [],
+        localDelivery,
       },
-      { status: 502 },
+      { status: localDelivery ? 200 : 502 },
     );
   }
 
@@ -141,7 +157,43 @@ export async function POST(request: Request) {
         ? "Envio calculado para este CEP."
         : data.Message ?? "Nenhuma opção de envio retornou para este CEP.",
     options,
+    localDelivery,
   });
+}
+
+async function getLocalDelivery(cep: string, productName?: string) {
+  try {
+    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`, {
+      cache: "no-store",
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const address = (await response.json()) as ViaCepResponse;
+
+    if (
+      address.erro ||
+      !isLocalDeliveryCity(address.localidade, address.uf)
+    ) {
+      return null;
+    }
+
+    const city = address.localidade?.trim() ?? "região atendida";
+    const productReference = productName ? ` para ${productName}` : "";
+
+    return {
+      city,
+      label: "Combinar entrega pelo WhatsApp",
+      message: "Valor, prazo e horário combinados diretamente com a GM Clothing.",
+      whatsappUrl: createWhatsAppUrl(
+        `Olá! Quero combinar a entrega local${productReference}. Meu CEP é ${formatCep(cep)} (${city}/SC).`,
+      ),
+    };
+  } catch {
+    return null;
+  }
 }
 
 function isServiceError(service: FrenetShippingService) {

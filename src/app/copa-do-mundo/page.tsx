@@ -6,10 +6,10 @@ export const metadata: Metadata = {
   description:
     "Peças finais da GM Clothing organizadas dentro da coleção principal.",
   alternates: {
-    canonical: "/colecao?categoria=ultimas-pecas",
+    canonical: "/colecao/futebol",
   },
 };
 
 export default function CopaDoMundoRedirectPage() {
-  redirect("/colecao?categoria=ultimas-pecas");
+  redirect("/colecao/futebol");
 }
