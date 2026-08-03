@@ -89,7 +89,10 @@ const websiteSchema = {
   },
 };
 
+type HomeProduct = (typeof catalogProducts)[number];
+
 export default function Home() {
+  const shownProductFamilies = new Set<string>();
   const winterProducts = catalogProducts
     .filter(isWinterProduct)
     .sort(
@@ -98,18 +101,23 @@ export default function Home() {
         Number(isChenilleProduct(secondProduct)),
     )
     .slice(0, 8);
+  markShownProducts(winterProducts, shownProductFamilies);
 
   const newProducts = catalogProducts
     .filter((product) => {
       const badge = product.badge?.toLowerCase() ?? "";
       return badge.includes("novo") || badge.includes("lan");
     })
+    .filter((product) => !shownProductFamilies.has(getHomeProductFamily(product)))
     .slice(0, 4);
+  markShownProducts(newProducts, shownProductFamilies);
 
   const lastPieces = catalogProducts
     .filter(isLastChanceProduct)
+    .filter((product) => !shownProductFamilies.has(getHomeProductFamily(product)))
     .map((product) => ({ ...product, badge: "Últimas peças" }))
     .slice(0, 4);
+  markShownProducts(lastPieces, shownProductFamilies);
 
   const bestSellerProducts = catalogProducts
     .filter((product) => !isChenilleProduct(product))
@@ -119,6 +127,7 @@ export default function Home() {
         product.category === "Polo Tricot" ||
         product.slug === "camiseta-brasil-versao-jogador",
     )
+    .filter((product) => !shownProductFamilies.has(getHomeProductFamily(product)))
     .slice(0, 4);
 
   return (
@@ -390,6 +399,19 @@ function isLastChanceProduct(product: (typeof catalogProducts)[number]) {
     !isFaithProduct(product) &&
     (isFootballProduct(product) || product.category === "Polo Tricot")
   );
+}
+
+function getHomeProductFamily(product: HomeProduct) {
+  return product.canonicalSlug ?? product.slug;
+}
+
+function markShownProducts(
+  products: HomeProduct[],
+  shownProductFamilies: Set<string>,
+) {
+  products.forEach((product) => {
+    shownProductFamilies.add(getHomeProductFamily(product));
+  });
 }
 
 function hasAnyProductText(

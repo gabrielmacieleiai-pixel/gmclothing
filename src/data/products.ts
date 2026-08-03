@@ -186,23 +186,23 @@ const oversizedCatalogPhotoSources: Record<string, string[]> = {
     "/products/Oversized/1f54de62-76d9-4168-a636-67aba3fa67f8.png",
   ],
   "oversized-box-preta": [
+    "/products/Oversized/5c095ef5-2dc1-4db6-8b36-0976cdc6ecdd.webp",
     "/products/Oversized/a5916e0c-712d-4785-8868-69b4fa193145.webp",
     "/products/Oversized/d3da7709-c81e-4a0f-9e3a-a042d0e10f95.webp",
-    "/products/Oversized/5c095ef5-2dc1-4db6-8b36-0976cdc6ecdd.webp",
     "/products/Oversized/478f0b24-16d7-42d5-9ea0-771cf7444dd9.webp",
     "/products/Oversized/56101010-0f61-4613-8ff0-75683d4f2d76.webp",
   ],
   "oversized-box-off-white": [
+    "/products/Oversized/5a8eef4c-69b9-4467-a217-8b63e0652da0.webp",
     "/products/Oversized/f6ad0234-e5e8-48d5-b935-1f79dfe31ff6.webp",
     "/products/Oversized/39692017-22f5-4bbe-82bf-d6f083187c02.webp",
-    "/products/Oversized/5a8eef4c-69b9-4467-a217-8b63e0652da0.webp",
     "/products/Oversized/f8665d17-00f6-4599-8975-0cbbe0dcf8ca.webp",
     "/products/Oversized/7de91b42-46ca-483a-adaa-074a04c0ed02.webp",
   ],
   "oversized-box-azul-marinho": [
+    "/products/Oversized/69125d74-8298-4178-a689-7dab3c7fa174.webp",
     "/products/Oversized/07be526e-9d41-4166-a759-e7ca38424678.webp",
     "/products/Oversized/1a9df566-6fea-4ed4-86b4-0bd3eb1e57bd.webp",
-    "/products/Oversized/69125d74-8298-4178-a689-7dab3c7fa174.webp",
     "/products/Oversized/cc15f350-279f-466c-9797-ea10d83f910c.webp",
     "/products/Oversized/28aa9013-9a6d-4764-9177-aaf317934cd2.webp",
   ],
@@ -214,11 +214,18 @@ const oversizedCatalogPhotoSources: Record<string, string[]> = {
     "/products/Oversized/8292a2e4-11c9-40b3-bb94-a969d1b4965f.webp",
   ],
   "oversized-graphic-marrom": [
-    "/products/Oversized/d23564ad-8380-427c-be10-9898efcaf484.webp",
     "/products/Oversized/7dedb7b8-a896-40ab-b3e7-19819c73988b.webp",
+    "/products/Oversized/d23564ad-8380-427c-be10-9898efcaf484.webp",
     "/products/Oversized/77e279a5-451d-4c26-b3e2-6207e0b70ea3.webp",
     "/products/Oversized/a7df4077-860e-4fb5-ae55-baa04438ddf0.webp",
     "/products/Oversized/946cbfdc-2e70-4a90-84d1-e2321be0e3d8.webp",
+  ],
+  "oversized-graphic-off-white-laranja": [
+    "/products/Oversized/5a2e4e8e-876a-4a9b-b66f-3a64e6c4baad.webp",
+    "/products/Oversized/0750ff19-5619-4da8-938a-a87f75f621b6.webp",
+    "/products/Oversized/2af0c79f-9135-4d74-8a5b-8794711315c5.webp",
+    "/products/Oversized/a376a85c-7179-475b-aa78-5f8f0fd95f96.webp",
+    "/products/Oversized/d75a1f82-e295-4242-b9b0-c1471ad55ae2.webp",
   ],
   "oversized-essential-preta": [
     "/products/Oversized/1c8a6912-8647-4a41-bd85-03b3228b0680.webp",
@@ -449,14 +456,14 @@ export const products: Product[] = [
   }),
   createMultiColorOversizedProduct({
     slug: "oversized-box-preta",
-    name: "Camiseta Oversized Box",
-    shortName: "Box Oversized",
-    active: false,
+    name: "Camiseta Oversized Air Back",
+    shortName: "Air Back",
+    active: true,
     description:
-      "Camiseta oversized Box com patch frontal contrastante, visual limpo e presença urbana em cores selecionadas.",
+      "Camiseta oversized Air Back com frente limpa, estampa grande nas costas e presença streetwear esportiva em cores selecionadas.",
     salesNote:
-      "Um mesmo modelo, mais de uma cor. Escolha a variante que combina com seu look sem sair da página.",
-    tags: ["box", "graphic tee"],
+      "A estampa das costas é o ponto de impacto. Escolha a cor dentro da mesma página e mantenha o visual limpo na frente.",
+    tags: ["air back", "graphic tee", "estampa nas costas", "basquete"],
     colorOptions: [
       {
         productCode: "oversized-box-preta",
@@ -496,13 +503,25 @@ export const products: Product[] = [
     skuCode: "GMC-OVS-GRMR",
     name: "Camiseta Oversized Graphic Marrom",
     shortName: "Graphic Marrom",
-    active: false,
+    active: true,
     color: colors.brown,
     description:
       "Camiseta oversized marrom com detalhe frontal laranja e estampa gráfica de impacto nas costas, contraste quente e caimento amplo.",
     salesNote:
       "Marrom premium para sair do básico. Frente limpa, costas marcantes e personalidade sem perder o visual urbano.",
     tags: ["marrom", "camiseta marrom", "graphic tee"],
+  }),
+  createOversizedProduct({
+    slug: "oversized-graphic-off-white-laranja",
+    skuCode: "GMC-OVS-GROF",
+    name: "Camiseta Oversized Graphic Off-White",
+    shortName: "Graphic Off-White",
+    color: colors.offWhite,
+    description:
+      "Camiseta oversized off-white com frente limpa e arte gráfica laranja nas costas, feita para destacar a peça sem poluir o look.",
+    salesNote:
+      "Off-white com presença. O impacto está nas costas, com contraste laranja e caimento amplo para uma leitura streetwear forte.",
+    tags: ["off-white", "camiseta off-white", "graphic tee", "estampa nas costas"],
   }),
   createMultiColorOversizedProduct({
     slug: "oversized-essential-preta",
@@ -2074,6 +2093,54 @@ export const products: Product[] = [
         colors.black,
         standardSizeStock,
         "sueter-tricot-trancado-preto",
+      ),
+    ],
+  },
+  {
+    slug: "sueter-tricot-trancado-off-white",
+    name: "Suéter Tricot Trançado Off-White",
+    shortName: "Tricot Trançado Off-White",
+    active: true,
+    description:
+      "Suéter off-white em tricot trançado, com textura aparente, visual limpo e presença premium para dias frios.",
+    salesNote:
+      "Uma peça clara com textura forte. Ideal para elevar o look de inverno com leitura limpa, masculina e sofisticada.",
+    details: [
+      "Tricot masculino",
+      "Textura trançada",
+      "Punhos e barra canelados",
+      "Caimento regular",
+      "Produto da coleção frio GM Clothing",
+    ],
+    price: 249.9,
+    promotionalPrice: 149.9,
+    yampiCheckoutUrl: null,
+    collection: "Coleção Frio",
+    category: "Suéter",
+    tags: [
+      "suéter masculino",
+      "tricot masculino",
+      "coleção frio",
+      "off-white",
+      "moda masculina",
+      "streetwear premium",
+      "gm clothing",
+    ],
+    badge: "Coleção frio",
+    hideStockCount: true,
+    photos: createProductPhotos("sueter-tricot-trancado-off-white", [
+      {
+        id: "frente",
+        src: "/products/colecao-frio/642f6582-7f1a-4b73-a887-d785a5c482b8.webp",
+        alt: "Suéter Tricot Trançado Off-White frente",
+      },
+    ]),
+    variants: [
+      ...createVariants(
+        "GMC-FRIO-STTOF",
+        colors.offWhite,
+        standardSizeStock,
+        "sueter-tricot-trancado-off-white",
       ),
     ],
   },
