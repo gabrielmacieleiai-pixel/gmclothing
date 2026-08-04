@@ -8,7 +8,7 @@ import { Header } from "@/components/header";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { createWhatsAppUrl } from "@/lib/whatsapp";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gmclo.shop";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

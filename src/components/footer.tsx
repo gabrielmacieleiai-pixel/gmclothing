@@ -27,7 +27,7 @@ export function Footer() {
             </p>
             <div className="flex flex-col gap-3 text-sm">
               <Link href="/" prefetch={false}>Início</Link>
-              <Link href="/colecao/frio" prefetch={false}>Inverno</Link>
+              <Link href="/colecoes/chenille-zara" prefetch={false}>Inverno</Link>
               <Link href="/colecao" prefetch={false}>Coleção</Link>
               <Link href="/colecao/ultimas-pecas" prefetch={false}>Últimas peças</Link>
               <Link href="/acessorios" prefetch={false}>Acessórios</Link>

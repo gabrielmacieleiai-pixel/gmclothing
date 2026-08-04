@@ -82,6 +82,26 @@ export const shopifyVariantIds: ShopifyVariantIdMap = {
       gg: "45870364262470",
     },
   },
+  "oversized-box-preta": {
+    preto: {
+      p: "45870363115590",
+      m: "45870363148358",
+      g: "45870363181126",
+      gg: "45870363213894",
+    },
+    "off-white": {
+      p: "45870363246662",
+      m: "45870363279430",
+      g: "45870363312198",
+      gg: "45870363344966",
+    },
+    "azul-marinho": {
+      p: "45870363377734",
+      m: "45870363410502",
+      g: "45870363443270",
+      gg: "45870363476038",
+    },
+  },
   "oversized-court-verde-militar": {
     verde: {
       p: "45870364328006",
@@ -153,6 +173,22 @@ export const shopifyVariantIds: ShopifyVariantIdMap = {
       gg: "45870363672646",
     },
   },
+  "oversized-graphic-marrom": {
+    marrom: {
+      p: "45870363836486",
+      m: "45870363869254",
+      g: "45870363902022",
+      gg: "45870363934790",
+    },
+  },
+  "oversized-graphic-off-white-laranja": {
+    "off-white": {
+      p: "46087502069830",
+      m: "46087502102598",
+      g: "46087502135366",
+      gg: "46087502168134",
+    },
+  },
   "polo-tricot": {
     "off-white": {
       p: "45870367866950",
@@ -199,12 +235,46 @@ export const shopifyVariantIds: ShopifyVariantIdMap = {
       gg: "46069678997574",
     },
   },
+  "camiseta-canelada-zara": {
+    preto: {
+      p: "46087467663430",
+      m: "46087467696198",
+      g: "46087467728966",
+      gg: "46087467761734",
+    },
+    "off-white": {
+      p: "46087467794502",
+      m: "46087467827270",
+      g: "46087467860038",
+      gg: "46087467892806",
+    },
+    marrom: {
+      p: "46087467925574",
+      m: "46087467958342",
+      g: "46087467991110",
+      gg: "46087468023878",
+    },
+    areia: {
+      p: "46087468056646",
+      m: "46087468089414",
+      g: "46087468122182",
+      gg: "46087468154950",
+    },
+  },
   "sueter-tricot-trancado-preto": {
     preto: {
       p: "45870367703110",
       m: "45870367735878",
       g: "45870367768646",
       gg: "45870367801414",
+    },
+  },
+  "sueter-tricot-trancado-off-white": {
+    "off-white": {
+      p: "46087502200902",
+      m: "46087502233670",
+      g: "46087502266438",
+      gg: "46087502299206",
     },
   },
   "sueter-tricot-texturizado-azul-marinho": {

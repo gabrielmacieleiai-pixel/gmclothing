@@ -1,4 +1,4 @@
-const DEFAULT_SHOPIFY_STORE_DOMAIN = "wgykiy-hp.myshopify.com";
+const DEFAULT_SHOPIFY_STORE_DOMAIN = "checkout-gmclo.myshopify.com";
 
 const SHOPIFY_STORE_DOMAIN =
   process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN?.trim() ??

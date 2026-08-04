@@ -273,8 +273,8 @@ export function CartDrawer() {
             </a>
           </div>
           <p className="mt-3 text-center text-[10px] leading-4 text-black/40">
-            Sem gateway próprio. O pagamento final continua preparado para
-            checkout externo.
+            Pagamento seguro via Shopify. Você será direcionado ao checkout
+            protegido para concluir a compra.
           </p>
         </div>
       </aside>

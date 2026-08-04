@@ -273,8 +273,8 @@ export function CartPage() {
           </div>
 
           <p className="mt-4 text-[10px] leading-4 text-black/40">
-            Pagamento final preparado para checkout externo. Esta etapa revisa
-            produtos, variantes e dados antes da finalização.
+            Revise os produtos e siga para o checkout seguro da Shopify para
+            concluir o pagamento.
           </p>
         </aside>
       </div>

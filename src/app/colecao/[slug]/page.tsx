@@ -46,8 +46,15 @@ const collectionPages = {
     description: "Brasil, seleções, retrôs e oversized de futebol em uma única linha.",
     filterProducts: (products) => products.filter(isFootballProduct),
   },
+  lancamentos: {
+    label: "Lançamentos",
+    eyebrow: "Entradas recentes",
+    title: "Chegou agora.",
+    description: "Peças novas e entradas recentes para ver antes de todo mundo.",
+    filterProducts: (products) => products.filter(isLaunchProduct),
+  },
   promocao: {
-    label: "Promoções",
+    label: "Sale",
     eyebrow: "Condições especiais",
     title: "Oferta sem enrolação.",
     description: "Produtos com preço promocional já aplicado e compra direta.",
@@ -161,8 +168,8 @@ function sortCollectionProducts(slug: string, products: Product[]) {
 
   return [...products].sort(
     (firstProduct, secondProduct) =>
-      Number(isChenilleProduct(firstProduct)) -
-      Number(isChenilleProduct(secondProduct)),
+      Number(isChenilleProduct(secondProduct)) -
+      Number(isChenilleProduct(firstProduct)),
   );
 }
 
@@ -232,6 +239,16 @@ function isPromotionalProduct(product: Product) {
     Boolean(product.colorPricing) ||
     hasAnyText(product, ["promoção", "promocao", "oferta", "sale"])
   );
+}
+
+function isLaunchProduct(product: Product) {
+  return hasAnyText(product, [
+    "lançamento",
+    "lancamento",
+    "novo",
+    "novidade",
+    "chegou",
+  ]);
 }
 
 function hasAnyText(product: Product, values: string[]) {

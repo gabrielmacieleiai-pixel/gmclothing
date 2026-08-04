@@ -47,6 +47,11 @@ const filters: CollectionFilter[] = [
     matches: (product) => isFootballProduct(product),
   },
   {
+    id: "lancamentos",
+    label: "Lançamentos",
+    matches: (product) => isLaunchProduct(product),
+  },
+  {
     id: "mais-vendidos",
     label: "Mais vendidos",
     matches: (product) =>
@@ -64,7 +69,7 @@ const filters: CollectionFilter[] = [
   },
   {
     id: "promocao",
-    label: "Promoções",
+    label: "Sale",
     matches: (product) =>
       Boolean(product.promotionalPrice) ||
       Boolean(product.colorPricing) ||
@@ -88,8 +93,8 @@ export function CollectionBrowser({
     if (selectedFilter.id === "frio") {
       return [...filteredProducts].sort(
         (firstProduct, secondProduct) =>
-          Number(isChenilleProduct(firstProduct)) -
-          Number(isChenilleProduct(secondProduct)),
+          Number(isChenilleProduct(secondProduct)) -
+          Number(isChenilleProduct(firstProduct)),
       );
     }
 
@@ -218,6 +223,16 @@ function isFootballProduct(product: Product) {
       "jersey",
     ])
   );
+}
+
+function isLaunchProduct(product: Product) {
+  return hasAnyText(product, [
+    "lançamento",
+    "lancamento",
+    "novo",
+    "novidade",
+    "chegou",
+  ]);
 }
 function getValidFilterId(filterId?: string) {
   return filters.some((filter) => filter.id === filterId) ? filterId! : "todos";

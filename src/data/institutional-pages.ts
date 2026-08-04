@@ -90,7 +90,7 @@ export const institutionalPages = {
       },
       {
         title: "Segurança",
-        body: "Não publicamos dados sensíveis no site. Pagamentos são direcionados para checkout seguro externo, sem criar gateway próprio dentro da loja.",
+        body: "Não publicamos dados sensíveis no site. Pagamentos são concluídos em ambiente seguro de checkout externo.",
       },
     ],
   },

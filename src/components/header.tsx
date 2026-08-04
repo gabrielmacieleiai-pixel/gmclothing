@@ -10,24 +10,25 @@ import { getProductHref, getProductPricing, products } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 
 const links = [
-  { href: "/colecao/frio", label: "Inverno" },
+  { href: "/colecoes/chenille-zara", label: "Inverno" },
   { href: "/colecao/oversized", label: "Oversized" },
   { href: "/colecao/crista", label: "Cristã" },
   { href: "/colecao/futebol", label: "Futebol" },
-  { href: "/colecao/promocao", label: "Promoções" },
+  { href: "/colecao/lancamentos", label: "Lançamentos" },
+  { href: "/colecao/promocao", label: "Sale" },
   { href: "/colecao/ultimas-pecas", label: "Últimas peças" },
 ];
 
 const salesLinks = [
   {
-    href: "/colecao/frio",
+    href: "/colecoes/chenille-zara",
     eyebrow: "Coleção Inverno",
     label: "Tricôs, polos e suéteres para vender agora",
   },
   {
-    href: "/colecoes/chenille-zara",
-    eyebrow: "Chenille Zara",
-    label: "Textura macia em cores selecionadas",
+    href: "/colecao/frio",
+    eyebrow: "Todos os frios",
+    label: "Tricôs, polos e suéteres da seleção",
   },
   {
     href: "/colecao/oversized",
@@ -45,13 +46,18 @@ const salesLinks = [
     label: "Brasil, retrô, Portugal e seleções",
   },
   {
+    href: "/colecao/lancamentos",
+    eyebrow: "Lançamentos",
+    label: "Peças novas e entradas recentes",
+  },
+  {
     href: "/colecao/ultimas-pecas",
     eyebrow: "Últimas peças",
     label: "Futebol, polos e peças finais em giro rápido",
   },
   {
     href: "/colecao/promocao",
-    eyebrow: "Promoções",
+    eyebrow: "Sale",
     label: "Condições especiais no fim da seleção",
   },
 ];

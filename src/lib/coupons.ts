@@ -1,4 +1,4 @@
-export type CouponResult =
+﻿export type CouponResult =
   | {
       valid: true;
       code: string;
@@ -22,6 +22,21 @@ const couponMap: Record<string, CouponDefinition> = {
     active: true,
     type: "percentage",
     value: 20,
+  },
+  CAIO15: {
+    active: true,
+    type: "percentage",
+    value: 15,
+  },
+  JEEH15: {
+    active: true,
+    type: "percentage",
+    value: 15,
+  },
+  PRIMEIRACOMPRA: {
+    active: true,
+    type: "percentage",
+    value: 10,
   },
 };
 
@@ -65,3 +80,4 @@ export function calculateCouponDiscount(
     message: `Cupom ${normalizedCode} aplicado: ${coupon.value}% de desconto.`,
   };
 }
+

@@ -14,6 +14,7 @@ const colors = {
   charcoal: { id: "chumbo", name: "Chumbo", hex: "#4f504c" },
   brown: { id: "marrom", name: "Marrom", hex: "#6b3f2a" },
   caramel: { id: "caramelo", name: "Caramelo", hex: "#8a542f" },
+  sand: { id: "areia", name: "Areia", hex: "#c5b49a" },
   mixedGray: { id: "cinza-mesclado", name: "Cinza mesclado", hex: "#5a5650" },
   green: { id: "verde", name: "Verde", hex: "#183d27" },
   brazilYellow: { id: "amarelo", name: "Amarelo", hex: "#ffd500" },
@@ -819,27 +820,27 @@ export const products: Product[] = [
     photos: createProductPhotos("argentina-player-2026", [
       {
         id: "frente",
-        src: "/products/copa/camiseta-argentina-versao-jogador-frente.webp",
+        src: "/products/copa/Argentina frente.webp",
         alt: "Camiseta Argentina versão jogador Copa 2026 frente",
       },
       {
         id: "frente-2",
-        src: "/products/copa/camiseta-argentina-versao-jogador-frente-2.webp",
+        src: "/products/copa/Argentina frente.webp",
         alt: "Camiseta Argentina versão jogador Copa 2026 em look frontal",
       },
       {
         id: "costas",
-        src: "/products/copa/camiseta-argentina-versao-jogador-costas.webp",
+        src: "/products/copa/Argentina frente.webp",
         alt: "Camiseta Argentina versão jogador Copa 2026 costas",
       },
       {
         id: "detalhe-peito",
-        src: "/products/copa/camiseta-argentina-versao-jogador-detalhe-peito.webp",
+        src: "/products/copa/Argentina frente.webp",
         alt: "Detalhe frontal da Camiseta Argentina versão jogador Copa 2026",
       },
       {
         id: "detalhe-barra",
-        src: "/products/copa/camiseta-argentina-versao-jogador-detalhe-barra.webp",
+        src: "/products/copa/Argentina frente.webp",
         alt: "Detalhe de barra da Camiseta Argentina versão jogador Copa 2026",
       },
     ]),
@@ -1825,6 +1826,229 @@ export const products: Product[] = [
     ],
   },
   {
+    slug: "camiseta-canelada-zara",
+    name: "Camiseta Canelada Zara",
+    shortName: "Canelada Zara",
+    active: true,
+    description:
+      "Camiseta canelada masculina com textura premium, toque macio e caimento limpo para usar sozinha ou em camadas.",
+    salesNote:
+      "A base premium que resolve o visual sem excesso. Textura aparente, leitura sofisticada e preço de oportunidade.",
+    details: [
+      "Camiseta masculina canelada",
+      "Malha texturizada",
+      "Gola careca",
+      "Caimento regular",
+      "Produto da linha Caneladas GM Clothing",
+    ],
+    price: 199.9,
+    promotionalPrice: 99.9,
+    shopifyHandle: "camiseta-canelada-zara",
+    yampiCheckoutUrl: null,
+    collection: "Caneladas",
+    category: "Camiseta Canelada",
+    type: "apparel",
+    subcollection: "Caneladas",
+    styleTags: ["street", "premium", "canelada", "basico"],
+    tags: [
+      "camiseta canelada",
+      "canelada masculina",
+      "zara",
+      "camiseta basica premium",
+      "moda masculina",
+      "streetwear premium",
+      "gm clothing",
+    ],
+    features: [
+      "Malha canelada",
+      "Toque macio",
+      "Gola careca",
+      "Caimento regular",
+      "Visual clean",
+    ],
+    badge: "Lançamento",
+    hideStockCount: true,
+    showSizeGuide: false,
+    catalogColorSlugs: [
+      {
+        slug: "camiseta-canelada-zara-preta",
+        colorId: colors.black.id,
+        colorName: colors.black.name,
+      },
+      {
+        slug: "camiseta-canelada-zara-off-white",
+        colorId: colors.offWhite.id,
+        colorName: colors.offWhite.name,
+      },
+      {
+        slug: "camiseta-canelada-zara-marrom",
+        colorId: colors.brown.id,
+        colorName: colors.brown.name,
+      },
+      {
+        slug: "camiseta-canelada-zara-areia",
+        colorId: colors.sand.id,
+        colorName: colors.sand.name,
+      },
+    ],
+    photos: [
+      ...createProductPhotos("camiseta-canelada-zara-preta", [
+        {
+          id: "frente",
+          src: "/products/camisetas-caneladas/5c98d3eb-d2d3-4794-9fca-51da08d9ad18.png",
+          alt: "Camiseta Canelada Zara preta frente",
+          colorId: colors.black.id,
+        },
+        {
+          id: "look-sentado",
+          src: "/products/camisetas-caneladas/c05a63f7-8a36-4543-bace-1d4f25abf44b.png",
+          alt: "Camiseta Canelada Zara preta em look sentado",
+          colorId: colors.black.id,
+        },
+        {
+          id: "costas",
+          src: "/products/camisetas-caneladas/c1dacd78-4e8d-4737-9556-9a19835d63e3.png",
+          alt: "Camiseta Canelada Zara preta costas",
+          colorId: colors.black.id,
+        },
+        {
+          id: "detalhe",
+          src: "/products/camisetas-caneladas/2f2de6e3-3cd1-4375-81a9-f42ff40865a0.png",
+          alt: "Detalhe da Camiseta Canelada Zara preta",
+          colorId: colors.black.id,
+        },
+        {
+          id: "look",
+          src: "/products/camisetas-caneladas/ea629893-dfde-40ff-9202-60e380939f0f.png",
+          alt: "Camiseta Canelada Zara preta em look masculino",
+          colorId: colors.black.id,
+        },
+      ]),
+      ...createProductPhotos("camiseta-canelada-zara-off-white", [
+        {
+          id: "frente",
+          src: "/products/camisetas-caneladas/2e6f50f1-28e0-4111-9435-40f041f9a2ce.png",
+          alt: "Camiseta Canelada Zara off-white frente",
+          colorId: colors.offWhite.id,
+        },
+        {
+          id: "look",
+          src: "/products/camisetas-caneladas/3895731e-656e-4cbf-8e2e-7ba4bd692c7e.png",
+          alt: "Camiseta Canelada Zara off-white em look masculino",
+          colorId: colors.offWhite.id,
+        },
+        {
+          id: "look-sentado",
+          src: "/products/camisetas-caneladas/883c35c8-cdf9-4eec-ac8f-f01f3d4c9f0a.png",
+          alt: "Camiseta Canelada Zara off-white em look sentado",
+          colorId: colors.offWhite.id,
+        },
+        {
+          id: "costas",
+          src: "/products/camisetas-caneladas/834bac81-6dc3-4edf-8bb6-443bed385f4f.png",
+          alt: "Camiseta Canelada Zara off-white costas",
+          colorId: colors.offWhite.id,
+        },
+        {
+          id: "detalhe",
+          src: "/products/camisetas-caneladas/25f96cbd-1768-4e47-9785-c5192cb7d968.png",
+          alt: "Detalhe da Camiseta Canelada Zara off-white",
+          colorId: colors.offWhite.id,
+        },
+      ]),
+      ...createProductPhotos("camiseta-canelada-zara-marrom", [
+        {
+          id: "frente",
+          src: "/products/camisetas-caneladas/6b95038d-95b2-4f38-b866-89cf031481c2.png",
+          alt: "Camiseta Canelada Zara marrom frente",
+          colorId: colors.brown.id,
+        },
+        {
+          id: "look-sentado",
+          src: "/products/camisetas-caneladas/92765913-e4af-430c-84aa-c6dfcbd68abf.png",
+          alt: "Camiseta Canelada Zara marrom em look sentado",
+          colorId: colors.brown.id,
+        },
+        {
+          id: "costas",
+          src: "/products/camisetas-caneladas/61e974bc-6fd1-4706-b257-90faf2b7b00f.png",
+          alt: "Camiseta Canelada Zara marrom costas",
+          colorId: colors.brown.id,
+        },
+        {
+          id: "detalhe",
+          src: "/products/camisetas-caneladas/6569d159-21b5-4bc7-b08e-56452fc7430a.png",
+          alt: "Detalhe da Camiseta Canelada Zara marrom",
+          colorId: colors.brown.id,
+        },
+        {
+          id: "detalhe-malha",
+          src: "/products/camisetas-caneladas/8a37e316-3ee9-4ae7-87f6-23a1ab8f229c.png",
+          alt: "Detalhe da malha da Camiseta Canelada Zara marrom",
+          colorId: colors.brown.id,
+        },
+      ]),
+      ...createProductPhotos("camiseta-canelada-zara-areia", [
+        {
+          id: "frente",
+          src: "/products/camisetas-caneladas/8e381d6c-315d-4006-b0b2-c48f350d7ccc.png",
+          alt: "Camiseta Canelada Zara areia frente",
+          colorId: colors.sand.id,
+        },
+        {
+          id: "look-sentado",
+          src: "/products/camisetas-caneladas/66563853-ae01-463f-b264-dbd5e88a6021.png",
+          alt: "Camiseta Canelada Zara areia em look sentado",
+          colorId: colors.sand.id,
+        },
+        {
+          id: "costas",
+          src: "/products/camisetas-caneladas/780f173b-06fa-43b7-b6f2-15b052871424.png",
+          alt: "Camiseta Canelada Zara areia costas",
+          colorId: colors.sand.id,
+        },
+        {
+          id: "costas-detalhe",
+          src: "/products/camisetas-caneladas/c99c07a2-7f21-4c11-8bfc-3bf036c35286.png",
+          alt: "Detalhe de costas da Camiseta Canelada Zara areia",
+          colorId: colors.sand.id,
+        },
+        {
+          id: "detalhe",
+          src: "/products/camisetas-caneladas/c46e1e64-0ea5-4452-976f-41a248cf7dcc.png",
+          alt: "Detalhe da Camiseta Canelada Zara areia",
+          colorId: colors.sand.id,
+        },
+      ]),
+    ],
+    variants: [
+      ...createShopifyReadyVariants(
+        "camiseta-canelada-zara",
+        "GMC-CANELADA-PR",
+        colors.black,
+        standardSizeStock,
+      ),
+      ...createShopifyReadyVariants(
+        "camiseta-canelada-zara",
+        "GMC-CANELADA-OF",
+        colors.offWhite,
+        standardSizeStock,
+      ),
+      ...createShopifyReadyVariants(
+        "camiseta-canelada-zara",
+        "GMC-CANELADA-MR",
+        colors.brown,
+        standardSizeStock,
+      ),
+      ...createShopifyReadyVariants(
+        "camiseta-canelada-zara",
+        "GMC-CANELADA-AR",
+        colors.sand,
+        standardSizeStock,
+      ),
+    ],
+  },
+  {
     slug: "sueter-tricot-minimal-preto",
     name: "Suéter Tricot Minimal Preto",
     shortName: "Tricot Minimal Preto",
@@ -2520,6 +2744,22 @@ const productSlugRedirects: Record<string, ProductSlugRedirect> = {
   "sueter-chenile-zara-cinza-claro": {
     slug: "sueter-chenile-zara",
     colorId: colors.lightGray.id,
+  },
+  "camiseta-canelada-zara-preta": {
+    slug: "camiseta-canelada-zara",
+    colorId: colors.black.id,
+  },
+  "camiseta-canelada-zara-off-white": {
+    slug: "camiseta-canelada-zara",
+    colorId: colors.offWhite.id,
+  },
+  "camiseta-canelada-zara-marrom": {
+    slug: "camiseta-canelada-zara",
+    colorId: colors.brown.id,
+  },
+  "camiseta-canelada-zara-areia": {
+    slug: "camiseta-canelada-zara",
+    colorId: colors.sand.id,
   },
 };
 

@@ -38,7 +38,7 @@ const categoryTiles = [
   {
     label: "Inverno",
     eyebrow: "Texturas para a estação",
-    href: "/colecao/frio",
+    href: "/colecoes/chenille-zara",
   },
   {
     label: "Oversized",
@@ -56,7 +56,12 @@ const categoryTiles = [
     href: "/colecao/futebol",
   },
   {
-    label: "Promoções",
+    label: "Lançamentos",
+    eyebrow: "Chegou agora",
+    href: "/colecao/lancamentos",
+  },
+  {
+    label: "Sale",
     eyebrow: "Condições especiais",
     href: "/colecao/promocao",
   },
@@ -71,7 +76,7 @@ const organizationSchema = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: "GM Clothing",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://gmclo.shop",
   description: "Streetwear masculino premium.",
 };
 
@@ -79,11 +84,11 @@ const websiteSchema = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "GM Clothing",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://gmclo.shop",
   potentialAction: {
     "@type": "SearchAction",
     target:
-      (process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000") +
+      (process.env.NEXT_PUBLIC_SITE_URL ?? "https://gmclo.shop") +
       "/colecao?busca={search_term_string}",
     "query-input": "required name=search_term_string",
   },
@@ -97,8 +102,8 @@ export default function Home() {
     .filter(isWinterProduct)
     .sort(
       (firstProduct, secondProduct) =>
-        Number(isChenilleProduct(firstProduct)) -
-        Number(isChenilleProduct(secondProduct)),
+        Number(isChenilleProduct(secondProduct)) -
+        Number(isChenilleProduct(firstProduct)),
     )
     .slice(0, 8);
   markShownProducts(winterProducts, shownProductFamilies);
@@ -165,7 +170,7 @@ export default function Home() {
           <SectionHeading
             action="Ver inverno"
             eyebrow="Coleção Inverno"
-            href="/colecao/frio"
+            href="/colecoes/chenille-zara"
             title="Camadas com presença."
           />
           <ProductGrid products={winterProducts} />
