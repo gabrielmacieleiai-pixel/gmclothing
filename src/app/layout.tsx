@@ -61,11 +61,10 @@ export default function RootLayout({
         {googleTagId ? (
           <>
             <Script
-              async
               src={`https://www.googletagmanager.com/gtag/js?id=${googleTagId}`}
-              strategy="afterInteractive"
+              strategy="beforeInteractive"
             />
-            <Script id="google-tag" strategy="afterInteractive">
+            <Script id="google-tag" strategy="beforeInteractive">
               {`
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
