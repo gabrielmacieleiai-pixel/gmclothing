@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "@/app/globals.css";
 import { CartDrawer } from "@/components/cart-drawer";
 import { CartProvider } from "@/components/cart-provider";
@@ -9,6 +10,7 @@ import { WhatsAppButton } from "@/components/whatsapp-button";
 import { createWhatsAppUrl } from "@/lib/whatsapp";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://gmclo.shop";
+const googleTagId = process.env.NEXT_PUBLIC_GOOGLE_TAG_ID ?? "G-PBQZJHKBQF";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -55,6 +57,25 @@ export default function RootLayout({
 
   return (
     <html lang="pt-BR">
+      <head>
+        {googleTagId ? (
+          <>
+            <Script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${googleTagId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-tag" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${googleTagId}');
+              `}
+            </Script>
+          </>
+        ) : null}
+      </head>
       <body>
         <CartProvider>
           <Header />
