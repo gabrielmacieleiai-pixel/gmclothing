@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import "@/app/globals.css";
 import { CartDrawer } from "@/components/cart-drawer";
 import { CartProvider } from "@/components/cart-provider";
@@ -60,18 +59,21 @@ export default function RootLayout({
       <head>
         {googleTagId ? (
           <>
-            <Script
+            <script
+              async
               src={`https://www.googletagmanager.com/gtag/js?id=${googleTagId}`}
-              strategy="beforeInteractive"
             />
-            <Script id="google-tag" strategy="beforeInteractive">
-              {`
+            <script
+              id="google-tag"
+              dangerouslySetInnerHTML={{
+                __html: `
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
                 gtag('config', '${googleTagId}');
-              `}
-            </Script>
+              `,
+              }}
+            />
           </>
         ) : null}
       </head>
