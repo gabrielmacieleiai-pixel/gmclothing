@@ -123,6 +123,10 @@ export function ProductDetails({
   const selectedColorStock = selectedColorId
     ? getColorStock(product, selectedColorId)
     : 0;
+  const totalProductStock = product.variants.reduce(
+    (total, variant) => total + Math.max(variant.stock, 0),
+    0,
+  );
   const filteredMedia = allMedia.filter(
     (media) => !media.colorId || media.colorId === selectedColorId,
   );
@@ -139,6 +143,14 @@ export function ProductDetails({
   const canAddToCart =
     Boolean(selectedVariant) &&
     Boolean(selectedVariant?.stock && selectedVariant.stock > 0);
+  const unavailableCtaLabel =
+    totalProductStock === 0
+      ? "Produto esgotado"
+      : selectedColorStock === 0
+        ? "Cor esgotada"
+        : selectedSize
+          ? "Tamanho esgotado"
+          : "Escolha o tamanho";
   const showSizeGuide =
     product.showSizeGuide === true && Boolean(product.sizeGuide?.rows.length);
   const showOversizedMaterialProof =
@@ -527,6 +539,11 @@ export function ProductDetails({
           <p className="mt-3 max-w-md text-sm leading-6 text-black/70">
             {product.salesNote}
           </p>
+          {totalProductStock === 0 ? (
+            <div className="mt-5 border border-[#050505] bg-[#050505] px-4 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-white">
+              Produto esgotado · indisponível no momento
+            </div>
+          ) : null}
           </div>
 
           <div className="my-6 grid grid-cols-2 gap-3 border-y border-black/15 py-4 text-[9px] font-bold uppercase tracking-[0.13em] text-black/50 sm:grid-cols-3 sm:text-center">
@@ -613,11 +630,11 @@ export function ProductDetails({
                         ? `Tamanho ${size} indisponível`
                         : `Selecionar tamanho ${size}`
                     }
-                    className={`h-12 border text-xs font-bold transition-colors ${
+                    className={`flex h-14 flex-col items-center justify-center gap-1 border text-xs font-bold transition-colors ${
                       selectedSize === size
                         ? "border-[#050505] bg-[#050505] text-white"
                         : isUnavailable
-                          ? "cursor-not-allowed border-black/10 text-black/25 line-through"
+                          ? "cursor-not-allowed border-black/10 bg-black/[0.025] text-black/30"
                           : "border-black/20 hover:border-[#050505]"
                     }`}
                     disabled={isUnavailable}
@@ -625,7 +642,14 @@ export function ProductDetails({
                     onClick={() => selectSize(size)}
                     type="button"
                   >
-                    {size}
+                    <span className={isUnavailable ? "line-through" : undefined}>
+                      {size}
+                    </span>
+                    {isUnavailable ? (
+                      <span className="text-[7px] font-bold uppercase tracking-[0.12em] no-underline">
+                        Esgotado
+                      </span>
+                    ) : null}
                   </button>
                 );
               })}
@@ -639,7 +663,7 @@ export function ProductDetails({
               onClick={handleAddToCart}
               type="button"
             >
-              {canAddToCart ? "Adicionar ao carrinho" : "Escolha o tamanho"}
+              {canAddToCart ? "Adicionar ao carrinho" : unavailableCtaLabel}
               <ArrowUpRight />
             </button>
             <button
@@ -650,9 +674,10 @@ export function ProductDetails({
                   : "border-black/20 text-black/35"
               }`}
               onClick={handleBuyNow}
+              disabled={!canAddToCart}
               type="button"
             >
-              Comprar agora
+              {canAddToCart ? "Comprar agora" : unavailableCtaLabel}
             </button>
           </div>
 
@@ -852,9 +877,10 @@ export function ProductDetails({
             canAddToCart ? "bg-[#050505]" : "bg-black/35"
           }`}
           onClick={handleBuyNow}
+          disabled={!canAddToCart}
           type="button"
         >
-          {canAddToCart ? "Comprar agora" : "Escolha o tamanho"}
+          {canAddToCart ? "Comprar agora" : unavailableCtaLabel}
           <ArrowUpRight />
         </button>
       </div>

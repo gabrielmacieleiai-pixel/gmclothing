@@ -21,7 +21,13 @@ export function ProductCard({
 }: ProductCardProps) {
   const colors = getProductColors(product);
   const pricing = getProductPricing(product, product.defaultColorId);
-  const isLastChanceBadge = product.badge
+  const totalStock = product.variants.reduce(
+    (total, variant) => total + Math.max(variant.stock, 0),
+    0,
+  );
+  const isSoldOut = totalStock === 0;
+  const badge = isSoldOut ? "Esgotado" : product.badge;
+  const isLastChanceBadge = badge
     ?.toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
@@ -29,26 +35,30 @@ export function ProductCard({
 
   return (
     <article className="group w-[84vw] max-w-[410px] shrink-0 snap-center md:w-auto md:max-w-none">
-      {product.badge ? (
+      {badge ? (
         <div className="mb-2 min-h-5 md:mb-3 md:min-h-6">
           <span
             className={`inline-flex max-w-full border px-2.5 py-1 text-[8px] font-bold uppercase tracking-[0.14em] md:px-3 md:py-1.5 md:text-[9px] md:tracking-[0.16em] ${
-              isLastChanceBadge
+              isSoldOut
+                ? "border-[#050505] bg-[#050505] text-white"
+                : isLastChanceBadge
                 ? "border-red-800 bg-red-800 text-white"
                 : "border-black/15 text-ink"
             }`}
           >
-            {product.badge}
+            {badge}
           </span>
         </div>
       ) : null}
 
-      <ProductCardGallery
-        href={getProductHref(product)}
-        photos={product.photos}
-        priority={priority}
-        productName={product.name}
-      />
+      <div className={isSoldOut ? "opacity-55 grayscale-[0.2]" : undefined}>
+        <ProductCardGallery
+          href={getProductHref(product)}
+          photos={product.photos}
+          priority={priority}
+          productName={product.name}
+        />
+      </div>
 
       <Link href={getProductHref(product)} prefetch={false}>
         <div className="min-w-0 pt-3 md:pt-4">
@@ -114,6 +124,16 @@ export function ProductCard({
               ) : null}
             </div>
           </div>
+
+          {isSoldOut ? (
+            <p
+              className={`mt-2 text-[9px] font-bold uppercase tracking-[0.14em] ${
+                inverse ? "text-white/55" : "text-black/55"
+              }`}
+            >
+              Indisponível no momento
+            </p>
+          ) : null}
         </div>
       </Link>
     </article>

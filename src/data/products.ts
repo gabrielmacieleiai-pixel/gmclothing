@@ -5,6 +5,7 @@ import type {
   ProductVariant,
 } from "@/types/product";
 import { getShopifyVariantId } from "@/data/shopify-variant-ids";
+import { applyOfficialInventory } from "@/data/official-inventory";
 
 const colors = {
   black: { id: "preto", name: "Preto", hex: "#171715" },
@@ -404,7 +405,7 @@ function createMultiColorOversizedProduct(
   };
 }
 
-export const products: Product[] = [
+const productCatalog: Product[] = [
   createMultiColorOversizedProduct({
     slug: "oversized-fate-eu-sou-jesus-branca",
     name: "Camiseta Oversized Faith Eu Sou Jesus",
@@ -2664,6 +2665,8 @@ export const products: Product[] = [
     ],
   },
 ];
+
+export const products = applyOfficialInventory(productCatalog);
 
 export const activeProducts = products.filter((product) => product.active);
 
