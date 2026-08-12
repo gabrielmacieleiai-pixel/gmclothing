@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ProductCardGallery } from "@/components/product-card-gallery";
 import {
   getProductColors,
+  getProductDisplayStock,
   getProductHref,
   getProductPricing,
 } from "@/data/products";
@@ -21,17 +22,18 @@ export function ProductCard({
 }: ProductCardProps) {
   const colors = getProductColors(product);
   const pricing = getProductPricing(product, product.defaultColorId);
-  const totalStock = product.variants.reduce(
-    (total, variant) => total + Math.max(variant.stock, 0),
-    0,
-  );
+  const totalStock = getProductDisplayStock(product);
   const isSoldOut = totalStock === 0;
-  const badge = isSoldOut ? "Esgotado" : product.badge;
+  const badge = isSoldOut
+    ? "Sem estoque"
+    : totalStock === 1
+      ? "Últimas peças"
+      : product.badge;
   const isLastChanceBadge = badge
     ?.toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
-    .includes("ultimas");
+    .includes("ultima");
 
   return (
     <article className="group w-[84vw] max-w-[410px] shrink-0 snap-center md:w-auto md:max-w-none">

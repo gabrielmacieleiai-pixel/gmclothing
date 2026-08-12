@@ -2766,7 +2766,9 @@ const productSlugRedirects: Record<string, ProductSlugRedirect> = {
   },
 };
 
-export const catalogProducts = getCatalogProducts(activeProducts);
+export const catalogProducts = sortProductsByAvailability(
+  getCatalogProducts(activeProducts),
+);
 
 export const copaProducts = activeProducts
   .filter((product) => product.campaign === "copa-2026")
@@ -2864,6 +2866,29 @@ export function getProductTotalStock(product: Product, colorId?: string) {
   return product.variants
     .filter((variant) => !colorId || variant.color.id === colorId)
     .reduce((total, variant) => total + variant.stock, 0);
+}
+
+export function getProductDisplayStock(product: Product) {
+  return getProductTotalStock(product, product.defaultColorId);
+}
+
+export function isProductLastPiece(product: Product) {
+  return getProductDisplayStock(product) === 1;
+}
+
+export function sortProductsByAvailability(products: Product[]) {
+  return products
+    .map((product, index) => ({ product, index }))
+    .sort((first, second) => {
+      const firstIsSoldOut = getProductDisplayStock(first.product) === 0;
+      const secondIsSoldOut = getProductDisplayStock(second.product) === 0;
+
+      return (
+        Number(firstIsSoldOut) - Number(secondIsSoldOut) ||
+        first.index - second.index
+      );
+    })
+    .map(({ product }) => product);
 }
 
 export function getRelatedProducts(

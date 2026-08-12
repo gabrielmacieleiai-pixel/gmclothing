@@ -127,6 +127,12 @@ export function ProductDetails({
     (total, variant) => total + Math.max(variant.stock, 0),
     0,
   );
+  const productStatusBadge =
+    totalProductStock === 0
+      ? "Sem estoque"
+      : selectedColorStock === 1
+        ? "Últimas peças"
+        : product.badge;
   const filteredMedia = allMedia.filter(
     (media) => !media.colorId || media.colorId === selectedColorId,
   );
@@ -429,9 +435,9 @@ export function ProductDetails({
                   className="relative aspect-[2/3] w-full shrink-0 snap-center overflow-hidden sm:aspect-[3/4]"
                   key={media.id}
                 >
-                  {product.badge ? (
+                  {productStatusBadge ? (
                     <span className="absolute left-4 top-4 z-10 bg-[#050505] px-3 py-2 text-[9px] font-bold uppercase tracking-[0.18em] text-white">
-                      {product.badge}
+                      {productStatusBadge}
                     </span>
                   ) : null}
                   <MediaFrame media={media} priority={index === 0} />

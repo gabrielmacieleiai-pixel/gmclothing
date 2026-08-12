@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { ProductGrid } from "@/components/product-grid";
-import { catalogProducts } from "@/data/products";
+import {
+  catalogProducts,
+  getProductDisplayStock,
+  isProductLastPiece,
+  sortProductsByAvailability,
+} from "@/data/products";
 import type { Product } from "@/types/product";
 
 type CollectionPageProps = {
@@ -65,13 +70,7 @@ const collectionPages = {
     eyebrow: "Estoque limitado",
     title: "Garanta antes que acabe.",
     description: "Uma seleção curta para decidir rápido enquanto ainda há estoque.",
-    filterProducts: (products) =>
-      products.filter(
-        (product) =>
-          product.slug !== "camisa-brasil-retro-azul-ronaldo" &&
-          !isFaithProduct(product) &&
-          (isFootballProduct(product) || product.category === "Polo Tricot"),
-      ),
+    filterProducts: (products) => products.filter(isProductLastPiece),
   },
 } satisfies Record<string, CollectionConfig>;
 
@@ -154,20 +153,26 @@ export default async function CollectionLandingPage({
 }
 
 function sortCollectionProducts(slug: string, products: Product[]) {
+  const compareAvailability = (firstProduct: Product, secondProduct: Product) =>
+    Number(getProductDisplayStock(firstProduct) === 0) -
+    Number(getProductDisplayStock(secondProduct) === 0);
+
   if (slug === "oversized") {
     return [...products].sort(
       (firstProduct, secondProduct) =>
+        compareAvailability(firstProduct, secondProduct) ||
         Number(isFaithProduct(firstProduct)) -
         Number(isFaithProduct(secondProduct)),
     );
   }
 
   if (slug !== "frio") {
-    return products;
+    return sortProductsByAvailability(products);
   }
 
   return [...products].sort(
     (firstProduct, secondProduct) =>
+      compareAvailability(firstProduct, secondProduct) ||
       Number(isChenilleProduct(secondProduct)) -
       Number(isChenilleProduct(firstProduct)),
   );

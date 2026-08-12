@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { ProductGrid } from "@/components/product-grid";
+import { isProductLastPiece } from "@/data/products";
 import type { Product } from "@/types/product";
 
 type CollectionBrowserProps = {
@@ -62,10 +63,7 @@ const filters: CollectionFilter[] = [
   {
     id: "ultimas-pecas",
     label: "Últimas peças",
-    matches: (product) =>
-      product.slug !== "camisa-brasil-retro-azul-ronaldo" &&
-      !isFaithProduct(product) &&
-      (isFootballProduct(product) || product.category === "Polo Tricot"),
+    matches: isProductLastPiece,
   },
   {
     id: "promocao",

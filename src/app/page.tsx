@@ -8,6 +8,8 @@ import { brandAssets } from "@/data/brand-assets";
 import {
   catalogProducts,
   featuredProducts,
+  getProductDisplayStock,
+  isProductLastPiece,
 } from "@/data/products";
 import { heroSlides } from "@/data/hero-slides";
 
@@ -100,11 +102,17 @@ export default function Home() {
   const shownProductFamilies = new Set<string>();
   const winterProducts = catalogProducts
     .filter(isWinterProduct)
-    .sort(
-      (firstProduct, secondProduct) =>
+    .sort((firstProduct, secondProduct) => {
+      const availabilityOrder =
+        Number(getProductDisplayStock(firstProduct) === 0) -
+        Number(getProductDisplayStock(secondProduct) === 0);
+
+      return (
+        availabilityOrder ||
         Number(isChenilleProduct(secondProduct)) -
-        Number(isChenilleProduct(firstProduct)),
-    )
+          Number(isChenilleProduct(firstProduct))
+      );
+    })
     .slice(0, 8);
   markShownProducts(winterProducts, shownProductFamilies);
 
@@ -118,7 +126,7 @@ export default function Home() {
   markShownProducts(newProducts, shownProductFamilies);
 
   const lastPieces = catalogProducts
-    .filter(isLastChanceProduct)
+    .filter(isProductLastPiece)
     .filter((product) => !shownProductFamilies.has(getHomeProductFamily(product)))
     .map((product) => ({ ...product, badge: "Últimas peças" }))
     .slice(0, 4);
@@ -395,14 +403,6 @@ function isFootballProduct(product: (typeof catalogProducts)[number]) {
       "selecao",
       "jersey",
     ])
-  );
-}
-
-function isLastChanceProduct(product: (typeof catalogProducts)[number]) {
-  return (
-    product.slug !== "camisa-brasil-retro-azul-ronaldo" &&
-    !isFaithProduct(product) &&
-    (isFootballProduct(product) || product.category === "Polo Tricot")
   );
 }
 
