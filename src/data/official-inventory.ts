@@ -103,7 +103,15 @@ export function applyOfficialInventory(catalog: Product[]): Product[] {
     const productInventory = officialInventory[product.slug];
 
     if (!productInventory) {
-      return product;
+      // The approved physical count is the source of truth. Products that
+      // were not counted stay visible, but cannot be purchased accidentally.
+      return {
+        ...product,
+        variants: product.variants.map((variant) => ({
+          ...variant,
+          stock: 0,
+        })),
+      };
     }
 
     return {
