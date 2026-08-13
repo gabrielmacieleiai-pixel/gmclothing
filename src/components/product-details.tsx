@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useCart } from "@/components/cart-provider";
+import { useShopifyPricing } from "@/components/shopify-pricing-provider";
 import {
   ArrowUpRight,
   ChevronLeft,
@@ -12,11 +13,11 @@ import {
   XIcon,
 } from "@/components/icons";
 import { WhatsAppButton } from "@/components/whatsapp-button";
-import { getProductPricing } from "@/data/products";
 import { formatCheckoutZip, saveCheckoutPrefill } from "@/lib/checkout-prefill";
 import { formatPrice } from "@/lib/format";
 import { getImageVariantSrc } from "@/lib/image-variants";
 import { getShopifyCartUrl } from "@/lib/shopify";
+import { isWinterSaleChenille } from "@/lib/winter-sale";
 import type { Product, ProductMedia } from "@/types/product";
 
 type ProductDetailsProps = {
@@ -48,8 +49,10 @@ export function ProductDetails({
   initialColorId,
 }: ProductDetailsProps) {
   const { addItem, couponCode } = useCart();
+  const resolvePricing = useShopifyPricing();
   const router = useRouter();
   const galleryRef = useRef<HTMLDivElement>(null);
+  const sizeSelectorRef = useRef<HTMLDivElement>(null);
   const productMedia = useMemo(
     () =>
       product.media?.length
@@ -127,23 +130,29 @@ export function ProductDetails({
     (total, variant) => total + Math.max(variant.stock, 0),
     0,
   );
+  const isChenilleWinterSale = isWinterSaleChenille(product);
   const productStatusBadge =
     totalProductStock === 0
       ? "Sem estoque"
       : selectedColorStock === 1
         ? "Últimas peças"
         : product.badge;
-  const filteredMedia = allMedia.filter(
+  const enabledMedia = allMedia.filter(
+    (media) =>
+      media.type === "image" || (!media.disabled && Boolean(media.src)),
+  );
+  const filteredMedia = enabledMedia.filter(
     (media) => !media.colorId || media.colorId === selectedColorId,
   );
-  const visibleMedia = filteredMedia.length > 0 ? filteredMedia : allMedia;
+  const visibleMedia =
+    filteredMedia.length > 0 ? filteredMedia : enabledMedia;
   const selectedMedia =
     visibleMedia.find((media) => media.id === selectedMediaId) ??
     visibleMedia[0] ??
     allMedia[0];
   const pricing = useMemo(
-    () => getProductPricing(product, selectedColorId),
-    [product, selectedColorId],
+    () => resolvePricing(product, selectedColorId, selectedVariant?.id),
+    [product, resolvePricing, selectedColorId, selectedVariant?.id],
   );
   const currentPrice = pricing.currentPrice;
   const canAddToCart =
@@ -392,11 +401,28 @@ export function ProductDetails({
     window.location.href = checkoutUrl;
   }
 
+  function handleMobileStickyAction() {
+    if (!selectedSize) {
+      sizeSelectorRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      return;
+    }
+
+    handleBuyNow();
+  }
+
   return (
     <>
       <section className="mx-auto grid max-w-[1536px] gap-8 overflow-hidden px-4 pb-36 sm:px-6 lg:grid-cols-[1.42fr_0.58fr] lg:gap-14 lg:px-10 lg:pb-24">
         <div className="order-1 min-w-0 lg:sticky lg:top-24 lg:self-start">
           <div className="mb-5 lg:hidden">
+            {isChenilleWinterSale ? (
+              <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.22em] text-[#8c6a2c]">
+                Winter Sale
+              </p>
+            ) : null}
             <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-black/45">
               {product.collection} / {product.category}
             </p>
@@ -417,7 +443,7 @@ export function ProductDetails({
                 Por {formatPrice(currentPrice)}
               </span>
               {pricing.discountPercentage ? (
-                <span className="bg-[#050505] px-3 py-2 text-[9px] font-black uppercase tracking-[0.14em] text-white">
+                <span className="border border-black/15 px-2 py-1 text-[8px] font-bold uppercase tracking-[0.12em] text-black/50">
                   {pricing.discountPercentage}% off
                 </span>
               ) : null}
@@ -510,6 +536,11 @@ export function ProductDetails({
 
         <div className="order-2 min-w-0 lg:py-10">
           <div className="hidden lg:block">
+          {isChenilleWinterSale ? (
+            <p className="mb-3 text-[9px] font-bold uppercase tracking-[0.22em] text-[#8c6a2c]">
+              Winter Sale
+            </p>
+          ) : null}
           <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-black/45">
             {product.collection} / {product.category}
           </p>
@@ -530,7 +561,7 @@ export function ProductDetails({
               Por {formatPrice(currentPrice)}
             </span>
             {pricing.discountPercentage ? (
-              <span className="bg-[#050505] px-3 py-2 text-[9px] font-black uppercase tracking-[0.14em] text-white">
+              <span className="border border-black/15 px-2 py-1 text-[8px] font-bold uppercase tracking-[0.12em] text-black/50">
                 {pricing.discountPercentage}% off
               </span>
             ) : null}
@@ -563,7 +594,9 @@ export function ProductDetails({
                   : selectedVariant &&
                       selectedVariant.stock > 0 &&
                       selectedVariant.stock <= LOW_STOCK_THRESHOLD
-                    ? "Últimas unidades"
+                    ? selectedVariant.stock === 1
+                      ? "Última peça"
+                      : "Restam poucas"
                     : `${selectedColorStock} peças disponíveis`}
             </span>
           </div>
@@ -608,7 +641,7 @@ export function ProductDetails({
             </div>
           </div>
 
-          <div className="border-t border-black/15 py-6">
+          <div className="border-t border-black/15 py-6" ref={sizeSelectorRef}>
             <div className="mb-4 flex justify-between gap-4 text-[10px] font-bold uppercase tracking-[0.18em]">
               <span>Tamanho</span>
               <span className="text-right text-black/45">
@@ -617,7 +650,9 @@ export function ProductDetails({
                   : selectedVariant &&
                       !product.hideStockCount &&
                       selectedVariant.stock <= LOW_STOCK_THRESHOLD
-                    ? "Últimas unidades"
+                    ? selectedVariant.stock === 1
+                      ? "Última peça"
+                      : "Restam poucas"
                     : "Escolha para adicionar"}
               </span>
             </div>
@@ -687,6 +722,17 @@ export function ProductDetails({
             </button>
           </div>
 
+          {isChenilleWinterSale ? (
+            <div className="mt-4 grid grid-cols-2 border border-black/15 text-[9px] font-bold uppercase tracking-[0.12em] text-black/60">
+              <span className="border-r border-black/15 px-3 py-3">
+                Pronta entrega
+              </span>
+              <span className="px-3 py-3">
+                Entrega grátis em BC e região
+              </span>
+            </div>
+          ) : null}
+
           {checkoutMessage ? (
             <p className="mt-3 text-[10px] font-bold uppercase leading-4 tracking-[0.12em] text-[#8a2d1d]">
               {checkoutMessage}
@@ -714,8 +760,6 @@ export function ProductDetails({
               pode comprar pelo WhatsApp.
             </p>
           ) : null}
-
-          <WhatsAppButton href={whatsappUrl} label="Tirar dúvida no WhatsApp" />
 
           <div className="mt-6 border-t border-black/15 py-5">
             <div className="mb-4 flex items-center justify-between gap-4">
@@ -796,6 +840,8 @@ export function ProductDetails({
             ) : null}
           </div>
 
+          <WhatsAppButton href={whatsappUrl} label="Tirar dúvida no WhatsApp" />
+
           <div className="mt-8 border-t border-black/15">
             <details className="border-b border-black/15 py-5" open>
               <summary className="cursor-pointer text-[10px] font-bold uppercase tracking-[0.18em]">
@@ -868,7 +914,10 @@ export function ProductDetails({
         </section>
       ) : null}
 
-      <div className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-[#f5f1e8] px-4 py-3 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] md:hidden">
+      <div
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-[#f5f1e8] px-4 pt-3 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] md:hidden"
+        style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      >
         <div className="mb-2 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.14em] text-black/45">
           <span>
             {selectedSize
@@ -878,15 +927,27 @@ export function ProductDetails({
           <span>Por {formatPrice(currentPrice)}</span>
         </div>
         <button
-          aria-disabled={!canAddToCart}
+          aria-disabled={
+            totalProductStock === 0 || Boolean(selectedSize && !canAddToCart)
+          }
           className={`flex h-12 w-full items-center justify-between px-4 text-[10px] font-bold uppercase tracking-[0.18em] text-white ${
-            canAddToCart ? "bg-[#050505]" : "bg-black/35"
+            totalProductStock > 0 && (!selectedSize || canAddToCart)
+              ? "bg-[#050505]"
+              : "bg-black/35"
           }`}
-          onClick={handleBuyNow}
-          disabled={!canAddToCart}
+          onClick={handleMobileStickyAction}
+          disabled={
+            totalProductStock === 0 || Boolean(selectedSize && !canAddToCart)
+          }
           type="button"
         >
-          {canAddToCart ? "Comprar agora" : unavailableCtaLabel}
+          {totalProductStock === 0
+            ? "Produto esgotado"
+            : !selectedSize
+              ? "Escolher tamanho"
+              : canAddToCart
+                ? "Comprar agora"
+                : unavailableCtaLabel}
           <ArrowUpRight />
         </button>
       </div>

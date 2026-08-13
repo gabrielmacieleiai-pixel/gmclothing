@@ -5,6 +5,7 @@ import { CartProvider } from "@/components/cart-provider";
 import { CartToast } from "@/components/cart-toast";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { ShopifyPricingProvider } from "@/components/shopify-pricing-provider";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { createWhatsAppUrl } from "@/lib/whatsapp";
 
@@ -78,14 +79,16 @@ export default function RootLayout({
         ) : null}
       </head>
       <body>
-        <CartProvider>
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <CartDrawer />
-          <CartToast />
-          <WhatsAppButton href={whatsappUrl} floating />
-        </CartProvider>
+        <ShopifyPricingProvider>
+          <CartProvider>
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <CartDrawer />
+            <CartToast />
+            <WhatsAppButton href={whatsappUrl} floating />
+          </CartProvider>
+        </ShopifyPricingProvider>
       </body>
     </html>
   );

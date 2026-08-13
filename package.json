@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "inventory:shopify": "node scripts/generate-shopify-inventory-csv.mjs"
   },
   "dependencies": {
     "next": "^16.0.0",

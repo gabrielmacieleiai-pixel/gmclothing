@@ -3,6 +3,10 @@ export type HeroSlide = {
   eyebrow: string;
   title: string;
   offer?: string;
+  highlights?: Array<{
+    label: string;
+    value: string;
+  }>;
   description: string;
   href: string;
   cta: string;
@@ -21,22 +25,22 @@ export type HeroSlide = {
 export const heroSlides: HeroSlide[] = [
   {
     id: "colecao-frio",
-    eyebrow: "Nova coleção inverno",
-    title: "Sale Inverno",
-    offer: "Chenile Zara de R$399,90 por R$249,90",
-    description:
-      "O suéter principal da temporada: textura real, toque macio e visual premium para comprar agora.",
-    href: "/colecoes/chenille-zara",
-    cta: "Ver coleção",
-    secondaryHref: "/colecao/frio",
-    secondaryCta: "Ver inverno",
-    image: "/products/imagens para o site/2855d6bb-8bdb-4316-a4a1-2788772328aa.png",
-    mobileImage: "/products/imagens para o site/6af50d10-d52c-477a-9b65-36ee207a0da7.png",
+    eyebrow: "WINTER SALE",
+    title: "O frio voltou.",
+    offer: "Os preços também mudaram.",
+    highlights: [
+      { label: "Chenille Zara", value: "R$199,90" },
+      { label: "Outros suéteres", value: "R$149,90" },
+    ],
+    description: "Peças selecionadas para os dias frios. Enquanto houver estoque.",
+    href: "/sale-inverno",
+    cta: "Ver Winter Sale",
+    image: "/products/winter/sueter-chenile-zara/caramelo/01-frente.webp",
     palette: "gold",
     imageFit: "cover",
     mobileImageFit: "cover",
-    composedImage: true,
-    imagePosition: "center center",
+    composedImage: false,
+    imagePosition: "center top",
     mobileImagePosition: "center top",
   },
   {

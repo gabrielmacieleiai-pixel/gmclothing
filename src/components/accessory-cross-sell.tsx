@@ -1,8 +1,4 @@
-import Link from "next/link";
-import {
-  accessoryCategories,
-  getActiveAccessoryProducts,
-} from "@/data/accessories";
+import { getActiveAccessoryProducts } from "@/data/accessories";
 import { formatPrice } from "@/lib/format";
 
 type AccessoryCrossSellProps = {
@@ -18,8 +14,20 @@ export function AccessoryCrossSell({
 }: AccessoryCrossSellProps) {
   const activeAccessories = getActiveAccessoryProducts();
 
-  if (activeAccessories.length > 0) {
-    return (
+  if (activeAccessories.length === 0) {
+    return null;
+  }
+
+  return (
+    <div>
+      <div className={compact ? "mb-4" : "mb-6"}>
+        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-black/40">
+          {eyebrow}
+        </p>
+        <h2 className="mt-2 text-2xl font-black uppercase leading-none tracking-display sm:text-4xl">
+          {title}
+        </h2>
+      </div>
       <div className={compact ? "space-y-3" : "grid gap-3 sm:grid-cols-2 lg:grid-cols-4"}>
         {activeAccessories.map((accessory) => (
           <article
@@ -39,38 +47,6 @@ export function AccessoryCrossSell({
               {formatPrice(accessory.price)}
             </p>
           </article>
-        ))}
-      </div>
-    );
-  }
-
-  return (
-    <div>
-      <div className={compact ? "mb-4" : "mb-6"}>
-        <p className="text-[10px] font-bold uppercase tracking-[0.22em] text-black/40">
-          {eyebrow}
-        </p>
-        <h2 className="mt-2 text-2xl font-black uppercase leading-none tracking-display sm:text-4xl">
-          {title}
-        </h2>
-      </div>
-      <div className={compact ? "space-y-3" : "grid gap-3 sm:grid-cols-2 lg:grid-cols-4"}>
-        {accessoryCategories.map((category) => (
-          <Link
-            className="block border border-black/10 bg-white/55 p-4 transition-colors hover:border-black/30"
-            href={category.href}
-            key={category.slug}
-          >
-            <div className="flex items-center justify-between gap-3">
-              <h3 className="text-sm font-black uppercase">{category.label}</h3>
-              <span className="rounded-full border border-black/10 px-3 py-1 text-[9px] font-bold uppercase tracking-[0.14em] text-black/40">
-                Em breve
-              </span>
-            </div>
-            <p className="mt-3 text-xs leading-5 text-black/50">
-              {category.description}
-            </p>
-          </Link>
         ))}
       </div>
     </div>

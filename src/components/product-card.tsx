@@ -1,10 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { ProductCardGallery } from "@/components/product-card-gallery";
+import { useShopifyPricing } from "@/components/shopify-pricing-provider";
 import {
   getProductColors,
   getProductDisplayStock,
   getProductHref,
-  getProductPricing,
 } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types/product";
@@ -20,8 +22,9 @@ export function ProductCard({
   priority = false,
   inverse = false,
 }: ProductCardProps) {
+  const resolvePricing = useShopifyPricing();
   const colors = getProductColors(product);
-  const pricing = getProductPricing(product, product.defaultColorId);
+  const pricing = resolvePricing(product, product.defaultColorId);
   const totalStock = getProductDisplayStock(product);
   const isSoldOut = totalStock === 0;
   const badge = isSoldOut
@@ -115,10 +118,10 @@ export function ProductCard({
 
               {pricing.discountPercentage ? (
                 <span
-                  className={`w-fit shrink-0 whitespace-nowrap px-2 py-1 text-[7px] font-bold uppercase tracking-[0.11em] md:px-2.5 md:py-1.5 md:text-[8px] md:font-black md:tracking-[0.12em] ${
+                  className={`w-fit shrink-0 whitespace-nowrap border px-2 py-1 text-[7px] font-bold uppercase tracking-[0.11em] md:text-[8px] ${
                     inverse
-                      ? "bg-white text-[#050505]"
-                      : "bg-[#050505] text-white"
+                      ? "border-white/20 text-white/65"
+                      : "border-black/15 text-black/50"
                   }`}
                 >
                   {pricing.discountPercentage}% off

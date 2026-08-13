@@ -99,18 +99,18 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   hasSeparateMobileImage && slide.mobileImage ? (
                     <HeroPicture priority={index === 0} slide={slide} />
                   ) : (
-                    <Image
-                      alt={slide.eyebrow}
-                      className="object-cover"
-                      fill
-                      priority={index === 0}
-                      quality={82}
-                      sizes="100vw"
-                      src={getImageVariantSrc(slide.image, "hero")}
-                      style={{
-                        objectPosition: slide.imagePosition ?? "center",
-                      }}
-                    />
+<Image
+  alt={slide.eyebrow}
+  className="object-cover bg-black"
+  fill
+  priority={index === 0}
+  quality={82}
+  sizes="100vw"
+  src={getImageVariantSrc(slide.image, "hero")}
+  style={{
+    objectPosition: slide.imagePosition ?? "center",
+  }}
+/>
                   )
                 ) : null}
                 {!isComposedImage ? (
@@ -159,6 +159,20 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                   <p className="mt-4 max-w-md text-sm leading-6 text-white/70 sm:text-base">
                     {slide.description}
                   </p>
+                  {slide.highlights?.length ? (
+                    <div className="mt-6 grid max-w-lg grid-cols-2 divide-x divide-white/20 border-y border-white/20 py-4">
+                      {slide.highlights.map((highlight) => (
+                        <div className="px-4 first:pl-0" key={highlight.label}>
+                          <p className="text-[9px] font-bold uppercase tracking-[0.18em] text-white/55">
+                            {highlight.label}
+                          </p>
+                          <p className="mt-1 text-lg font-black tracking-[-0.03em] text-white sm:text-2xl">
+                            {highlight.value}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
                   <Link
                     className="mt-8 inline-flex h-14 items-center gap-8 bg-white px-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#050505] transition-colors hover:bg-[#d4b06a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
                     href={slide.href}

@@ -12,6 +12,11 @@ import {
   isProductLastPiece,
 } from "@/data/products";
 import { heroSlides } from "@/data/hero-slides";
+import {
+  WINTER_SALE_CHENILLE_SLUG,
+  WINTER_SALE_OTHER_SLUGS,
+  WINTER_SALE_PATH,
+} from "@/lib/winter-sale";
 
 export const metadata: Metadata = {
   title: "GM Clothing | Streetwear com identidade",
@@ -100,21 +105,21 @@ type HomeProduct = (typeof catalogProducts)[number];
 
 export default function Home() {
   const shownProductFamilies = new Set<string>();
-  const winterProducts = catalogProducts
-    .filter(isWinterProduct)
-    .sort((firstProduct, secondProduct) => {
-      const availabilityOrder =
-        Number(getProductDisplayStock(firstProduct) === 0) -
-        Number(getProductDisplayStock(secondProduct) === 0);
-
-      return (
-        availabilityOrder ||
-        Number(isChenilleProduct(secondProduct)) -
-          Number(isChenilleProduct(firstProduct))
-      );
-    })
-    .slice(0, 8);
-  markShownProducts(winterProducts, shownProductFamilies);
+  const winterSaleProducts = [
+    ...catalogProducts.filter(
+      (product) => getHomeProductFamily(product) === WINTER_SALE_CHENILLE_SLUG,
+    ),
+    ...WINTER_SALE_OTHER_SLUGS.flatMap((slug) =>
+      catalogProducts.filter(
+        (product) => getHomeProductFamily(product) === slug,
+      ),
+    ),
+  ].sort(
+    (firstProduct, secondProduct) =>
+      Number(getProductDisplayStock(firstProduct) === 0) -
+      Number(getProductDisplayStock(secondProduct) === 0),
+  );
+  markShownProducts(winterSaleProducts, shownProductFamilies);
 
   const newProducts = catalogProducts
     .filter((product) => {
@@ -154,8 +159,50 @@ export default function Home() {
 
       <HeroCarousel slides={heroSlides} />
 
+      <section className="home-section bg-[#f5f1e8] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-24">
+        <div className="mx-auto max-w-[1440px]">
+          <SectionHeading
+            action="Ver todos"
+            eyebrow="Winter Sale"
+            href={WINTER_SALE_PATH}
+            title="Peças selecionadas para os dias frios."
+          />
+          <div className="mb-8 grid border-y border-black/15 sm:grid-cols-2">
+            <Link
+              className="group flex min-h-24 items-end justify-between gap-4 border-b border-black/15 px-1 py-5 sm:border-b-0 sm:border-r sm:px-5"
+              href={`/produto/${WINTER_SALE_CHENILLE_SLUG}`}
+            >
+              <span>
+                <span className="block text-[9px] font-bold uppercase tracking-[0.2em] text-black/40">
+                  Produto-herói
+                </span>
+                <span className="mt-2 block text-lg font-black uppercase">
+                  Chenille Zara
+                </span>
+              </span>
+              <span className="text-lg font-black">R$199,90</span>
+            </Link>
+            <Link
+              className="group flex min-h-24 items-end justify-between gap-4 px-1 py-5 sm:px-5"
+              href={`${WINTER_SALE_PATH}#outros-sueteres`}
+            >
+              <span>
+                <span className="block text-[9px] font-bold uppercase tracking-[0.2em] text-black/40">
+                  Seleção da campanha
+                </span>
+                <span className="mt-2 block text-lg font-black uppercase">
+                  Outros suéteres
+                </span>
+              </span>
+              <span className="text-lg font-black">R$149,90</span>
+            </Link>
+          </div>
+          <ProductGrid products={winterSaleProducts} />
+        </div>
+      </section>
+
       <section
-        aria-label="Beneficios GM Clothing"
+        aria-label="Benefícios GM Clothing"
         className="border-b border-black/10 bg-[#050505] text-white"
       >
         <div className="mx-auto grid max-w-[1440px] grid-cols-2 divide-x divide-white/15 sm:grid-cols-4">
@@ -173,22 +220,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section bg-[#f5f1e8] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-24">
-        <div className="mx-auto max-w-[1440px]">
-          <SectionHeading
-            action="Ver inverno"
-            eyebrow="Coleção Inverno"
-            href="/colecoes/chenille-zara"
-            title="Camadas com presença."
-          />
-          <ProductGrid products={winterProducts} />
-        </div>
-      </section>
-
       <section className="home-section bg-white px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-[1440px]">
           <SectionHeading
-            action="Ver colecao"
+            action="Ver coleção"
             eyebrow="Mais vendidos"
             href="/colecao"
             title="Os favoritos da GM."
@@ -203,23 +238,19 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="home-section bg-[#f5f1e8] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-24">
-        <div className="mx-auto max-w-[1440px]">
-          <SectionHeading
-            action="Ver novidades"
-            eyebrow="Novidades"
-            href="/colecao"
-            title="Chegou agora."
-          />
-          {newProducts.length > 0 ? (
+      {newProducts.length > 0 ? (
+        <section className="home-section bg-[#f5f1e8] px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-24">
+          <div className="mx-auto max-w-[1440px]">
+            <SectionHeading
+              action="Ver novidades"
+              eyebrow="Novidades"
+              href="/colecao"
+              title="Chegou agora."
+            />
             <ProductGrid products={newProducts} />
-          ) : (
-            <div className="border border-black/10 bg-white/50 p-8 text-sm text-black/55">
-              Novas peças entram em breve no catalogo.
-            </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
+      ) : null}
 
       <section className="home-section bg-white px-5 py-14 sm:px-8 sm:py-16 lg:px-12 lg:py-24">
         <div className="mx-auto max-w-[1440px]">
@@ -254,23 +285,6 @@ export default function Home() {
                 </div>
               </Link>
             ))}
-            <Link
-              className="group flex min-h-[300px] flex-col justify-between bg-[#050505] p-6 text-white sm:min-h-[390px] sm:p-8"
-              href="/acessorios"
-              prefetch={false}
-            >
-              <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#c8a96a]">
-                Detalhes que elevam
-              </span>
-              <div>
-                <h3 className="font-display max-w-[8ch] text-4xl font-bold uppercase leading-[0.88] tracking-[-0.06em]">
-                  Acessórios
-                </h3>
-                <span className="mt-6 inline-flex items-center gap-2 border-b border-white/40 pb-2 text-[9px] font-bold uppercase tracking-[0.18em]">
-                  Ver em breve <ArrowUpRight />
-                </span>
-              </div>
-            </Link>
           </div>
         </div>
       </section>
@@ -347,14 +361,6 @@ export default function Home() {
   );
 }
 
-function isWinterProduct(product: (typeof catalogProducts)[number]) {
-  return (
-    product.collection === "Coleção Frio" ||
-    product.category === "Suéter" ||
-    product.category === "Polo Tricot"
-  );
-}
-
 function isChenilleProduct(product: (typeof catalogProducts)[number]) {
   return hasAnyProductText(product, ["chenile", "chenille"]);
 }
@@ -366,43 +372,6 @@ function isOversizedProduct(product: (typeof catalogProducts)[number]) {
     product.styleTags?.includes("oversized") ||
     product.tags?.includes("oversized") ||
     hasAnyProductText(product, ["oversized"])
-  );
-}
-
-function isFaithProduct(product: (typeof catalogProducts)[number]) {
-  return hasAnyProductText(product, [
-    "fate",
-    "faith",
-    "jesus",
-    "salmo",
-    "cristã",
-    "crista",
-    "propósito",
-    "proposito",
-  ]);
-}
-
-function isFootballProduct(product: (typeof catalogProducts)[number]) {
-  return (
-    product.campaign === "copa-2026" ||
-    product.collection === "Copa do Mundo" ||
-    product.category === "Jerseys" ||
-    hasAnyProductText(product, [
-      "futebol",
-      "football",
-      "copa",
-      "brasil",
-      "portugal",
-      "espanha",
-      "cr7",
-      "cristiano",
-      "ronaldinho",
-      "kaká",
-      "kaka",
-      "seleção",
-      "selecao",
-      "jersey",
-    ])
   );
 }
 

@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import { flushSync } from "react-dom";
 import { CartButton } from "@/components/cart-button";
 import { MenuIcon, SearchIcon, XIcon } from "@/components/icons";
-import { getProductHref, getProductPricing, products } from "@/data/products";
+import { useShopifyPricing } from "@/components/shopify-pricing-provider";
+import { getProductHref, products } from "@/data/products";
 import { formatPrice } from "@/lib/format";
 
 const links = [
@@ -62,11 +63,9 @@ const salesLinks = [
   },
 ];
 const trustMessages = [
-  "🚚 Frete grátis acima de R$ 299,90",
-  "🔥 Oversized Premium por R$ 99,90",
-  "❄️ Coleção Inverno disponível",
-  "🎁 Dia dos Pais • O presente perfeito",
-  "📦 Envio rápido para todo o Brasil",
+  "Coleção Inverno disponível",
+  "Frete grátis acima de R$ 299,90",
+  "Envio para todo o Brasil",
 ];
 
 function BrandMark() {
@@ -169,6 +168,7 @@ function normalizeSearch(value: string) {
 }
 
 function SearchButton() {
+  const resolvePricing = useShopifyPricing();
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const normalizedQuery = normalizeSearch(query);
@@ -248,7 +248,7 @@ function SearchButton() {
             <div className="mt-4 grid gap-2">
               {results.length ? (
                 results.map((product) => {
-                  const pricing = getProductPricing(product, product.defaultColorId);
+                  const pricing = resolvePricing(product, product.defaultColorId);
 
                   return (
                     <Link

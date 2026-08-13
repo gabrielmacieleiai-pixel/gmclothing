@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
   type ReactNode,
@@ -12,6 +13,7 @@ import {
   calculateCouponDiscount,
   normalizeCouponCode,
 } from "@/lib/coupons";
+import { useShopifyVariantPricing } from "@/components/shopify-pricing-provider";
 import type { CartItem } from "@/types/cart";
 
 type CartContextValue = {
@@ -37,15 +39,102 @@ type CartContextValue = {
 };
 
 const CartContext = createContext<CartContextValue | null>(null);
+const CART_STORAGE_KEY = "gm-clothing-cart";
 
 export function CartProvider({ children }: { children: ReactNode }) {
+  const resolveVariantPricing = useShopifyVariantPricing();
   const [items, setItems] = useState<CartItem[]>([]);
+  const [hasRestoredCart, setHasRestoredCart] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [lastAddedItem, setLastAddedItem] = useState<CartItem | null>(null);
   const [couponCode, setCouponCode] = useState("");
   const [appliedCouponCode, setAppliedCouponCode] = useState<string | null>(null);
   const [couponMessage, setCouponMessage] = useState<string | null>(null);
   const [cartMessage, setCartMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    let isActive = true;
+
+    queueMicrotask(() => {
+      if (!isActive) {
+        return;
+      }
+
+      try {
+        const storedCart = window.localStorage.getItem(CART_STORAGE_KEY);
+
+        if (storedCart) {
+          const parsedCart: unknown = JSON.parse(storedCart);
+
+          if (Array.isArray(parsedCart)) {
+            setItems(parsedCart.filter(isStoredCartItem));
+          }
+        }
+      } catch {
+        window.localStorage.removeItem(CART_STORAGE_KEY);
+      } finally {
+        setHasRestoredCart(true);
+      }
+    });
+
+    return () => {
+      isActive = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!hasRestoredCart) {
+      return;
+    }
+
+    window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(items));
+  }, [hasRestoredCart, items]);
+
+  useEffect(() => {
+    if (!hasRestoredCart) {
+      return;
+    }
+
+    let isActive = true;
+
+    queueMicrotask(() => {
+      if (!isActive) {
+        return;
+      }
+
+      setItems((currentItems) => {
+        let hasPriceChange = false;
+        const synchronizedItems = currentItems.map((item) => {
+          const pricing = resolveVariantPricing(
+            item.shopifyVariantId,
+            item.price,
+            item.compareAtPrice,
+            item.productSlug,
+          );
+
+          if (
+            pricing.price === item.price &&
+            pricing.compareAtPrice === item.compareAtPrice
+          ) {
+            return item;
+          }
+
+          hasPriceChange = true;
+          return {
+            ...item,
+            price: pricing.price,
+            compareAtPrice: pricing.compareAtPrice,
+          };
+        });
+
+        return hasPriceChange ? synchronizedItems : currentItems;
+      });
+    });
+
+    return () => {
+      isActive = false;
+    };
+  }, [hasRestoredCart, resolveVariantPricing]);
 
   const addItem = useCallback((item: CartItem) => {
     let nextMessage: string | null = null;
@@ -208,6 +297,27 @@ function clampQuantity(quantity: number, availableStock?: number) {
   }
 
   return quantity;
+}
+
+function isStoredCartItem(item: unknown): item is CartItem {
+  if (!item || typeof item !== "object") {
+    return false;
+  }
+
+  const candidate = item as Partial<CartItem>;
+  const availableStock = candidate.availableStock ?? Number.MAX_SAFE_INTEGER;
+
+  return (
+    typeof candidate.id === "string" &&
+    typeof candidate.productSlug === "string" &&
+    typeof candidate.productName === "string" &&
+    typeof candidate.image === "string" &&
+    typeof candidate.price === "number" &&
+    typeof candidate.sku === "string" &&
+    typeof candidate.quantity === "number" &&
+    candidate.quantity > 0 &&
+    availableStock > 0
+  );
 }
 
 export function useCart() {

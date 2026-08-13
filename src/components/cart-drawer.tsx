@@ -4,7 +4,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import type { FormEvent } from "react";
-import { AccessoryCrossSell } from "@/components/accessory-cross-sell";
 import { useCart } from "@/components/cart-provider";
 import { getCheckoutPrefill } from "@/lib/checkout-prefill";
 import { formatPrice } from "@/lib/format";
@@ -180,13 +179,6 @@ export function CartDrawer() {
             </div>
           )}
 
-          <div className="mt-8">
-            <AccessoryCrossSell
-              compact
-              eyebrow="Complete seu estilo"
-              title="Adicione ao pedido"
-            />
-          </div>
         </div>
 
         <div className="border-t border-black/10 bg-[#f5f1e8] p-4">

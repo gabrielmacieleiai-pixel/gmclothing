@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { AccessoryCrossSell } from "@/components/accessory-cross-sell";
 import { useCart } from "@/components/cart-provider";
 import { ArrowUpRight } from "@/components/icons";
 import { getCheckoutPrefill } from "@/lib/checkout-prefill";
@@ -178,12 +177,6 @@ export function CartPage() {
             </div>
           )}
 
-          <div className="mt-10 border-t border-black/10 pt-8">
-            <AccessoryCrossSell
-              eyebrow="Cross-sell"
-              title="Complete seu estilo"
-            />
-          </div>
         </div>
 
         <aside className="h-fit border border-black/10 bg-white/70 p-5 lg:sticky lg:top-28">
