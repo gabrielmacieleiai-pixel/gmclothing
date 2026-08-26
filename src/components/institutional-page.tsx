@@ -15,7 +15,7 @@ export function InstitutionalPage({ page }: InstitutionalPageProps) {
 
   return (
     <>
-      <div className="bg-[#f5f1e8]">
+      <div className="bg-white">
         <Breadcrumbs
           items={[
             { label: "Home", href: "/" },
@@ -25,7 +25,7 @@ export function InstitutionalPage({ page }: InstitutionalPageProps) {
         />
       </div>
 
-      <main className="bg-[#f5f1e8] px-4 pb-16 pt-8 sm:px-6 lg:px-10 lg:pb-24">
+      <main className="bg-white px-4 pb-16 pt-8 sm:px-6 lg:px-10 lg:pb-24">
         <div className="mx-auto max-w-[1040px]">
           <section className="border-b border-black/15 pb-8">
             <p className="mb-4 text-[10px] font-bold uppercase tracking-[0.26em] text-black/42">

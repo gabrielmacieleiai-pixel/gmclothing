@@ -64,7 +64,7 @@ export function CartDrawer() {
       />
 
       <aside
-        className={`absolute bottom-0 right-0 flex max-h-[92svh] w-full flex-col bg-[#f5f1e8] text-[#050505] shadow-2xl transition-transform duration-300 sm:top-0 sm:h-full sm:max-h-none sm:max-w-md ${
+        className={`absolute bottom-0 right-0 flex max-h-[92svh] w-full flex-col bg-white text-[#050505] shadow-2xl transition-transform duration-300 sm:top-0 sm:h-full sm:max-h-none sm:max-w-md ${
           isOpen
             ? "translate-y-0 sm:translate-x-0"
             : "translate-y-full sm:translate-x-full sm:translate-y-0"
@@ -181,7 +181,7 @@ export function CartDrawer() {
 
         </div>
 
-        <div className="border-t border-black/10 bg-[#f5f1e8] p-4">
+        <div className="border-t border-black/10 bg-white p-4">
           {hasItems ? (
             <form className="mb-4" onSubmit={handleCouponSubmit}>
               <label

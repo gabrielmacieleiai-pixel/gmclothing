@@ -22,7 +22,7 @@ export default async function CollectionPage({
   const { categoria } = (await searchParams) ?? {};
 
   return (
-    <main className="bg-[#f5f1e8]">
+    <main className="bg-white">
       <Breadcrumbs
         items={[{ label: "Home", href: "/" }, { label: "Coleção" }]}
       />

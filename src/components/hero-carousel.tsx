@@ -16,7 +16,7 @@ const paletteClasses: Record<HeroSlide["palette"], string> = {
   black: "bg-[#050505] text-white",
   navy: "bg-[#07111f] text-white",
   military: "bg-[#142016] text-white",
-  bone: "bg-[#f5f1e8] text-[#050505]",
+  bone: "bg-white text-[#050505]",
   gold: "bg-[#1b1710] text-white",
 };
 

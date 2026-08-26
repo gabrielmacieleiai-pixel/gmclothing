@@ -915,7 +915,7 @@ export function ProductDetails({
       ) : null}
 
       <div
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-[#f5f1e8] px-4 pt-3 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-black/10 bg-white px-4 pt-3 shadow-[0_-12px_30px_rgba(0,0,0,0.08)] md:hidden"
         style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
       >
         <div className="mb-2 flex items-center justify-between gap-3 text-[10px] uppercase tracking-[0.14em] text-black/45">

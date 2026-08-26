@@ -57,6 +57,7 @@ export function ProductCardGallery({
                   : "object-cover object-[center_18%]"
               }`}
               fill
+              loading={priority ? "eager" : "lazy"}
               priority={priority}
               quality={84}
               sizes="(max-width: 767px) 84vw, (max-width: 1024px) 32vw, 24vw"

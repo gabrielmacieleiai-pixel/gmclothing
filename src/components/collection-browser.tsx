@@ -160,7 +160,7 @@ export function CollectionBrowser({
       </div>
 
       {visibleProducts.length > 0 ? (
-        <ProductGrid products={visibleProducts} />
+        <ProductGrid products={visibleProducts} priorityCount={1} />
       ) : (
         <div className="border border-black/10 px-5 py-12 text-center">
           <p className="text-sm text-black/55">

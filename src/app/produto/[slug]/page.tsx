@@ -93,7 +93,7 @@ export default async function ProductPage({
         initialColorId={cor}
       />
 
-      <section className="border-t border-black/15 bg-[#f5f1e8] px-4 py-14 sm:px-6 lg:px-10 lg:py-20">
+      <section className="border-t border-black/15 bg-white px-4 py-14 sm:px-6 lg:px-10 lg:py-20">
         <div className="mx-auto max-w-[1440px]">
           <AccessoryCrossSell
             eyebrow="Combine com"

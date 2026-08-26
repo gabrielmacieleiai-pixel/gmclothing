@@ -7,7 +7,7 @@ import { catalogProducts } from "@/data/products";
 const collectionSlug = "sueter-chenile-zara";
 
 export const metadata: Metadata = {
-  title: "Chenille Zara | GM Clothing",
+  title: "Chenille Zara",
   description:
     "Textura premium, toque macio e presença para os dias frios. Conheça o Chenille Zara da GM Clothing.",
   alternates: {
@@ -31,7 +31,7 @@ export default function ChenilleZaraCollectionPage() {
 
   return (
     <>
-      <div className="bg-[#f5f1e8]">
+      <div className="bg-white">
         <Breadcrumbs
           items={[
             { label: "Home", href: "/" },
@@ -41,7 +41,7 @@ export default function ChenilleZaraCollectionPage() {
         />
       </div>
 
-      <div className="bg-[#f5f1e8] text-[#050505]">
+      <div className="bg-white text-[#050505]">
         <section className="border-b border-black/10 px-5 py-14 sm:px-8 sm:py-20 lg:px-12 lg:py-24">
           <div className="mx-auto max-w-[1440px]">
             <p className="text-[10px] font-bold uppercase tracking-[0.28em] text-black/45">
@@ -73,7 +73,7 @@ export default function ChenilleZaraCollectionPage() {
             </div>
 
             {products.length > 0 ? (
-              <ProductGrid products={products} />
+              <ProductGrid products={products} priorityCount={1} />
             ) : (
               <div className="border border-black/10 bg-white px-5 py-14 text-center">
                 <p className="text-sm text-black/60">

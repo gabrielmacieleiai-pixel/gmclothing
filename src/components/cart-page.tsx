@@ -47,7 +47,7 @@ export function CartPage() {
   }
 
   return (
-    <section className="bg-[#f5f1e8] px-4 pb-20 pt-6 sm:px-6 lg:px-10 lg:pb-28">
+    <section className="bg-white px-4 pb-20 pt-6 sm:px-6 lg:px-10 lg:pb-28">
       <div className="mx-auto grid max-w-[1440px] gap-8 lg:grid-cols-[1fr_420px]">
         <div>
           <div className="mb-6">
