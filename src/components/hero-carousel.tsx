@@ -18,6 +18,7 @@ const paletteClasses: Record<HeroSlide["palette"], string> = {
   military: "bg-[#142016] text-white",
   bone: "bg-white text-[#050505]",
   gold: "bg-[#1b1710] text-white",
+  sale: "bg-[#050505] text-[#f21d2f]",
 };
 
 const accentClasses: Record<HeroSlide["palette"], string> = {
@@ -26,6 +27,25 @@ const accentClasses: Record<HeroSlide["palette"], string> = {
   military: "text-[#9faa83]",
   bone: "text-[#5b5139]",
   gold: "text-[#d4b06a]",
+  sale: "text-[#f21d2f]",
+};
+
+const titleClasses: Record<HeroSlide["palette"], string> = {
+  black: "text-white",
+  navy: "text-white",
+  military: "text-white",
+  bone: "text-[#050505]",
+  gold: "text-white",
+  sale: "text-[#f21d2f]",
+};
+
+const ctaClasses: Record<HeroSlide["palette"], string> = {
+  black: "bg-white text-[#050505] hover:bg-[#d4b06a]",
+  navy: "bg-white text-[#050505] hover:bg-[#9bb8d3]",
+  military: "bg-white text-[#050505] hover:bg-[#9faa83]",
+  bone: "bg-[#050505] text-white hover:bg-[#d4b06a] hover:text-[#050505]",
+  gold: "bg-white text-[#050505] hover:bg-[#d4b06a]",
+  sale: "bg-[#f21d2f] text-[#050505] hover:bg-white",
 };
 
 const HERO_IMAGE_WIDTHS = {
@@ -95,6 +115,15 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
               key={slide.id}
             >
               <div className="absolute inset-0">
+                {slide.palette === "sale" ? (
+                  <>
+                    <div className="absolute inset-x-0 top-[18%] h-px bg-[#f21d2f]/35" />
+                    <div className="absolute inset-x-0 bottom-[22%] h-px bg-[#f21d2f]/20" />
+                    <div className="absolute -right-[8vw] top-1/2 hidden -translate-y-1/2 rotate-90 text-[clamp(5rem,12vw,12rem)] font-black uppercase leading-none tracking-[-0.08em] text-[#f21d2f]/[0.07] lg:block">
+                      Sale
+                    </div>
+                  </>
+                ) : null}
                 {slide.image ? (
                   hasSeparateMobileImage && slide.mobileImage ? (
                     <HeroPicture priority={index === 0} slide={slide} />
@@ -148,7 +177,12 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                       Coleção atual
                     </p>
                   ) : null}
-                  <h1 className="font-display max-w-[11ch] text-[clamp(3.8rem,15vw,9.5rem)] font-bold uppercase leading-[0.82] tracking-[-0.075em] text-white [text-wrap:balance]">
+                  <h1
+                    className={
+                      "font-display max-w-[11ch] text-[clamp(3.8rem,15vw,9.5rem)] font-bold uppercase leading-[0.82] tracking-[-0.075em] [text-wrap:balance] " +
+                      titleClasses[slide.palette]
+                    }
+                  >
                     {slide.title}
                   </h1>
                   {slide.offer ? (
@@ -174,7 +208,10 @@ export function HeroCarousel({ slides }: HeroCarouselProps) {
                     </div>
                   ) : null}
                   <Link
-                    className="mt-8 inline-flex h-14 items-center gap-8 bg-white px-6 text-[10px] font-bold uppercase tracking-[0.2em] text-[#050505] transition-colors hover:bg-[#d4b06a] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                    className={
+                      "mt-8 inline-flex h-14 items-center gap-8 px-6 text-[10px] font-bold uppercase tracking-[0.2em] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white " +
+                      ctaClasses[slide.palette]
+                    }
                     href={slide.href}
                     prefetch={false}
                   >

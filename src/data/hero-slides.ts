@@ -14,7 +14,7 @@ export type HeroSlide = {
   secondaryCta?: string;
   image?: string;
   mobileImage?: string;
-  palette: "black" | "navy" | "military" | "bone" | "gold";
+  palette: "black" | "navy" | "military" | "bone" | "gold" | "sale";
   imageFit?: "cover" | "contain";
   mobileImageFit?: "cover" | "contain";
   composedImage?: boolean;
@@ -24,24 +24,19 @@ export type HeroSlide = {
 
 export const heroSlides: HeroSlide[] = [
   {
-    id: "colecao-frio",
-    eyebrow: "WINTER SALE",
-    title: "O frio voltou.",
-    offer: "Os preços também mudaram.",
+    id: "liquidacao-inverno",
+    eyebrow: "Liquidação de inverno",
+    title: "Liquidação",
+    offer: "Inverno com preço de saída.",
     highlights: [
       { label: "Chenille Zara", value: "R$199,90" },
-      { label: "Outros suéteres", value: "R$149,90" },
+      { label: "Suéteres selecionados", value: "R$149,90" },
     ],
-    description: "Peças selecionadas para os dias frios. Enquanto houver estoque.",
-    href: "/sale-inverno",
-    cta: "Ver Winter Sale",
-    image: "/products/winter/sueter-chenile-zara/caramelo/01-frente.webp",
-    palette: "gold",
-    imageFit: "cover",
-    mobileImageFit: "cover",
-    composedImage: false,
-    imagePosition: "center top",
-    mobileImagePosition: "center top",
+    description:
+      "Todos os suéteres e peças de frio reunidos. Estoque limitado.",
+    href: "/colecao/frio",
+    cta: "Ver tudo de inverno",
+    palette: "sale",
   },
   {
     id: "oversized-essentials",

@@ -140,7 +140,7 @@ export default async function CollectionLandingPage({
       <section className="px-4 pb-20 sm:px-6 lg:px-10 lg:pb-28">
         <div className="mx-auto max-w-[1440px]">
           {products.length > 0 ? (
-            <ProductGrid products={products} />
+            <ProductGrid products={products} priorityCount={1} />
           ) : (
             <div className="border border-black/10 bg-white px-5 py-12 text-center">
               <p className="text-sm text-black/55">Nenhuma peça ativa nesta linha.</p>
